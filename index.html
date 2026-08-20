@@ -381,9 +381,8 @@
   }
 
   // ---- YouTube playlist -> custom cards ----
-  // Set this to your Cloudflare Worker URL once deployed, e.g. "https://feeds.YOURNAME.workers.dev/?url="
-  // Until then it falls back to a public CORS proxy so you can preview it working.
-  const PROXY = "https://api.allorigins.win/raw?url=";
+  // Your own Cloudflare Worker (fast, free, reliable).
+  const PROXY = "https://youtube-feed.silent-hall-684c.workers.dev/?url=";
 
   function feedUrl(pl){
     return "https://www.youtube.com/feeds/videos.xml?playlist_id=" + pl;
