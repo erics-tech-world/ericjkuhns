@@ -114,7 +114,7 @@
   .vid-loading,.vid-error{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);padding:40px 0;text-align:center}
   .vid-error b{color:var(--neon)}
   .vid-feature{margin-bottom:16px}
-  .embed{position:relative;width:100%;aspect-ratio:16/9;background:#050705;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .embed{position:relative;width:100%;aspect-ratio:16/9;background:#050705;border:1px solid var(--line);border-radius:3px;overflow:hidden;z-index:10000}
   .embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
   /* clickable thumbnail (lite embed) */
   .vid-thumb{
@@ -141,16 +141,23 @@
   .vid-feature .vid-sub{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:10px}
   .vid-feature .vid-sub b{color:var(--neon)}
   /* recent row */
-  .vid-recent{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
-  .vid-mini{background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;cursor:pointer;transition:all .2s}
+  .vid-recent{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+  .vid-mini{background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;cursor:pointer;transition:all .2s;display:block}
   .vid-mini:hover{border-color:var(--neon-dim);transform:translateY(-2px)}
   .vid-mini .m-thumb{aspect-ratio:16/9;background-size:cover;background-position:center;background-color:#050705;position:relative}
   .vid-mini .m-thumb::after{content:"▶";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--neon);font-size:16px;opacity:0;transition:opacity .2s}
   .vid-mini:hover .m-thumb::after{opacity:1}
   .vid-mini .m-title{padding:10px 12px;font-size:12px;line-height:1.35;color:var(--ink)}
+  /* See All tile */
+  .vid-all .all-thumb{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d130d,#060806)}
+  .vid-all .all-thumb::after{content:none}
+  .vid-all .all-thumb span{color:var(--neon);font-size:30px;transition:transform .2s}
+  .vid-all:hover .all-thumb span{transform:translateX(4px)}
+  .vid-all .m-title{color:var(--neon);font-family:'JetBrains Mono',monospace}
   .vid-cap{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:14px}
   .vid-cap b{color:var(--neon)}
   .vid-cap a{color:var(--neon)}
+  @media(max-width:820px){.vid-recent{grid-template-columns:repeat(3,1fr)}}
   @media(max-width:640px){.vid-recent{grid-template-columns:1fr 1fr}}
 
   .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -398,8 +405,9 @@
   function render(panel, videos){
     if(!videos.length){ return renderError(panel); }
     const label = panel.getAttribute('data-label');
+    const pl = panel.getAttribute('data-playlist');
     const feat = videos[0];
-    const rest = videos.slice(1,4);
+    const rest = videos.slice(1,9);
 
     const wrap = document.createElement('div');
 
@@ -420,21 +428,29 @@
     f.appendChild(sub);
     wrap.appendChild(f);
 
-    // recent row
-    if(rest.length){
-      const row = document.createElement('div');
-      row.className = 'vid-recent';
-      rest.forEach(function(v){
-        const m = document.createElement('div');
-        m.className = 'vid-mini';
-        m.innerHTML =
-          '<div class="m-thumb" style="background-image:url(\''+thumb(v.id,'mqdefault')+'\')"></div>'+
-          '<div class="m-title">'+esc(v.title)+'</div>';
-        m.onclick = function(){ playFeature(f, v.id, v.title); window.scrollTo({top:f.getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'}); };
-        row.appendChild(m);
-      });
-      wrap.appendChild(row);
-    }
+    // recent grid (up to 8) + See All tile
+    const row = document.createElement('div');
+    row.className = 'vid-recent';
+    rest.forEach(function(v){
+      const m = document.createElement('div');
+      m.className = 'vid-mini';
+      m.innerHTML =
+        '<div class="m-thumb" style="background-image:url(\''+thumb(v.id,'mqdefault')+'\')"></div>'+
+        '<div class="m-title">'+esc(v.title)+'</div>';
+      m.onclick = function(){ playFeature(f, v.id, v.title); window.scrollTo({top:f.getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'}); };
+      row.appendChild(m);
+    });
+    // See All tile
+    const all = document.createElement('a');
+    all.className = 'vid-mini vid-all';
+    all.href = "https://www.youtube.com/playlist?list=" + pl;
+    all.target = "_blank";
+    all.rel = "noopener";
+    all.innerHTML =
+      '<div class="m-thumb all-thumb"><span>▸</span></div>'+
+      '<div class="m-title">See all videos on YouTube</div>';
+    row.appendChild(all);
+    wrap.appendChild(row);
 
     const cap = document.createElement('div');
     cap.className = 'vid-cap mono';
