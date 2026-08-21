@@ -32,7 +32,8 @@
   .head{padding:72px 0 40px;border-bottom:1px solid var(--line)}
   .head .prompt{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--neon-dim);letter-spacing:1px;margin-bottom:18px}
   .head .prompt .path{color:var(--muted)}
-  .head h1{font-size:clamp(34px,6vw,60px);font-weight:800;letter-spacing:-2px}
+  .head h1{font-size:clamp(34px,6vw,60px);font-weight:800;letter-spacing:-2px;min-height:1.1em}
+  .head h1 .type-caret{color:var(--neon);animation:blink 1.05s steps(1) infinite;font-weight:400}
   .head p{color:var(--muted);margin-top:14px;max-width:560px}
 
   /* search + filter bar */
@@ -94,9 +95,9 @@
 
 <header class="head">
   <div class="wrap">
-    <div class="prompt mono"><span class="path">~/eric</span> $ ls ./blog</div>
-    <h1>The Blog</h1>
-    <p>Notes on tech I'm testing, skate spots I'm chasing, and the worlds I'm writing. Long-form, unfiltered, mine.</p>
+    <div class="prompt mono"><span class="path">~/eric</span> $ cat ./blog/about.txt</div>
+    <h1 class="typed"><span id="typed-title"></span><span class="type-caret">_</span></h1>
+    <p>Welcome to my blog where I cover tech, adventure/travel, skateboarding, pop culture, nostalgia, and anything else that pops into my head.</p>
     <div class="tools">
       <input class="search" id="search" placeholder="search posts…" oninput="applyFilter()">
       <span class="count mono" id="count"></span>
@@ -113,12 +114,29 @@
 
 <footer>
   <div class="wrap foot-note mono">
-    Built by hand. Powered by <b>tech + adventure</b>. © 2026 Eric Kuhns
+    Copyright © 2015 - 2026 Eric J. Kuhns / Eric's Tech World LLC
   </div>
 </footer>
 
 <script src="blog-config.js"></script>
 <script>
+  // typewriter effect for the blog title
+  (function(){
+    const target = document.getElementById('typed-title');
+    if(!target) return;
+    const text = "Eric J. Kuhns Blog";
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){ target.textContent = text; return; }
+    let i = 0;
+    (function tick(){
+      if(i <= text.length){
+        target.textContent = text.slice(0,i);
+        i++;
+        setTimeout(tick, 65);
+      }
+    })();
+  })();
+
   function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
   function fmtDate(iso){ try{ return new Date(iso).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }catch(e){ return ''; } }
   function firstImage(html){ const m=(html||'').match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:''; }
