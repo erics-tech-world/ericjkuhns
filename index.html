@@ -97,6 +97,7 @@
   .card:hover{border-color:var(--neon-dim);transform:translateY(-3px)}
   .card:hover::before{width:100%}
   .card .k{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon);letter-spacing:.5px;margin-bottom:14px}
+  .card-img{width:56px;height:56px;object-fit:cover;border:1px solid var(--line);border-radius:4px;margin-bottom:16px;display:block;background:#0d110d}
   .card h3{font-size:18px;font-weight:700;margin-bottom:8px}
   .card p{font-size:14px;color:var(--muted)}
 
@@ -219,6 +220,32 @@
   .foot-links{display:flex;gap:22px;font-family:'JetBrains Mono',monospace;font-size:13px}
   .foot-links a{color:var(--muted);transition:color .2s}
   .foot-links a:hover{color:var(--neon)}
+  /* social dropdowns */
+  .foot-socials{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+  .social-drop{position:relative}
+  .social-btn{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);
+    background:var(--panel);border:1px solid var(--line);border-radius:3px;
+    padding:9px 14px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;
+  }
+  .social-btn:hover{border-color:var(--neon-dim);color:var(--ink)}
+  .social-drop.open .social-btn{border-color:var(--neon);color:var(--neon);box-shadow:0 0 14px rgba(57,255,100,.15)}
+  .drop-arrow{font-size:10px;transition:transform .2s;color:var(--neon)}
+  .social-drop.open .drop-arrow{transform:rotate(180deg)}
+  .social-menu{
+    position:absolute;bottom:calc(100% + 8px);left:0;min-width:180px;
+    background:var(--panel);border:1px solid var(--neon-dim);border-radius:3px;
+    padding:6px;display:none;flex-direction:column;gap:2px;z-index:200;
+    box-shadow:0 0 30px rgba(0,0,0,.5);
+  }
+  .social-drop.open .social-menu{display:flex;animation:dropIn .18s ease}
+  @keyframes dropIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .social-menu a{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);
+    padding:8px 12px;border-radius:2px;transition:all .15s;
+  }
+  .social-menu a:hover{background:var(--panel2,#0d110d);color:var(--neon)}
+  .social-menu a::before{content:"▸ ";color:var(--neon-dim)}
   .foot-note{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
   .foot-note b{color:var(--neon)}
 
@@ -248,6 +275,8 @@
     <div class="nav-links" id="nl">
       <a href="#projects">Projects</a>
       <a href="#videos">Videos</a>
+      <a href="#skating">Skating</a>
+      <a href="#music">Music</a>
       <a href="#blog">Blog</a>
       <a href="#book">Book</a>
       <a href="#contact">Contact</a>
@@ -276,21 +305,25 @@
     </div>
     <div class="grid">
       <div class="card">
+        <img class="card-img" src="https://i.imgur.com/AQj83JT.png" alt="Eric's Tech World" onerror="this.style.display='none'">
         <div class="k mono">// Eric's Tech World</div>
-        <h3>Tech &amp; Robots</h3>
-        <p>Long-term, real-world reviews of desktop companion robots, drones, e-bikes, and the gear that makes adventure better.</p>
+        <h3>Robots &amp; Future Tech</h3>
+        <p>Tech &amp; Robot Reviews, articles, and my robot shop.</p>
       </div>
       <div class="card">
+        <img class="card-img" src="https://i.imgur.com/F7403zG.png" alt="Eric Skateboards" onerror="this.style.display='none'">
         <div class="k mono">// Eric Skateboards</div>
-        <h3>Skate &amp; History</h3>
-        <p>DFW lost skate spots, local history, and urban exploration. Chasing the places most people forgot.</p>
+        <h3>100% Skateboarding</h3>
+        <p>Skate spots, articles, videos and more from 20+ years of skating.</p>
       </div>
       <div class="card">
+        <img class="card-img" src="https://i.imgur.com/YrkTIUa.png" alt="Writing Projects" onerror="this.style.display='none'">
         <div class="k mono">// Writing Projects</div>
         <h3>Sci-Fi Writing</h3>
         <p>Original worlds and stories, including my debut novel <em style="color:var(--neon);font-style:normal">Spacecosis</em>.</p>
       </div>
       <div class="card">
+        <img class="card-img" src="https://i.imgur.com/Pr4ka3Q.jpeg" alt="Professional Acting" onerror="this.style.display='none'">
         <div class="k mono">// Professional Acting</div>
         <h3>On Screen</h3>
         <p>Acting work across film and video. Bringing characters and stories to life in front of the camera.</p>
@@ -365,12 +398,33 @@
 <footer id="contact">
   <div class="wrap foot-grid">
     <div>
-      <div class="logo mono" style="font-size:18px;margin-bottom:12px">eric<b style="color:var(--neon)">.</b>kuhns</div>
-      <div class="foot-links">
-        <a href="#">YouTube</a>
-        <a href="#">Instagram</a>
-        <a href="#">TikTok</a>
-        <a href="mailto:info@ericjkuhns.com">Email</a>
+      <div class="logo mono" style="font-size:18px;margin-bottom:16px">ericjkuhns<span class="logo-caret">_</span></div>
+      <div class="foot-socials">
+        <div class="social-drop">
+          <button class="social-btn mono" onclick="toggleSocial(this)">Instagram <span class="drop-arrow">▾</span></button>
+          <div class="social-menu">
+            <a href="https://instagram.com/ericjkuhns" target="_blank" rel="noopener">@ericjkuhns</a>
+            <a href="https://instagram.com/ericstechworld" target="_blank" rel="noopener">@ericstechworld</a>
+          </div>
+        </div>
+        <div class="social-drop">
+          <button class="social-btn mono" onclick="toggleSocial(this)">YouTube <span class="drop-arrow">▾</span></button>
+          <div class="social-menu">
+            <a href="https://youtube.com/@ericstechworld" target="_blank" rel="noopener">@ericstechworld</a>
+            <a href="https://youtube.com/@ericskateboards" target="_blank" rel="noopener">@ericskateboards</a>
+            <a href="https://youtube.com/@ericsbackrooms" target="_blank" rel="noopener">@ericsbackrooms</a>
+          </div>
+        </div>
+        <div class="social-drop">
+          <button class="social-btn mono" onclick="toggleSocial(this)">TikTok <span class="drop-arrow">▾</span></button>
+          <div class="social-menu">
+            <a href="https://tiktok.com/@ericstechworld" target="_blank" rel="noopener">@ericstechworld</a>
+            <a href="https://tiktok.com/@ericskateboards" target="_blank" rel="noopener">@ericskateboards</a>
+            <a href="https://tiktok.com/@spacecosis" target="_blank" rel="noopener">@spacecosis</a>
+            <a href="https://tiktok.com/@austintexasfreak" target="_blank" rel="noopener">@austintexasfreak</a>
+          </div>
+        </div>
+        <a class="social-btn mono" href="mailto:info@ericjkuhns.com">Email</a>
       </div>
     </div>
     <div class="foot-note mono">
@@ -571,6 +625,19 @@
   document.addEventListener('DOMContentLoaded', function(){
     const active = document.querySelector('.vid-panel.active');
     if(active) loadPanel(active);
+  });
+
+  // ---- footer social dropdowns ----
+  function toggleSocial(btn){
+    const drop = btn.closest('.social-drop');
+    const isOpen = drop.classList.contains('open');
+    document.querySelectorAll('.social-drop.open').forEach(function(d){ d.classList.remove('open'); });
+    if(!isOpen) drop.classList.add('open');
+  }
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.social-drop')){
+      document.querySelectorAll('.social-drop.open').forEach(function(d){ d.classList.remove('open'); });
+    }
   });
 
   // ---- latest 3 blog posts from Blogger ----
