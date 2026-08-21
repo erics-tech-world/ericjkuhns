@@ -121,6 +121,9 @@
   .card-img{width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--line);border-radius:4px;margin-bottom:18px;display:block;background:#0d110d}
   .card h3{font-size:18px;font-weight:700;margin-bottom:8px}
   .card p{font-size:14px;color:var(--muted)}
+  .card-link{cursor:pointer}
+  .card-link .card-cta{display:inline-block;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--neon);opacity:0;transform:translateX(-4px);transition:all .2s}
+  .card-link:hover .card-cta{opacity:1;transform:translateX(0)}
 
   /* VIDEO TABS */
   .vid-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
@@ -328,12 +331,13 @@
       <button class="proj-arrow proj-prev disabled" aria-label="Previous" onclick="projSlide(-1)">‹</button>
       <div class="proj-viewport">
         <div class="grid proj-track" id="proj-track">
-          <div class="card">
+          <a class="card card-link" href="eric-tech-world.html">
             <img class="card-img" src="https://i.imgur.com/AQj83JT.png" alt="Eric's Tech World" onerror="this.style.display='none'">
             <div class="k mono">// Eric's Tech World</div>
             <h3>Robots &amp; Future Tech</h3>
             <p>Tech &amp; Robot Reviews, articles, and my robot shop.</p>
-          </div>
+            <span class="card-cta mono">Explore →</span>
+          </a>
           <div class="card">
             <img class="card-img" src="https://i.imgur.com/YrkTIUa.png" alt="Writing Projects" onerror="this.style.display='none'">
             <div class="k mono">// Writing Projects</div>
