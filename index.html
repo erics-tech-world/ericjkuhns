@@ -97,7 +97,7 @@
   .card:hover{border-color:var(--neon-dim);transform:translateY(-3px)}
   .card:hover::before{width:100%}
   .card .k{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon);letter-spacing:.5px;margin-bottom:14px}
-  .card-img{width:56px;height:56px;object-fit:cover;border:1px solid var(--line);border-radius:4px;margin-bottom:16px;display:block;background:#0d110d}
+  .card-img{width:100%;aspect-ratio:16/10;object-fit:cover;border:1px solid var(--line);border-radius:4px;margin-bottom:18px;display:block;background:#0d110d}
   .card h3{font-size:18px;font-weight:700;margin-bottom:8px}
   .card p{font-size:14px;color:var(--muted)}
 
@@ -203,14 +203,11 @@
 
   .book{display:grid;grid-template-columns:1fr 1.4fr;gap:40px;align-items:center}
   .book-cover{
-    aspect-ratio:11/17;background:linear-gradient(150deg,#0d130d,#060806);
-    border:1px solid var(--neon-dim);border-radius:4px;display:flex;flex-direction:column;
-    align-items:center;justify-content:center;padding:30px;text-align:center;
-    box-shadow:0 0 40px rgba(57,255,100,.08);
+    border-radius:4px;overflow:hidden;
+    box-shadow:0 0 40px rgba(57,255,100,.12);
+    border:1px solid var(--neon-dim);
   }
-  .book-cover .t{font-size:34px;font-weight:800;letter-spacing:2px;line-height:1;margin-bottom:12px}
-  .book-cover .t span{color:var(--neon)}
-  .book-cover .a{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:2px}
+  .book-cover .cover-img{width:100%;height:auto;display:block}
   .book-info h3{font-size:clamp(22px,3vw,30px);font-weight:800;margin-bottom:8px;letter-spacing:-.5px}
   .book-info .rel{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--neon);margin-bottom:18px}
   .book-info p{color:var(--muted);margin-bottom:24px;max-width:460px}
@@ -382,8 +379,7 @@
     </div>
     <div class="book">
       <div class="book-cover">
-        <div class="t">SPACE<span>COSIS</span></div>
-        <div class="a mono">ERIC KUHNS</div>
+        <img src="https://i.imgur.com/yZN4U1z.png" alt="Spacecosis cover" class="cover-img">
       </div>
       <div class="book-info">
         <h3>Spacecosis</h3>
