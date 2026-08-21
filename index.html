@@ -87,6 +87,27 @@
   .sec-head .line{flex:1;height:1px;background:var(--line)}
 
   .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  /* projects carousel */
+  .proj-carousel{display:flex;align-items:stretch;gap:10px}
+  .proj-viewport{flex:1;overflow:hidden}
+  .proj-track{
+    grid-template-columns:none;display:flex;gap:16px;
+    transition:transform .4s cubic-bezier(.4,0,.2,1);
+  }
+  .proj-track .card{flex:0 0 calc((100% - 48px) / 4);}
+  .proj-arrow{
+    flex:0 0 42px;align-self:center;height:80px;width:42px;
+    background:var(--panel);border:1px solid var(--line);border-radius:3px;
+    color:var(--neon);font-size:28px;line-height:1;cursor:pointer;transition:all .2s;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .proj-arrow:hover{border-color:var(--neon);box-shadow:0 0 18px rgba(57,255,100,.25)}
+  .proj-arrow.disabled{opacity:.25;pointer-events:none}
+  .card-img-placeholder{
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#0d130d,#060806);
+  }
+  .card-img-placeholder span{color:var(--neon);font-size:32px;letter-spacing:6px}
   .card{
     background:var(--panel);border:1px solid var(--line);border-radius:3px;
     padding:26px 24px;transition:all .22s;position:relative;overflow:hidden;
@@ -230,7 +251,7 @@
   .drop-arrow{font-size:10px;transition:transform .2s;color:var(--neon)}
   .social-drop.open .drop-arrow{transform:rotate(180deg)}
   .social-menu{
-    position:absolute;bottom:calc(100% + 8px);left:0;min-width:180px;
+    position:absolute;bottom:calc(100% + 8px);left:0;min-width:200px;
     background:var(--panel);border:1px solid var(--neon-dim);border-radius:3px;
     padding:6px;display:none;flex-direction:column;gap:2px;z-index:200;
     box-shadow:0 0 30px rgba(0,0,0,.5);
@@ -239,16 +260,18 @@
   @keyframes dropIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
   .social-menu a{
     font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);
-    padding:8px 12px;border-radius:2px;transition:all .15s;
+    padding:7px 12px;border-radius:2px;transition:all .15s;white-space:nowrap;
+    display:flex;align-items:center;gap:7px;
   }
   .social-menu a:hover{background:var(--panel2,#0d110d);color:var(--neon)}
-  .social-menu a::before{content:"▸ ";color:var(--neon-dim)}
+  .social-menu a::before{content:"▸";color:var(--neon-dim);flex:0 0 auto}
   .foot-note{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
   .foot-note b{color:var(--neon)}
 
   @media(max-width:900px){
     .grid{grid-template-columns:repeat(2,1fr)}
     .posts{grid-template-columns:1fr}
+    .proj-track .card{flex:0 0 calc((100% - 16px) / 2)}
   }
   @media(max-width:820px){
     .book{grid-template-columns:1fr;gap:28px}
@@ -259,6 +282,7 @@
   }
   @media(max-width:520px){
     .grid{grid-template-columns:1fr}
+    .proj-track .card{flex:0 0 100%}
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -297,34 +321,46 @@
   <div class="wrap">
     <div class="sec-head">
       <span class="tag mono">01</span>
-      <h2>What I do</h2>
+      <h2>Projects</h2>
       <div class="line"></div>
     </div>
-    <div class="grid">
-      <div class="card">
-        <img class="card-img" src="https://i.imgur.com/AQj83JT.png" alt="Eric's Tech World" onerror="this.style.display='none'">
-        <div class="k mono">// Eric's Tech World</div>
-        <h3>Robots &amp; Future Tech</h3>
-        <p>Tech &amp; Robot Reviews, articles, and my robot shop.</p>
+    <div class="proj-carousel">
+      <button class="proj-arrow proj-prev disabled" aria-label="Previous" onclick="projSlide(-1)">‹</button>
+      <div class="proj-viewport">
+        <div class="grid proj-track" id="proj-track">
+          <div class="card">
+            <img class="card-img" src="https://i.imgur.com/AQj83JT.png" alt="Eric's Tech World" onerror="this.style.display='none'">
+            <div class="k mono">// Eric's Tech World</div>
+            <h3>Robots &amp; Future Tech</h3>
+            <p>Tech &amp; Robot Reviews, articles, and my robot shop.</p>
+          </div>
+          <div class="card">
+            <img class="card-img" src="https://i.imgur.com/YrkTIUa.png" alt="Writing Projects" onerror="this.style.display='none'">
+            <div class="k mono">// Writing Projects</div>
+            <h3>Sci-Fi Writing</h3>
+            <p>Original worlds and stories, including my debut novel <em style="color:var(--neon);font-style:normal">Spacecosis</em>.</p>
+          </div>
+          <div class="card">
+            <img class="card-img" src="https://i.imgur.com/F7403zG.png" alt="Eric Skateboards" onerror="this.style.display='none'">
+            <div class="k mono">// Eric Skateboards</div>
+            <h3>100% Skateboarding</h3>
+            <p>Skate spots, articles, videos and more from 20+ years of skating.</p>
+          </div>
+          <div class="card">
+            <img class="card-img" src="https://i.imgur.com/Pr4ka3Q.jpeg" alt="Professional Acting" onerror="this.style.display='none'">
+            <div class="k mono">// Professional Acting</div>
+            <h3>On Screen</h3>
+            <p>Acting work across film and video. Bringing characters and stories to life in front of the camera and on stage.</p>
+          </div>
+          <div class="card">
+            <div class="card-img card-img-placeholder"><span class="mono">♪ ♫ ♪</span></div>
+            <div class="k mono">// Music Projects</div>
+            <h3>My Music</h3>
+            <p>Assorted music I've made over the years spanning acoustic rock to hip hop.</p>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <img class="card-img" src="https://i.imgur.com/F7403zG.png" alt="Eric Skateboards" onerror="this.style.display='none'">
-        <div class="k mono">// Eric Skateboards</div>
-        <h3>100% Skateboarding</h3>
-        <p>Skate spots, articles, videos and more from 20+ years of skating.</p>
-      </div>
-      <div class="card">
-        <img class="card-img" src="https://i.imgur.com/YrkTIUa.png" alt="Writing Projects" onerror="this.style.display='none'">
-        <div class="k mono">// Writing Projects</div>
-        <h3>Sci-Fi Writing</h3>
-        <p>Original worlds and stories, including my debut novel <em style="color:var(--neon);font-style:normal">Spacecosis</em>.</p>
-      </div>
-      <div class="card">
-        <img class="card-img" src="https://i.imgur.com/Pr4ka3Q.jpeg" alt="Professional Acting" onerror="this.style.display='none'">
-        <div class="k mono">// Professional Acting</div>
-        <h3>On Screen</h3>
-        <p>Acting work across film and video. Bringing characters and stories to life in front of the camera.</p>
-      </div>
+      <button class="proj-arrow proj-next" aria-label="More" onclick="projSlide(1)">›</button>
     </div>
   </div>
 </section>
@@ -383,8 +419,8 @@
       </div>
       <div class="book-info">
         <h3>Spacecosis</h3>
-        <div class="rel mono">// releasing 09.01.2026</div>
-        <p>My debut sci-fi novel. A story years in the making, set in a universe I've been building long before the camera ever turned on.</p>
+        <div class="rel mono">// Available Now</div>
+        <p>My debut sci-fi novel. A story I worked on for over a decade and am proud to finally be releasing.</p>
         <a href="#" class="btn btn-primary mono">Pre-order / details</a>
       </div>
     </div>
@@ -622,6 +658,44 @@
     const active = document.querySelector('.vid-panel.active');
     if(active) loadPanel(active);
   });
+
+  // ---- projects carousel ----
+  (function(){
+    const track = document.getElementById('proj-track');
+    if(!track) return;
+    const prev = document.querySelector('.proj-prev');
+    const next = document.querySelector('.proj-next');
+    let index = 0;
+
+    function perView(){
+      const w = window.innerWidth;
+      if(w <= 520) return 1;
+      if(w <= 900) return 2;
+      return 4;
+    }
+    function maxIndex(){
+      const total = track.querySelectorAll('.card').length;
+      return Math.max(0, total - perView());
+    }
+    function apply(){
+      const card = track.querySelector('.card');
+      if(!card) return;
+      const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || 16) || 16;
+      const step = card.getBoundingClientRect().width + gap;
+      track.style.transform = 'translateX(' + (-index * step) + 'px)';
+      prev.classList.toggle('disabled', index <= 0);
+      next.classList.toggle('disabled', index >= maxIndex());
+    }
+    window.projSlide = function(dir){
+      index = Math.min(maxIndex(), Math.max(0, index + dir));
+      apply();
+    };
+    window.addEventListener('resize', function(){
+      index = Math.min(index, maxIndex());
+      apply();
+    });
+    setTimeout(apply, 60);
+  })();
 
   // ---- footer social dropdowns ----
   function toggleSocial(btn){
