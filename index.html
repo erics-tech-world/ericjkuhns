@@ -424,7 +424,7 @@
   }
 
   function render(panel, videos){
-    if(!videos.length){ return renderError(panel); }
+    if(!videos.length){ return renderFallback(panel); }
     const label = panel.getAttribute('data-label');
     const pl = panel.getAttribute('data-playlist');
     const feat = videos[0];
@@ -531,12 +531,13 @@
     setTimeout(update, 60);
   }
 
-  function renderError(panel){
+  function renderFallback(panel){
     const pl = panel.getAttribute('data-playlist');
+    const label = panel.getAttribute('data-label') || '';
     panel.innerHTML =
-      '<div class="vid-error mono">Couldn\'t load the live feed right now. '+
-      '<a href="https://www.youtube.com/playlist?list='+pl+'" target="_blank" rel="noopener" style="color:var(--neon)">Open the playlist on YouTube →</a></div>'+
-      '<div class="embed" style="margin-top:14px"><iframe src="https://www.youtube.com/embed/videoseries?list='+pl+'" title="playlist" allow="encrypted-media;picture-in-picture" allowfullscreen></iframe></div>';
+      '<div class="embed"><iframe src="https://www.youtube.com/embed/videoseries?list='+pl+'" title="'+esc(label)+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>'+
+      '<div class="vid-cap mono">▸ Newest upload plays first. '+
+      '<a href="https://www.youtube.com/playlist?list='+pl+'" target="_blank" rel="noopener">See all videos on YouTube →</a></div>';
   }
 
   function loadPanel(panel){
@@ -544,19 +545,45 @@
     panel.dataset.loading = "1";
     const pl = panel.getAttribute('data-playlist');
     const url = PROXY + encodeURIComponent(feedUrl(pl));
-    fetch(url).then(function(r){ if(!r.ok) throw new Error('bad'); return r.text(); })
+
+    // Fail fast: if the feed doesn't answer in 6s, fall back to the embed.
+    let done = false;
+    const controller = ("AbortController" in window) ? new AbortController() : null;
+    const timer = setTimeout(function(){
+      if(done) return;
+      done = true;
+      if(controller) controller.abort();
+      renderFallback(panel);
+      panel.dataset.loaded = "1";
+      panel.dataset.loading = "0";
+    }, 6000);
+
+    fetch(url, controller ? {signal:controller.signal} : {})
+      .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.text(); })
       .then(function(xml){
+        if(done) return;
         const doc = new DOMParser().parseFromString(xml, "text/xml");
+        // if XML failed to parse, bail to fallback
+        if(doc.getElementsByTagName('parsererror').length){ throw new Error('parse'); }
         const entries = Array.from(doc.getElementsByTagName('entry'));
         const vids = entries.map(function(e){
           const idEl = e.getElementsByTagName('yt:videoId')[0] || e.getElementsByTagName('videoId')[0];
           const tEl = e.getElementsByTagName('title')[0];
           return { id: idEl ? idEl.textContent : null, title: tEl ? tEl.textContent : '' };
         }).filter(function(v){ return v.id; });
+        if(!vids.length){ throw new Error('empty'); }
+        done = true;
+        clearTimeout(timer);
         render(panel, vids);
         panel.dataset.loaded = "1";
       })
-      .catch(function(){ renderError(panel); })
+      .catch(function(){
+        if(done) return;
+        done = true;
+        clearTimeout(timer);
+        renderFallback(panel);
+        panel.dataset.loaded = "1";
+      })
       .finally(function(){ panel.dataset.loading = "0"; });
   }
 
