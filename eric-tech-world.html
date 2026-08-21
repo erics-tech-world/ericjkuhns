@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eric's Tech World | Eric J. Kuhns</title>
+<meta name="description" content="Eric's Tech World: robot reviews, future tech, articles, and the robot shop. The companion site to the Eric's Tech World YouTube channel.">
+<style>
+  :root{
+    --bg:#0a0c0a;--panel:#101410;--panel2:#0d110d;--ink:#f4f6f4;--muted:#8a938c;
+    --line:#1e241e;--neon:#39ff64;--neon-dim:#1f8a37;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .mono{font-family:'JetBrains Mono','SF Mono',ui-monospace,'Courier New',monospace}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0,rgba(0,0,0,0) 2px,rgba(0,0,0,.14) 3px,rgba(0,0,0,0) 4px);mix-blend-mode:overlay;opacity:.5}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(10,12,10,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .logo{font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.5px;font-size:15px}
+  .logo-caret{color:var(--neon);animation:blink 1.05s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .nav-links{display:flex;gap:28px;font-size:13px;letter-spacing:.5px;text-transform:uppercase}
+  .nav-links a{color:var(--muted);transition:color .2s}
+  .nav-links a:hover{color:var(--neon)}
+  .nav-links a.active{color:var(--neon)}
+  .menu-btn{display:none;background:none;border:none;color:var(--neon);font-size:22px;cursor:pointer;font-family:monospace}
+
+  /* hero */
+  .hero{padding:80px 0 64px;border-bottom:1px solid var(--line);position:relative}
+  .prompt{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--neon-dim);letter-spacing:1px;margin-bottom:22px}
+  .prompt .path{color:var(--muted)}
+  .hero .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:1px;margin-bottom:14px;text-transform:uppercase}
+  .hero h1{font-size:clamp(38px,7vw,72px);line-height:1.02;font-weight:800;letter-spacing:-2px;margin-bottom:20px}
+  .hero h1 .cursor{display:inline-block;width:.5ch;height:.9em;background:var(--neon);margin-left:6px;transform:translateY(6px);animation:blink 1.05s steps(1) infinite}
+  .hero p.lead{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:600px;margin-bottom:32px}
+  .hero p.lead em{color:var(--neon);font-style:normal}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.5px;padding:13px 22px;border:1px solid var(--line);border-radius:2px;transition:all .2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+  .btn-primary{background:var(--neon);color:#04160a;border-color:var(--neon);font-weight:700}
+  .btn-primary:hover{box-shadow:0 0 24px rgba(57,255,100,.4)}
+  .btn-ghost{color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--neon);color:var(--neon)}
+
+  section.blk{padding:72px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:38px}
+  .sec-head .tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--neon);letter-spacing:1px}
+  .sec-head h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-1px}
+  .sec-head .line{flex:1;height:1px;background:var(--line)}
+
+  /* video (reused from home) */
+  .vid-loading,.vid-error{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);padding:40px 0;text-align:center}
+  .vid-error b{color:var(--neon)}
+  .vid-feature{margin-bottom:16px}
+  .embed{position:relative;width:100%;aspect-ratio:16/9;background:#050705;border:1px solid var(--line);border-radius:3px;overflow:hidden;z-index:10000}
+  .embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .vid-thumb{position:relative;width:100%;aspect-ratio:16/9;border:1px solid var(--line);border-radius:3px;overflow:hidden;cursor:pointer;background-size:cover;background-position:center;background-color:#050705}
+  .vid-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.55));transition:background .2s}
+  .vid-thumb:hover::after{background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.55))}
+  .vid-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:64px;height:64px;border-radius:50%;background:var(--neon);display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 0 30px rgba(57,255,100,.35)}
+  .vid-thumb:hover .vid-play{transform:translate(-50%,-50%) scale(1.08);box-shadow:0 0 42px rgba(57,255,100,.55)}
+  .vid-play svg{width:26px;height:26px;fill:#04160a;margin-left:3px}
+  .vid-title{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px;font-size:16px;font-weight:700;line-height:1.3}
+  .vid-feature .vid-sub{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:10px}
+  .vid-feature .vid-sub b{color:var(--neon)}
+  .vid-carousel{display:flex;align-items:stretch;gap:10px;margin-top:16px}
+  .car-viewport{flex:1;overflow:hidden}
+  .car-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
+  .car-track::-webkit-scrollbar{display:none}
+  .car-item{flex:0 0 calc((100% - 24px) / 3);scroll-snap-align:start}
+  .vid-mini{background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;cursor:pointer;transition:all .2s;display:block}
+  .vid-mini:hover{border-color:var(--neon-dim);transform:translateY(-2px)}
+  .vid-mini .m-thumb{aspect-ratio:16/9;background-size:cover;background-position:center;background-color:#050705;position:relative}
+  .vid-mini .m-thumb::after{content:"▶";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--neon);font-size:16px;opacity:0;transition:opacity .2s}
+  .vid-mini:hover .m-thumb::after{opacity:1}
+  .vid-mini .m-title{padding:10px 12px;font-size:12px;line-height:1.35;color:var(--ink)}
+  .car-arrow{flex:0 0 40px;align-self:center;height:64px;width:40px;background:var(--panel);border:1px solid var(--line);border-radius:3px;color:var(--neon);font-size:26px;line-height:1;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+  .car-arrow:hover{border-color:var(--neon);box-shadow:0 0 18px rgba(57,255,100,.25)}
+  .car-arrow.disabled{opacity:.25;pointer-events:none}
+  .vid-all .all-thumb{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d130d,#060806)}
+  .vid-all .all-thumb::after{content:none}
+  .vid-all .all-thumb span{color:var(--neon);font-size:30px;transition:transform .2s}
+  .vid-all:hover .all-thumb span{transform:translateX(4px)}
+  .vid-all .m-title{color:var(--neon);font-family:'JetBrains Mono',monospace}
+  .vid-cap{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:14px}
+  .vid-cap b{color:var(--neon)}
+
+  /* articles carousel */
+  .art-carousel{display:flex;align-items:stretch;gap:10px}
+  .art-viewport{flex:1;overflow:hidden}
+  .art-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
+  .art-track::-webkit-scrollbar{display:none}
+  .art-card{flex:0 0 calc((100% - 32px) / 3);scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;transition:all .2s;display:flex;flex-direction:column}
+  .art-card:hover{border-color:var(--neon-dim);transform:translateY(-3px)}
+  .art-card:hover h3{color:var(--neon)}
+  .art-thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#0d130d,#060806);border-bottom:1px solid var(--line);background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon-dim)}
+  .art-body{padding:18px;display:flex;flex-direction:column;flex:1}
+  .art-body .date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+  .art-body h3{font-size:16px;font-weight:700;margin:8px 0;line-height:1.3;transition:color .2s}
+  .art-body .cat{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--neon);border:1px solid var(--line);padding:3px 9px;border-radius:2px;display:inline-block;align-self:flex-start;margin-top:auto}
+  .art-loading{font-family:'JetBrains Mono',monospace;color:var(--muted);padding:20px 0}
+  @media(max-width:820px){.car-item{flex:0 0 calc((100% - 12px) / 2)}.art-card{flex:0 0 calc((100% - 16px) / 2)}}
+  @media(max-width:560px){.car-item{flex:0 0 85%}.art-card{flex:0 0 85%}.car-arrow,.art-arrow{display:none}}
+
+  /* shop */
+  .shop{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
+  .shop-art{aspect-ratio:4/3;background:linear-gradient(135deg,#0d130d,#060806);border:1px solid var(--neon-dim);border-radius:4px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(57,255,100,.08);overflow:hidden}
+  .shop-art span{font-size:64px;filter:grayscale(.2)}
+  .shop-info h3{font-size:clamp(22px,3vw,30px);font-weight:800;margin-bottom:12px;letter-spacing:-.5px}
+  .shop-info p{color:var(--muted);margin-bottom:14px;max-width:460px}
+  .shop-info .note{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:22px}
+
+  footer{padding:48px 0 40px}
+  .foot-grid{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px}
+  .foot-note{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
+  .foot-note b{color:var(--neon)}
+  .foot-back{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted)}
+  .foot-back:hover{color:var(--neon)}
+
+  @media(max-width:820px){
+    .shop{grid-template-columns:1fr;gap:24px}
+    .nav-links{display:none}
+    .nav-links.open{display:flex;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:var(--panel);padding:20px 24px;gap:18px;border-bottom:1px solid var(--line)}
+    .menu-btn{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo">ericjkuhns<span class="logo-caret">_</span></a>
+    <button class="menu-btn" onclick="document.getElementById('nl').classList.toggle('open')">[≡]</button>
+    <div class="nav-links" id="nl">
+      <a href="index.html#projects">Projects</a>
+      <a href="eric-tech-world.html" class="active">Tech World</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="index.html#book">Book</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="prompt mono"><span class="path">~/eric</span> $ cd ./eric-tech-world</div>
+    <div class="eyebrow mono">// official companion site to my YouTube</div>
+    <h1>Eric's Tech World<span class="cursor"></span></h1>
+    <p class="lead">Long-term, real-world reviews of <em>desktop robots</em>, <em>future tech</em>, drones, e-bikes, and the gear that makes adventure better.</p>
+    <div class="cta-row">
+      <a href="https://www.youtube.com/@ericstechworld" target="_blank" rel="noopener" class="btn btn-primary mono">▶ Subscribe on YouTube</a>
+      <a href="#shop" class="btn btn-ghost mono">Robot shop</a>
+    </div>
+  </div>
+</header>
+
+<section class="blk" id="videos">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag mono">01</span>
+      <h2>Latest videos</h2>
+      <div class="line"></div>
+    </div>
+    <div class="vid-panel" id="vid-etw" data-playlist="PLC_X1O0yNkfTPBVDezefBILpkI6IDSnrk" data-label="Eric's Tech World">
+      <div class="vid-loading mono">Loading latest videos…</div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="articles">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag mono">02</span>
+      <h2>Tech &amp; robot articles</h2>
+      <div class="line"></div>
+    </div>
+    <div class="art-carousel">
+      <button class="car-arrow art-prev disabled" aria-label="Previous" onclick="artSlide(-1)">‹</button>
+      <div class="art-viewport">
+        <div class="art-track" id="art-track"><div class="art-loading mono">Loading articles…</div></div>
+      </div>
+      <button class="car-arrow art-next" aria-label="More" onclick="artSlide(1)">›</button>
+    </div>
+    <div style="margin-top:24px">
+      <a href="blog/index.html" class="btn btn-ghost mono">Read all posts →</a>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="shop">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag mono">03</span>
+      <h2>The robot shop</h2>
+      <div class="line"></div>
+    </div>
+    <div class="shop">
+      <div class="shop-art"><span>🤖</span></div>
+      <div class="shop-info">
+        <h3>Buy the robots I've reviewed</h3>
+        <p>Want a personal robot or tech product I featured on Eric's Tech World? I sell many of the units I review over on my Mercari shop.</p>
+        <div class="note mono">// note: robots ship through Mercari, not directly from this site</div>
+        <a href="https://www.mercari.com/u/ericstechworld" target="_blank" rel="noopener" class="btn btn-primary mono">Visit my Mercari shop →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <a href="index.html" class="foot-back mono">← back to ericjkuhns.com</a>
+    <div class="foot-note mono">Copyright © 2015 - 2026 Eric J. Kuhns / Eric's Tech World LLC</div>
+  </div>
+</footer>
+
+<script>
+  // ---- shared helpers ----
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function thumb(id,q){return "https://i.ytimg.com/vi/"+id+"/"+(q||"hqdefault")+".jpg";}
+  const YT_PROXY = "https://youtube-feed.silent-hall-684c.workers.dev/?url=";
+  const BLOG_ID = "ericjkuhns.blogspot.com";
+
+  // ================= VIDEOS =================
+  function feedUrl(pl){ return "https://www.youtube.com/feeds/videos.xml?playlist_id=" + pl; }
+  function playFeature(el, id, title){
+    el.innerHTML = '<div class="embed"><iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1" title="'+esc(title)+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>';
+  }
+  function renderVideos(panel, videos){
+    if(!videos.length){ return videoFallback(panel); }
+    const label = panel.getAttribute('data-label');
+    const pl = panel.getAttribute('data-playlist');
+    const feat = videos[0];
+    const rest = videos.slice(1);
+    const wrap = document.createElement('div');
+    const f = document.createElement('div'); f.className='vid-feature';
+    const ft = document.createElement('div'); ft.className='vid-thumb';
+    ft.style.backgroundImage = "url('"+thumb(feat.id,'maxresdefault')+"'),url('"+thumb(feat.id,'hqdefault')+"')";
+    ft.innerHTML = '<div class="vid-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="vid-title">'+esc(feat.title)+'</div>';
+    ft.onclick = function(){ playFeature(f, feat.id, feat.title); };
+    f.appendChild(ft);
+    const sub = document.createElement('div'); sub.className='vid-sub mono';
+    sub.innerHTML = '▸ Latest from <b>'+esc(label)+'</b>'; f.appendChild(sub);
+    wrap.appendChild(f);
+    const car = document.createElement('div'); car.className='vid-carousel';
+    const prev = document.createElement('button'); prev.className='car-arrow'; prev.innerHTML='‹'; prev.setAttribute('aria-label','Previous');
+    const next = document.createElement('button'); next.className='car-arrow'; next.innerHTML='›'; next.setAttribute('aria-label','More');
+    const vp = document.createElement('div'); vp.className='car-viewport';
+    const track = document.createElement('div'); track.className='car-track';
+    rest.forEach(function(v){
+      const m = document.createElement('div'); m.className='vid-mini car-item';
+      m.innerHTML = '<div class="m-thumb" style="background-image:url(\''+thumb(v.id,'mqdefault')+'\')"></div><div class="m-title">'+esc(v.title)+'</div>';
+      m.onclick = function(){ playFeature(f, v.id, v.title); window.scrollTo({top:f.getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'}); };
+      track.appendChild(m);
+    });
+    const all = document.createElement('a'); all.className='vid-mini car-item vid-all';
+    all.href="https://www.youtube.com/playlist?list="+pl; all.target="_blank"; all.rel="noopener";
+    all.innerHTML='<div class="m-thumb all-thumb"><span>▸</span></div><div class="m-title">See all videos on YouTube</div>';
+    track.appendChild(all);
+    vp.appendChild(track); car.appendChild(prev); car.appendChild(vp); car.appendChild(next);
+    wrap.appendChild(car);
+    const cap = document.createElement('div'); cap.className='vid-cap mono'; cap.innerHTML='Auto-updates from the channel playlist.'; wrap.appendChild(cap);
+    panel.innerHTML=''; panel.appendChild(wrap);
+    setupCar(track, prev, next);
+  }
+  function setupCar(track, prev, next){
+    function step(){ const f=track.querySelector('.car-item'); if(!f) return 0; const gap=parseFloat(getComputedStyle(track).columnGap||getComputedStyle(track).gap||0)||0; return f.getBoundingClientRect().width+gap; }
+    function per(){ return Math.max(1, Math.round(track.parentElement.getBoundingClientRect().width/step())); }
+    function maxS(){ return track.scrollWidth - track.parentElement.getBoundingClientRect().width; }
+    function upd(){ const x=track.scrollLeft; prev.classList.toggle('disabled',x<=2); next.classList.toggle('disabled',x>=maxS()-2); }
+    prev.onclick=function(){ track.scrollBy({left:-step()*per(),behavior:'smooth'}); };
+    next.onclick=function(){ track.scrollBy({left:step()*per(),behavior:'smooth'}); };
+    track.addEventListener('scroll',upd,{passive:true}); window.addEventListener('resize',upd); setTimeout(upd,60);
+  }
+  function videoFallback(panel){
+    const pl = panel.getAttribute('data-playlist');
+    panel.innerHTML = '<div class="embed"><iframe src="https://www.youtube.com/embed/videoseries?list='+pl+'" title="playlist" allow="encrypted-media;picture-in-picture" allowfullscreen></iframe></div><div class="vid-cap mono">▸ Newest upload plays first. <a href="https://www.youtube.com/playlist?list='+pl+'" target="_blank" rel="noopener" style="color:var(--neon)">See all videos on YouTube →</a></div>';
+  }
+  function loadVideos(panel){
+    const pl = panel.getAttribute('data-playlist');
+    const url = YT_PROXY + encodeURIComponent(feedUrl(pl));
+    let done=false;
+    const controller = ("AbortController" in window) ? new AbortController() : null;
+    const timer = setTimeout(function(){ if(done)return; done=true; if(controller)controller.abort(); videoFallback(panel); }, 6000);
+    fetch(url, controller?{signal:controller.signal}:{})
+      .then(function(r){ if(!r.ok) throw new Error('http'); return r.text(); })
+      .then(function(xml){
+        if(done) return;
+        const doc = new DOMParser().parseFromString(xml,"text/xml");
+        if(doc.getElementsByTagName('parsererror').length) throw new Error('parse');
+        const entries = Array.from(doc.getElementsByTagName('entry'));
+        const vids = entries.map(function(e){ const idEl=e.getElementsByTagName('yt:videoId')[0]||e.getElementsByTagName('videoId')[0]; const tEl=e.getElementsByTagName('title')[0]; return {id:idEl?idEl.textContent:null,title:tEl?tEl.textContent:''}; }).filter(function(v){return v.id;});
+        if(!vids.length) throw new Error('empty');
+        done=true; clearTimeout(timer); renderVideos(panel, vids);
+      })
+      .catch(function(){ if(done)return; done=true; clearTimeout(timer); videoFallback(panel); });
+  }
+
+  // ================= ARTICLES (Blogger tech label) =================
+  function firstImage(html){ const m=(html||'').match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:''; }
+  function postSlug(entry){ let alt=(entry.link||[]).find(function(l){return l.rel==='alternate';}); let href=alt?alt.href:''; let m=href.match(/\/(\d{4})\/(\d{2})\/([^\/]+)\.html/); return m?(m[1]+'/'+m[2]+'/'+m[3]):encodeURIComponent(entry.id.$t); }
+  function fmtDate(iso){ try{ return new Date(iso).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }catch(e){ return ''; } }
+  const artTrack = document.getElementById('art-track');
+  const CB = 'techArticles_' + Math.floor(Math.random()*1e9);
+  window[CB] = function(json){
+    const entries = (json.feed && json.feed.entry) ? json.feed.entry : [];
+    if(!entries.length){ artTrack.innerHTML = '<div class="art-loading mono">No tech articles yet.</div>'; return; }
+    artTrack.innerHTML = '';
+    entries.forEach(function(e){
+      const title = e.title ? e.title.$t : 'Untitled';
+      const content = (e.content && e.content.$t) || (e.summary && e.summary.$t) || '';
+      const date = e.published ? e.published.$t : '';
+      const img = firstImage(content);
+      const cats = (e.category||[]).map(function(c){ return c.term; });
+      const slug = postSlug(e);
+      const a = document.createElement('a');
+      a.className='art-card'; a.href='blog/post.html?p='+encodeURIComponent(slug);
+      const thumbStyle = img ? (' style="background-image:url(\''+img+'\')"') : '';
+      const thumbText = img ? '' : '[ tech ]';
+      a.innerHTML = '<div class="art-thumb"'+thumbStyle+'>'+thumbText+'</div>'+
+        '<div class="art-body"><span class="date mono">'+fmtDate(date)+'</span><h3>'+esc(title)+'</h3>'+
+        (cats.length?'<span class="cat mono">'+esc(cats[0])+'</span>':'')+'</div>';
+      artTrack.appendChild(a);
+    });
+    setupArt();
+  };
+  let artTrackEl;
+  function setupArt(){ artTrackEl = artTrack; artUpd(); }
+  function artUpd(){
+    const prev=document.querySelector('.art-prev'), next=document.querySelector('.art-next');
+    if(!artTrack) return;
+    const x=artTrack.scrollLeft, maxS=artTrack.scrollWidth-artTrack.parentElement.getBoundingClientRect().width;
+    prev.classList.toggle('disabled',x<=2); next.classList.toggle('disabled',x>=maxS-2);
+  }
+  window.artSlide = function(dir){
+    const f=artTrack.querySelector('.art-card'); if(!f) return;
+    const gap=parseFloat(getComputedStyle(artTrack).columnGap||getComputedStyle(artTrack).gap||16)||16;
+    const step=f.getBoundingClientRect().width+gap;
+    const per=Math.max(1,Math.round(artTrack.parentElement.getBoundingClientRect().width/step));
+    artTrack.scrollBy({left:dir*step*per,behavior:'smooth'});
+  };
+  if(artTrack){ artTrack.addEventListener('scroll',artUpd,{passive:true}); window.addEventListener('resize',artUpd); }
+
+  // ---- kick off ----
+  document.addEventListener('DOMContentLoaded', function(){
+    loadVideos(document.getElementById('vid-etw'));
+    const s = document.createElement('script');
+    s.src = 'https://'+BLOG_ID+'/feeds/posts/default/-/tech?alt=json-in-script&max-results=15&callback='+CB;
+    s.onerror = function(){ if(artTrack) artTrack.innerHTML='<div class="art-loading mono">Couldn\'t load articles right now.</div>'; };
+    document.body.appendChild(s);
+  });
+</script>
+
+</body>
+</html>
