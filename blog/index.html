@@ -95,7 +95,6 @@
 
 <header class="head">
   <div class="wrap">
-    <div class="prompt mono"><span class="path">~/eric</span> $ cat ./blog/about.txt</div>
     <h1 class="typed"><span id="typed-title"></span><span class="type-caret">_</span></h1>
     <p>Welcome to my blog where I cover tech, adventure/travel, skateboarding, pop culture, nostalgia, and anything else that pops into my head.</p>
     <div class="tools">
@@ -211,7 +210,8 @@
       try{ delete window[CB]; }catch(e){}
     };
     const s = document.createElement('script');
-    s.src = 'https://'+BLOG_ID+'/feeds/posts/default?alt=json-in-script&max-results='+PAGE+'&start-index='+startIndex+'&callback='+CB;
+    const labelPath = (typeof BLOG_FILTER !== 'undefined' && BLOG_FILTER) ? ('/-/' + encodeURIComponent(BLOG_FILTER)) : '';
+    s.src = 'https://'+BLOG_ID+'/feeds/posts/default'+labelPath+'?alt=json-in-script&max-results='+PAGE+'&start-index='+startIndex+'&callback='+CB;
     s.onerror = function(){
       fetching=false; moreBtn.classList.remove('loading');
       if(allLoaded.length===0){ postsEl.innerHTML='<div class="empty mono">Couldn\'t load posts right now.</div>'; }
