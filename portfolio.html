@@ -42,8 +42,9 @@
 
   .hero{padding:90px 0 70px;border-bottom:1px solid var(--line)}
   .hero .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--neon-dim);letter-spacing:2px;margin-bottom:20px;text-transform:uppercase}
-  .hero h1{font-size:clamp(32px,5.4vw,60px);line-height:1.08;font-weight:800;letter-spacing:-1.5px;margin-bottom:24px;max-width:900px}
+  .hero h1{font-size:clamp(32px,5.4vw,60px);line-height:1.08;font-weight:800;letter-spacing:-1.5px;margin-bottom:24px;max-width:900px;min-height:1.08em}
   .hero h1 .hl{color:var(--neon)}
+  .hero-cursor{display:inline-block;width:.55ch;height:.92em;background:var(--neon);margin-left:4px;transform:translateY(3px);animation:blink 1.05s steps(1) infinite}
   .hero .sub{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:600px;margin-bottom:34px}
   .cta-row{display:flex;gap:14px;flex-wrap:wrap}
   .btn{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.5px;padding:13px 22px;border:1px solid var(--line);border-radius:2px;transition:all .2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
@@ -60,7 +61,7 @@
   section.blk{padding:70px 0;border-bottom:1px solid var(--line)}
   .sec-head{margin-bottom:14px}
   .sec-head h2{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-1px}
-  .sec-head p{color:var(--muted);margin-top:12px;max-width:620px}
+  .sec-head p{color:var(--muted);margin-top:12px;max-width:680px}
   .sec-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon-dim);margin:14px 0 0;padding:10px 14px;border:1px solid var(--line);border-radius:3px;background:var(--panel2);display:inline-block}
 
   /* category carousel */
@@ -77,7 +78,7 @@
   .proj{background:var(--panel);border:1px solid var(--line);border-radius:4px;overflow:hidden;transition:all .22s;display:flex;flex-direction:column;height:100%}
   .proj:hover{border-color:var(--neon-dim);transform:translateY(-3px)}
   .proj-media{aspect-ratio:16/10;position:relative;background:#050705;border-bottom:1px solid var(--line);overflow:hidden}
-  .proj-media img{width:100%;height:100%;object-fit:cover;display:block}
+  .proj-media img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
   .proj-media .embed{position:absolute;inset:0}
   .proj-media .embed iframe{width:100%;height:100%;border:0}
   .proj-media.clickable{cursor:pointer}
@@ -184,7 +185,7 @@
 <header class="hero">
   <div class="wrap">
     <div class="eyebrow mono">// professional portfolio</div>
-    <h1>Whether I'm building a website, filming a video, or designing an ad, <span class="hl">storytelling comes first.</span></h1>
+    <h1 id="hero-title"><span id="hero-typed"></span><span class="hero-cursor" id="hero-cursor"></span></h1>
     <p class="sub">I'm Eric, a creator and digital marketer with 15+ years turning ideas into content that connects. Video, web, ads, design, and copy for brands big and small.</p>
     <div class="cta-row">
       <a href="index.html#contact" class="btn btn-primary mono">Let's work together</a>
@@ -338,7 +339,7 @@
     <div class="sec-head">
       <h2>Copy &amp; Writing</h2>
       <p>Articles, ad copy, SOPs, email campaigns, and ghostwritten content that gets read and remembered.</p>
-      <div class="sec-note mono">One sample per brand. I write multiple articles per month for several of these clients.</div>
+      <div class="sec-note mono">One sample per brand. I've written multiple articles per month for these clients and others. (More samples available upon request.)</div>
     </div>
     <div class="linklist">
       <a class="linkrow" href="https://fx5.com/acsa-2025-a-recap-from-the-expo-floor/" target="_blank" rel="noopener">
@@ -380,8 +381,8 @@
 
 <section class="cta-band">
   <div class="wrap">
-    <h2>Let's build something <span class="hl">worth remembering.</span></h2>
-    <p>Whether it's a website, a campaign, a video, or all of it, I'd love to hear what you're working on.</p>
+    <h2>Let's tell your story <span class="hl">together.</span></h2>
+    <p>Whether it's a website, a campaign, a video, or all of it, I'd love to hear what you're working on and how I can help.</p>
     <div class="cta-row">
       <a href="index.html#contact" class="btn btn-primary mono">Let's work together</a>
       <a href="https://www.linkedin.com/in/ericjkuhns/" target="_blank" rel="noopener" class="btn btn-ghost mono">Connect on LinkedIn ↗</a>
@@ -419,6 +420,35 @@
 </div>
 
 <script>
+  // hero typewriter
+  (function(){
+    const typed = document.getElementById('hero-typed');
+    const cursor = document.getElementById('hero-cursor');
+    if(!typed) return;
+    const part1 = "Whether I'm building a website, filming a video, or designing an ad, ";
+    const part2 = "storytelling comes first.";
+    const full = part1 + part2;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function render(n){
+      if(n <= part1.length){
+        typed.innerHTML = escapeHtml(full.slice(0, n));
+      } else {
+        typed.innerHTML = escapeHtml(part1) + '<span class="hl">' + escapeHtml(full.slice(part1.length, n)) + '</span>';
+      }
+    }
+    function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    if(reduce){ render(full.length); return; }
+    let i = 0;
+    (function tick(){
+      if(i <= full.length){
+        render(i);
+        i++;
+        // slight variance for a natural typing feel
+        setTimeout(tick, i < part1.length ? 26 : 42);
+      }
+    })();
+  })();
+
   // nav dropdown
   function toggleNav(btn){
     const drop = btn.closest('.nav-drop');
