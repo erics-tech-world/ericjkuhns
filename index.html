@@ -47,9 +47,40 @@
   .logo{font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.5px;font-size:15px}
   .logo b{color:var(--neon)}
   .logo-caret{color:var(--neon);animation:blink 1.05s steps(1) infinite}
-  .nav-links{display:flex;gap:28px;font-size:13px;letter-spacing:.5px;text-transform:uppercase}
+  .nav-links{display:flex;gap:28px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;align-items:center}
   .nav-links a{color:var(--muted);transition:color .2s}
   .nav-links a:hover{color:var(--neon)}
+  /* projects dropdown */
+  .nav-drop{position:relative}
+  .nav-drop-btn{
+    font-family:inherit;font-size:13px;letter-spacing:.5px;text-transform:uppercase;
+    background:none;border:none;color:var(--muted);cursor:pointer;padding:0;
+    display:inline-flex;align-items:center;gap:6px;transition:color .2s;
+  }
+  .nav-drop-btn:hover{color:var(--neon)}
+  .nav-arrow{font-size:9px;color:var(--neon);transition:transform .2s}
+  .nav-drop.open .nav-drop-btn{color:var(--neon)}
+  .nav-drop.open .nav-arrow{transform:rotate(180deg)}
+  .nav-menu{
+    position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-6px);
+    min-width:210px;background:var(--panel);border:1px solid var(--neon-dim);border-radius:4px;
+    padding:8px;display:none;flex-direction:column;gap:2px;z-index:300;
+    box-shadow:0 8px 40px rgba(0,0,0,.6);
+  }
+  .nav-drop.open .nav-menu{display:flex;animation:navDrop .18s ease forwards}
+  @keyframes navDrop{to{transform:translateX(-50%) translateY(0);opacity:1}}
+  .nav-menu::before{
+    content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);
+    width:10px;height:10px;background:var(--panel);border-left:1px solid var(--neon-dim);border-top:1px solid var(--neon-dim);
+  }
+  .nav-menu a{
+    font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:none;letter-spacing:0;
+    color:var(--muted);padding:9px 12px;border-radius:3px;transition:all .15s;white-space:nowrap;
+    display:flex;align-items:center;gap:8px;
+  }
+  .nav-menu a::before{content:"▸";color:var(--neon-dim);flex:0 0 auto}
+  .nav-menu a:hover{background:var(--panel2,#0d110d);color:var(--neon)}
+  .nav-menu a:hover::before{color:var(--neon)}
   .menu-btn{display:none;background:none;border:none;color:var(--neon);font-size:22px;cursor:pointer;font-family:monospace}
 
   .hero{padding:88px 0 72px;border-bottom:1px solid var(--line);position:relative}
@@ -280,8 +311,14 @@
     .book{grid-template-columns:1fr;gap:28px}
     .book-cover{max-width:240px;margin:0 auto}
     .nav-links{display:none}
-    .nav-links.open{display:flex;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:var(--panel);padding:20px 24px;gap:18px;border-bottom:1px solid var(--line)}
+    .nav-links.open{display:flex;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:var(--panel);padding:20px 24px;gap:18px;border-bottom:1px solid var(--line);align-items:flex-start}
     .menu-btn{display:block}
+    /* dropdown expands inline on mobile */
+    .nav-drop{width:100%}
+    .nav-menu{position:static;transform:none;min-width:0;width:100%;border:none;box-shadow:none;padding:10px 0 0 14px;background:none}
+    .nav-drop.open .nav-menu{animation:none}
+    .nav-menu::before{display:none}
+    .nav-menu a{padding:8px 0}
   }
   @media(max-width:520px){
     .grid{grid-template-columns:1fr}
@@ -297,12 +334,20 @@
     <a href="#" class="logo">ericjkuhns<span class="logo-caret">_</span></a>
     <button class="menu-btn" onclick="document.getElementById('nl').classList.toggle('open')">[≡]</button>
     <div class="nav-links" id="nl">
-      <a href="#projects">Projects</a>
+      <div class="nav-drop">
+        <button class="nav-drop-btn" onclick="toggleNav(this)">Projects <span class="nav-arrow">▾</span></button>
+        <div class="nav-menu">
+          <a href="eric-tech-world.html">Eric's Tech World</a>
+          <a href="#">Books</a>
+          <a href="#">Eric Skateboards</a>
+          <a href="#">Acting</a>
+          <a href="#">Music</a>
+        </div>
+      </div>
       <a href="#videos">Videos</a>
-      <a href="#skating">Skating</a>
-      <a href="#music">Music</a>
       <a href="#blog">Blog</a>
       <a href="#book">Book</a>
+      <a href="#">Portfolio</a>
       <a href="#contact">Contact</a>
     </div>
   </div>
@@ -339,7 +384,7 @@
           </a>
           <div class="card">
             <img class="card-img" src="https://i.imgur.com/YrkTIUa.png" alt="Writing Projects" onerror="this.style.display='none'">
-            <div class="k mono">// Writing Projects</div>
+            <div class="k mono">// Books</div>
             <h3>Sci-Fi Writing</h3>
             <p>Original worlds and stories, including my debut novel <em style="color:var(--neon);font-style:normal">Spacecosis</em>.</p>
           </div>
@@ -397,7 +442,7 @@
   <div class="wrap">
     <div class="sec-head">
       <span class="tag mono">03</span>
-      <h2>From the blog</h2>
+      <h2>Blog</h2>
       <div class="line"></div>
     </div>
     <div class="posts" id="home-posts">
@@ -413,7 +458,7 @@
   <div class="wrap">
     <div class="sec-head">
       <span class="tag mono">04</span>
-      <h2>The novel</h2>
+      <h2>My Novel</h2>
       <div class="line"></div>
     </div>
     <div class="book">
@@ -463,6 +508,7 @@
       </div>
     </div>
     <div class="foot-note mono">
+      <a href="privacy-policy.html" style="color:var(--muted)">Privacy Policy</a> · <a href="disclaimer.html" style="color:var(--muted)">Disclaimer</a><br><br>
       Copyright © 2015 - 2026 Eric J. Kuhns / Eric's Tech World LLC
     </div>
   </div>
@@ -660,6 +706,19 @@
   document.addEventListener('DOMContentLoaded', function(){
     const active = document.querySelector('.vid-panel.active');
     if(active) loadPanel(active);
+  });
+
+  // ---- projects nav dropdown ----
+  function toggleNav(btn){
+    const drop = btn.closest('.nav-drop');
+    const isOpen = drop.classList.contains('open');
+    document.querySelectorAll('.nav-drop.open').forEach(function(d){ d.classList.remove('open'); });
+    if(!isOpen) drop.classList.add('open');
+  }
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.nav-drop')){
+      document.querySelectorAll('.nav-drop.open').forEach(function(d){ d.classList.remove('open'); });
+    }
   });
 
   // ---- projects carousel ----
