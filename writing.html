@@ -180,14 +180,9 @@
       }
     }
     function makeScenery(){
-      // spiral galaxy in a back corner
+      // spiral galaxy in a back corner (the "rip in space")
       galaxy = { x: W*0.82, y: H*0.28, r: Math.min(W,H)*0.34, rot: 0 };
-      // a few planets at fixed-ish positions, scaled to viewport
-      planets = [
-        { x: W*0.16, y: H*0.7,  r: Math.max(34, W*0.05),  hue:'#2a5c8f', shadow:'#0d1f33', ring:false, glow:'rgba(60,120,200,0.25)' },
-        { x: W*0.92, y: H*0.78, r: Math.max(22, W*0.032), hue:'#7a4b2a', shadow:'#2c1a0f', ring:true,  glow:'rgba(200,140,80,0.2)' },
-        { x: W*0.5,  y: H*0.16, r: Math.max(14, W*0.02),  hue:'#3f7a4d', shadow:'#16301c', ring:false, glow:'rgba(57,255,100,0.18)' }
-      ];
+      planets = [];
     }
     // draw a soft-shaded planet
     function drawPlanet(p){
