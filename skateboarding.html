@@ -114,6 +114,8 @@
   .faces{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;max-width:160px}
   .face-chip{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:#5a6b5a;transition:color .3s}
   .face-chip.active{color:var(--neon)}
+  .wild-legend{font-size:10px;letter-spacing:1px;color:var(--muted);margin-top:8px;display:flex;align-items:center;gap:6px;justify-content:center}
+  .wild-legend svg{vertical-align:middle}
   .result-area{min-height:80px;display:flex;align-items:center;justify-content:center;margin-bottom:26px}
   .trick-box{text-align:center;animation:fadeUp .4s ease forwards}
   .trick-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:var(--neon);margin-bottom:10px}
@@ -152,7 +154,7 @@
 <header class="skate-hero">
   <canvas id="skate-canvas"></canvas>
   <div class="wrap inner">
-    <div class="eyebrow mono">// 20+ years on a board</div>
+    <div class="eyebrow mono">// 20+ years of skate projects</div>
     <h1><span id="skate-typed"></span><span class="type-caret" id="skate-caret">_</span></h1>
     <p class="sub">This page houses all of my skateboarding projects and videos from my last 20+ years of skating (and continues to evolve).</p>
     <div class="cta-row">
@@ -240,7 +242,9 @@
       </div>
       <div class="dice-toggles">
         <label class="d-toggle"><input type="checkbox" id="tog-stance" checked onchange="rebuildFaces()"> Stance die</label>
+        <label class="d-toggle"><input type="checkbox" id="tog-spin" onchange="rebuildFaces()"> Spins (180 / 360)</label>
         <label class="d-toggle"><input type="checkbox" id="tog-combo" onchange="rebuildFaces()"> Combo (link a 2nd trick)</label>
+        <label class="d-toggle"><input type="checkbox" id="tog-wild" checked onchange="rebuildFaces()"> Wildcard variations</label>
       </div>
       <div class="dice-row" id="dice-row">
         <div class="die-wrap" id="wrap-stance">
@@ -252,6 +256,7 @@
           <div class="die-label" id="die2-label">TRICK</div>
           <div class="die" id="die2"><div class="die-value" id="val2">—</div></div>
           <div class="faces" id="faces2"></div>
+          <div id="wild-legend" class="wild-legend mono"><svg viewBox="0 0 40 16" width="30" height="12" fill="none" stroke="#39ff64" stroke-width="1.8"><rect x="3" y="4" width="34" height="6" rx="3"/><circle cx="12" cy="12.5" r="2.2"/><circle cx="28" cy="12.5" r="2.2"/></svg> = your own variation</div>
         </div>
         <div class="die-wrap" id="wrap-combo" style="display:none">
           <div class="die-label" id="die3-label">INTO</div>
@@ -598,8 +603,16 @@
     var cat="general";
     var history=[]; var histVisible=false;
 
+    // rotation spins that can prefix a trick
+    var spins=["FS 180","BS 180","FS 360","BS 360"];
+    // wildcard marker (renders as a skateboard outline) = "your variation / skater's choice"
+    var WILD="\u25AC"; // placeholder; we render an SVG board instead when detected
+    var BOARD_SVG='<svg viewBox="0 0 40 16" width="42" height="17" style="vertical-align:middle" fill="none" stroke="#39ff64" stroke-width="1.6"><rect x="3" y="4" width="34" height="6" rx="3"/><circle cx="12" cy="12.5" r="2.2"/><circle cx="28" cy="12.5" r="2.2"/></svg>';
+
     function stanceOn(){ return document.getElementById('tog-stance').checked; }
     function comboOn(){ return document.getElementById('tog-combo').checked; }
+    function spinOn(){ return document.getElementById('tog-spin').checked; }
+    function wildOn(){ return document.getElementById('tog-wild').checked; }
 
     function faces(id,list,active){
       var el=document.getElementById(id);
@@ -615,12 +628,15 @@
       document.getElementById('wrap-combo').style.display = comboOn() ? '' : 'none';
       // labels
       document.getElementById('die1-label').textContent = (cat==='grinds') ? 'APPROACH' : 'STANCE';
-      document.getElementById('die2-label').textContent = c.l2;
+      document.getElementById('die2-label').textContent = (spinOn()?'SPIN + ':'')+c.l2;
       document.getElementById('die3-label').textContent = 'INTO';
       // face chips
       faces('faces1', c.stance, null);
       faces('faces2', c.tricks, null);
       faces('faces3', c.comboFrom, null);
+      // wildcard legend under trick die
+      var leg=document.getElementById('wild-legend');
+      if(leg) leg.style.display = wildOn() ? 'block' : 'none';
       // reset values
       ['val1','val2','val3'].forEach(function(id){document.getElementById(id).textContent='—';});
       document.getElementById('resultIdle').style.display='block';
@@ -636,12 +652,22 @@
     };
 
     function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+    // pick a trick, with a ~1-in-8 chance of a wildcard variation if enabled
+    function pickTrick(arr){
+      if(wildOn() && Math.random()<0.14){ return WILD; }
+      return pick(arr);
+    }
+    // render a value into a die, swapping in the board SVG for wildcards
+    function setDie(el,val){
+      if(val===WILD){ el.innerHTML=BOARD_SVG; }
+      else { el.textContent=val; }
+    }
 
     rebuildFaces();
 
     window.rollDice=function(){
       var c=CATS[cat];
-      var useStance=stanceOn(), useCombo=comboOn();
+      var useStance=stanceOn(), useCombo=comboOn(), useSpin=spinOn();
       var btn=document.getElementById('rollBtn'); btn.disabled=true;
       document.getElementById('resultIdle').style.display='none';
       document.getElementById('resultTrick').style.display='none';
@@ -654,7 +680,7 @@
 
       var interval=setInterval(function(){
         if(useStance) v1.textContent=pick(c.stance);
-        v2.textContent=pick(c.tricks);
+        setDie(v2, pickTrick(c.tricks));
         if(useCombo){
           var ca=c.comboApproach.length?pick(c.comboApproach)+' ':'';
           v3.textContent=ca+pick(c.comboFrom);
@@ -664,29 +690,42 @@
       setTimeout(function(){
         clearInterval(interval);
         var r1=useStance?pick(c.stance):'';
-        var r2=pick(c.tricks);
+        var spin=useSpin?pick(spins):'';
+        var r2=pickTrick(c.tricks);
         var r3='';
         if(useCombo){
           var ca=c.comboApproach.length?pick(c.comboApproach)+' ':'';
           r3=ca+pick(c.comboFrom);
         }
         if(useStance) v1.textContent=r1;
-        v2.textContent=r2;
+        setDie(v2, r2);
         if(useCombo) v3.textContent=r3;
         [v1,v2,v3].forEach(function(v){v.classList.remove('rolling');});
         dice.forEach(function(d){d.classList.remove('rolling');});
-        faces('faces1',c.stance,r1);faces('faces2',c.tricks,r2);faces('faces3',c.comboFrom,r3.replace(/^(FS|BS) /,''));
+        faces('faces1',c.stance,r1);faces('faces2',c.tricks,r2===WILD?null:r2);faces('faces3',c.comboFrom,r3.replace(/^(FS|BS) /,''));
 
         document.getElementById('resultRolling').style.display='none';
         var trickEl=document.getElementById('resultTrick'); trickEl.style.display='block';
         trickEl.style.animation='none';trickEl.offsetHeight;trickEl.style.animation='';
 
-        var trick=((useStance&&r1!=='Regular')?r1+' ':'')+r2;   // omit "Regular" for cleaner read
-        if(useStance&&r1==='Regular') trick=r2; // regular stance implied
+        // build the trick name string
+        var trickText = (r2===WILD) ? 'Your Variation' : r2;
+        var parts=[];
+        if(useStance && r1 && r1!=='Regular') parts.push(r1);
+        if(useSpin && spin) parts.push(spin);
+        parts.push(trickText);
+        var trick=parts.join(' ');
         if(useCombo) trick=trick+' to '+r3;
-        document.getElementById('trickName').textContent=trick;
 
-        history.unshift(trick); if(history.length>10)history.pop(); updateHistory();
+        // show board icon in result if wildcard
+        if(r2===WILD){
+          document.getElementById('trickName').innerHTML=(parts.slice(0,-1).join(' ')+' ').replace(/^ /,'')+BOARD_SVG+' <span style="font-size:.6em;letter-spacing:2px;color:var(--neon)">YOUR VARIATION</span>'+(useCombo?' <span style="opacity:.7">to '+r3+'</span>':'');
+        } else {
+          document.getElementById('trickName').textContent=trick;
+        }
+
+        var histText = (r2===WILD? (parts.slice(0,-1).join(' ')+' [variation]').trim() : trick);
+        history.unshift(histText); if(history.length>10)history.pop(); updateHistory();
         btn.disabled=false;
       },900);
     };
