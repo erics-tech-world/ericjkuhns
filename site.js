@@ -105,6 +105,10 @@
       var lg = document.getElementById('site-logo');
       if(lg) lg.innerHTML = S.logo + '<span class="logo-caret">_</span>';
     }
+
+    // HARD GUARANTEE: search overlay must start closed, no matter what.
+    var sb = document.getElementById('site-search');
+    if(sb){ sb.classList.remove('open'); sb.style.display = 'none'; }
   }
 
   if(document.readyState === 'loading'){
