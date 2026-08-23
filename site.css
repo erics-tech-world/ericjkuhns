@@ -1,204 +1,83 @@
-/* Shared nav + footer for ericjkuhns.com
-   Each page includes:  <div id="site-nav"></div> ... <div id="site-footer"></div>
-   and sets  window.SITE = { active: "portfolio", base: "" }  before loading this file.
-   base is "" for root pages, "../" for pages in a subfolder (e.g. /blog/). */
-(function(){
-  var S = window.SITE || {};
-  var B = (typeof S.base === "string") ? S.base : "";
-  var active = S.active || "";
+/* Shared nav + footer + search styles for ericjkuhns.com */
 
-  function isActive(key){ return active === key ? " class=\"active\"" : ""; }
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,12,10,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.5px;font-size:15px;color:var(--ink)}
+.logo-caret{color:var(--neon);animation:blink 1.05s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.nav-links{display:flex;gap:28px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;align-items:center}
+.nav-links > a{color:var(--muted);transition:color .2s}
+.nav-links > a:hover{color:var(--neon)}
+.nav-links > a.active{color:var(--neon)}
+.nav-drop{position:relative}
+.nav-drop-btn{font-family:inherit;font-size:13px;letter-spacing:.5px;text-transform:uppercase;background:none;border:none;color:var(--muted);cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.nav-drop-btn:hover{color:var(--neon)}
+.nav-arrow{font-size:9px;color:var(--neon);transition:transform .2s}
+.nav-drop.open .nav-drop-btn{color:var(--neon)}
+.nav-drop.open .nav-arrow{transform:rotate(180deg)}
+.nav-menu{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-6px);min-width:210px;background:var(--panel);border:1px solid var(--neon-dim);border-radius:4px;padding:8px;display:none;flex-direction:column;gap:2px;z-index:300;box-shadow:0 8px 40px rgba(0,0,0,.6)}
+.nav-drop.open .nav-menu{display:flex;animation:navDrop .18s ease forwards}
+@keyframes navDrop{to{transform:translateX(-50%) translateY(0);opacity:1}}
+.nav-menu::before{content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:var(--panel);border-left:1px solid var(--neon-dim);border-top:1px solid var(--neon-dim)}
+.nav-menu a{font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:none;letter-spacing:0;color:var(--muted);padding:9px 12px;border-radius:3px;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.nav-menu a::before{content:"▸";color:var(--neon-dim);flex:0 0 auto}
+.nav-menu a:hover{background:var(--panel2);color:var(--neon)}
+.nav-menu a:hover::before{color:var(--neon)}
+.menu-btn{display:none;background:none;border:none;color:var(--neon);font-size:22px;cursor:pointer;font-family:monospace}
+.nav-search-btn{background:none;border:none;color:var(--neon);cursor:pointer;padding:4px;display:inline-flex;align-items:center;justify-content:center;transition:all .2s;opacity:.8}
+.nav-search-btn:hover{opacity:1;transform:scale(1.1);filter:drop-shadow(0 0 6px rgba(57,255,100,.5))}
 
-  /* ---------- NAV ---------- */
-  var nav =
-  '<nav>'+
-    '<div class="wrap nav-inner">'+
-      '<a href="'+B+'index.html" class="logo" id="site-logo">ericjkuhns<span class="logo-caret">_</span></a>'+
-      '<button class="menu-btn" onclick="document.getElementById(\'nl\').classList.toggle(\'open\')">[≡]</button>'+
-      '<div class="nav-links" id="nl">'+
-        '<div class="nav-drop">'+
-          '<button class="nav-drop-btn" onclick="siteToggleNav(this)">Projects <span class="nav-arrow">▾</span></button>'+
-          '<div class="nav-menu">'+
-            '<a href="'+B+'eric-tech-world.html">Eric\'s Tech World</a>'+
-            '<a href="'+B+'writing.html">Writing</a>'+
-            '<a href="'+B+'index.html#projects">Skateboarding</a>'+
-            '<a href="'+B+'index.html#projects">Acting</a>'+
-            '<a href="'+B+'index.html#projects">Music</a>'+
-          '</div>'+
-        '</div>'+
-        '<a href="'+B+'index.html#videos"'+isActive("videos")+'>Videos</a>'+
-        '<a href="'+B+'blog/index.html"'+isActive("blog")+'>Blog</a>'+
-        '<a href="'+B+'portfolio.html"'+isActive("portfolio")+'>Portfolio</a>'+
-        '<a href="'+B+'contact.html"'+isActive("contact")+'>Contact</a>'+
-        '<button class="nav-search-btn" aria-label="Search" onclick="siteOpenSearch()">'+
-          '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>'+
-        '</button>'+
-      '</div>'+
-    '</div>'+
-  '</nav>';
+/* SEARCH OVERLAY */
+.site-search{position:fixed;inset:0;z-index:9000;background:rgba(5,7,5,.92);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:14vh 20px 20px}
+.site-search.open{display:flex;animation:searchFade .16s ease}
+@keyframes searchFade{from{opacity:0}to{opacity:1}}
+.search-inner{width:100%;max-width:640px}
+.search-prompt{font-size:12px;color:var(--neon-dim);letter-spacing:1px;margin-bottom:12px}
+.search-box{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--neon-dim);border-radius:4px;padding:16px 18px;box-shadow:0 0 50px rgba(57,255,100,.1)}
+.search-ico{color:var(--neon);font-size:16px}
+#site-search-input{flex:1;background:none;border:none;outline:none;color:var(--ink);font-size:17px}
+#site-search-input::placeholder{color:var(--muted)}
+.search-close{background:none;border:1px solid var(--line);border-radius:3px;color:var(--muted);font-size:11px;padding:5px 8px;cursor:pointer;transition:all .2s}
+.search-close:hover{border-color:var(--neon);color:var(--neon)}
+.search-results{margin-top:12px;display:flex;flex-direction:column;gap:6px;max-height:44vh;overflow-y:auto}
+.search-hit{display:flex;flex-direction:column;gap:3px;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:4px;transition:all .18s}
+.search-hit:hover{border-color:var(--neon-dim);transform:translateX(4px)}
+.search-hit .hit-title{font-size:15px;font-weight:700;color:var(--ink)}
+.search-hit:hover .hit-title{color:var(--neon)}
+.search-hit .hit-desc{font-size:12px;color:var(--muted)}
+.search-empty{padding:16px;color:var(--muted);font-size:13px;border:1px dashed var(--line);border-radius:4px}
+.search-hint{margin-top:14px;font-size:11px;color:var(--muted);text-align:center}
+.search-hint b{color:var(--neon)}
 
-  /* ---------- SEARCH OVERLAY ---------- */
-  var search =
-  '<div class="site-search" id="site-search" style="display:none">'+
-    '<div class="search-inner">'+
-      '<div class="search-prompt mono">~/eric $ search</div>'+
-      '<div class="search-box">'+
-        '<span class="search-ico mono">▸</span>'+
-        '<input type="text" id="site-search-input" class="mono" placeholder="search videos, blog, projects…" autocomplete="off">'+
-        '<button class="search-close mono" onclick="siteCloseSearch()">[esc]</button>'+
-      '</div>'+
-      '<div class="search-results" id="site-search-results"></div>'+
-      '<div class="search-hint mono">Press <b>enter</b> to search the site · <b>esc</b> to close</div>'+
-    '</div>'+
-  '</div>';
+/* FOOTER */
+footer{padding:48px 0 40px;border-top:1px solid var(--line)}
+.foot-grid{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px}
+.foot-socials{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.social-drop{position:relative}
+.social-btn{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:9px 14px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.social-btn:hover{border-color:var(--neon-dim);color:var(--ink)}
+.social-drop.open .social-btn{border-color:var(--neon);color:var(--neon);box-shadow:0 0 14px rgba(57,255,100,.15)}
+.drop-arrow{font-size:10px;transition:transform .2s;color:var(--neon)}
+.social-drop.open .drop-arrow{transform:rotate(180deg)}
+.social-menu{position:absolute;bottom:calc(100% + 8px);left:0;min-width:200px;background:var(--panel);border:1px solid var(--neon-dim);border-radius:3px;padding:6px;display:none;flex-direction:column;gap:2px;z-index:200;box-shadow:0 0 30px rgba(0,0,0,.5)}
+.social-drop.open .social-menu{display:flex;animation:dropIn .18s ease}
+@keyframes dropIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.social-menu a{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);padding:7px 12px;border-radius:2px;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:7px}
+.social-menu a:hover{background:var(--panel2);color:var(--neon)}
+.social-menu a::before{content:"▸";color:var(--neon-dim);flex:0 0 auto}
+.foot-note{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
+.foot-note a{color:var(--muted)}
+.foot-note a:hover{color:var(--neon)}
 
-  /* ---------- FOOTER ---------- */
-  var footer =
-  '<footer id="contact">'+
-    '<div class="wrap foot-grid">'+
-      '<div>'+
-        '<div class="logo mono" style="font-size:18px;margin-bottom:16px">ericjkuhns<span class="logo-caret">_</span></div>'+
-        '<div class="foot-socials">'+
-          '<div class="social-drop">'+
-            '<button class="social-btn mono" onclick="siteToggleSocial(this)">Instagram <span class="drop-arrow">▾</span></button>'+
-            '<div class="social-menu">'+
-              '<a href="https://instagram.com/ericjkuhns" target="_blank" rel="noopener">@ericjkuhns</a>'+
-              '<a href="https://instagram.com/ericstechworld" target="_blank" rel="noopener">@ericstechworld</a>'+
-            '</div>'+
-          '</div>'+
-          '<div class="social-drop">'+
-            '<button class="social-btn mono" onclick="siteToggleSocial(this)">YouTube <span class="drop-arrow">▾</span></button>'+
-            '<div class="social-menu">'+
-              '<a href="https://youtube.com/@ericstechworld" target="_blank" rel="noopener">@ericstechworld</a>'+
-              '<a href="https://youtube.com/@ericskateboards" target="_blank" rel="noopener">@ericskateboards</a>'+
-              '<a href="https://youtube.com/@ericsbackrooms" target="_blank" rel="noopener">@ericsbackrooms</a>'+
-            '</div>'+
-          '</div>'+
-          '<div class="social-drop">'+
-            '<button class="social-btn mono" onclick="siteToggleSocial(this)">TikTok <span class="drop-arrow">▾</span></button>'+
-            '<div class="social-menu">'+
-              '<a href="https://tiktok.com/@ericstechworld" target="_blank" rel="noopener">@ericstechworld</a>'+
-              '<a href="https://tiktok.com/@ericskateboards" target="_blank" rel="noopener">@ericskateboards</a>'+
-              '<a href="https://tiktok.com/@spacecosis" target="_blank" rel="noopener">@spacecosis</a>'+
-              '<a href="https://tiktok.com/@austintexasfreak" target="_blank" rel="noopener">@austintexasfreak</a>'+
-            '</div>'+
-          '</div>'+
-          '<a class="social-btn mono" href="mailto:info@ericjkuhns.com">Email</a>'+
-        '</div>'+
-      '</div>'+
-      '<div class="foot-note mono">'+
-        '<a href="'+B+'privacy-policy.html">Privacy Policy</a> · <a href="'+B+'disclaimer.html">Disclaimer</a><br><br>'+
-        'Copyright © 2015 - 2026 Eric J. Kuhns / Eric\'s Tech World LLC'+
-      '</div>'+
-    '</div>'+
-  '</footer>';
-
-  /* ---------- inject ---------- */
-  function inject(){
-    var navSlot = document.getElementById('site-nav');
-    var footSlot = document.getElementById('site-footer');
-    if(navSlot) navSlot.outerHTML = nav + search;
-    if(footSlot) footSlot.outerHTML = footer;
-
-    // let a page override the logo text (e.g. Eric's Tech World page)
-    if(S.logo){
-      var lg = document.getElementById('site-logo');
-      if(lg) lg.innerHTML = S.logo + '<span class="logo-caret">_</span>';
-    }
-  }
-
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', inject);
-  } else { inject(); }
-
-  /* ---------- behaviors ---------- */
-  window.siteToggleNav = function(btn){
-    var drop = btn.closest('.nav-drop');
-    var isOpen = drop.classList.contains('open');
-    document.querySelectorAll('.nav-drop.open').forEach(function(d){ d.classList.remove('open'); });
-    if(!isOpen) drop.classList.add('open');
-  };
-  window.siteToggleSocial = function(btn){
-    var drop = btn.closest('.social-drop');
-    var isOpen = drop.classList.contains('open');
-    document.querySelectorAll('.social-drop.open').forEach(function(d){ d.classList.remove('open'); });
-    if(!isOpen) drop.classList.add('open');
-  };
-  document.addEventListener('click', function(e){
-    if(!e.target.closest('.nav-drop')){ document.querySelectorAll('.nav-drop.open').forEach(function(d){ d.classList.remove('open'); }); }
-    if(!e.target.closest('.social-drop')){ document.querySelectorAll('.social-drop.open').forEach(function(d){ d.classList.remove('open'); }); }
-  });
-
-  /* ---------- search ---------- */
-  // Simple site search: an index of pages/sections + live Blogger post lookup.
-  var SEARCH_INDEX = [
-    {t:"Eric's Tech World", d:"Robot reviews, future tech, and articles", u:B+"eric-tech-world.html", k:"tech robots reviews gadgets drones ebikes future"},
-    {t:"Portfolio", d:"Video, web, design, ads, and copywriting work", u:B+"portfolio.html", k:"portfolio work clients video design ads marketing websites resume hire"},
-    {t:"Blog", d:"Writing on tech, skating, sci-fi, and more", u:B+"blog/index.html", k:"blog posts articles writing"},
-    {t:"Videos", d:"Latest videos across all channels", u:B+"index.html#videos", k:"videos youtube watch"},
-    {t:"My Novel: Spacecosis", d:"Debut sci-fi novel, available now", u:B+"index.html#book", k:"book novel spacecosis sci-fi writing scifi"},
-    {t:"Skateboarding", d:"Skate spots, history, and videos", u:B+"index.html#projects", k:"skate skateboarding dfw skatepark"},
-    {t:"Music", d:"Assorted music over the years", u:B+"index.html#projects", k:"music songs acoustic hip hop"},
-    {t:"Acting", d:"On-camera and on-stage acting work", u:B+"index.html#projects", k:"acting actor film stage commercials"},
-    {t:"Contact", d:"Get in touch", u:B+"index.html#contact", k:"contact email hire work together"}
-  ];
-
-  window.siteOpenSearch = function(){
-    var box = document.getElementById('site-search');
-    if(!box) return;
-    box.style.display = 'flex';
-    box.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    var inp = document.getElementById('site-search-input');
-    setTimeout(function(){ inp && inp.focus(); }, 60);
-  };
-  window.siteCloseSearch = function(){
-    var box = document.getElementById('site-search');
-    if(!box) return;
-    box.classList.remove('open');
-    box.style.display = 'none';
-    document.body.style.overflow = '';
-    var res = document.getElementById('site-search-results');
-    if(res) res.innerHTML = '';
-    var inp = document.getElementById('site-search-input');
-    if(inp) inp.value = '';
-  };
-
-  function renderResults(q){
-    var res = document.getElementById('site-search-results');
-    if(!res) return;
-    q = q.trim().toLowerCase();
-    if(!q){ res.innerHTML = ''; return; }
-    var hits = SEARCH_INDEX.filter(function(item){
-      return (item.t + ' ' + item.d + ' ' + item.k).toLowerCase().indexOf(q) !== -1;
-    });
-    if(!hits.length){
-      res.innerHTML = '<div class="search-empty mono">No quick matches. Press enter to search the blog for "'+escapeHtml(q)+'".</div>';
-      return;
-    }
-    res.innerHTML = hits.map(function(h){
-      return '<a class="search-hit" href="'+h.u+'"><span class="hit-title">'+escapeHtml(h.t)+'</span><span class="hit-desc mono">'+escapeHtml(h.d)+'</span></a>';
-    }).join('');
-  }
-  function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-  document.addEventListener('input', function(e){
-    if(e.target && e.target.id === 'site-search-input'){ renderResults(e.target.value); }
-  });
-  document.addEventListener('keydown', function(e){
-    var box = document.getElementById('site-search');
-    if(!box) return;
-    if(e.key === 'Escape' && box.classList.contains('open')){ window.siteCloseSearch(); }
-    // open with "/" shortcut
-    if(e.key === '/' && !box.classList.contains('open') && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA'){
-      e.preventDefault(); window.siteOpenSearch();
-    }
-    // enter -> go to blog search for the query
-    if(e.key === 'Enter' && box.classList.contains('open')){
-      var inp = document.getElementById('site-search-input');
-      var q = inp ? inp.value.trim() : '';
-      if(q){ window.location.href = B + 'blog/index.html?q=' + encodeURIComponent(q); }
-    }
-  });
-})();
-
+@media(max-width:820px){
+  .nav-links{display:none}
+  .nav-links.open{display:flex;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:var(--panel);padding:20px 24px;gap:18px;border-bottom:1px solid var(--line);align-items:flex-start}
+  .nav-drop{width:100%}
+  .nav-menu{position:static;transform:none;min-width:0;width:100%;border:none;box-shadow:none;padding:10px 0 0 14px;background:none}
+  .nav-drop.open .nav-menu{animation:none}
+  .nav-menu::before{display:none}
+  .nav-menu a{padding:8px 0}
+  .menu-btn{display:block}
+  .nav-search-btn{align-self:flex-start}
+}
