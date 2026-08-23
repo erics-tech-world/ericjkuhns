@@ -156,7 +156,7 @@
   <div class="wrap inner">
     <div class="eyebrow mono">// 20+ years of skate projects</div>
     <h1><span id="skate-typed"></span><span class="type-caret" id="skate-caret">_</span></h1>
-    <p class="sub">This page houses all of my skateboarding projects and videos from the last 20+ years of skating (and continues to evolve).</p>
+    <p class="sub">This page houses all of my skateboarding projects and videos from my last 20+ years of skating (and continues to evolve).</p>
     <div class="cta-row">
       <a href="#videos" class="btn btn-primary mono">▶ Watch latest</a>
       <a href="#map" class="btn btn-ghost mono">Skate spot map</a>
@@ -652,8 +652,8 @@
     };
 
     function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-    // pick a trick, with a ~1-in-8 chance of a wildcard variation if enabled
-    function pickTrick(arr){
+    // pick from a list, with a ~1-in-7 chance of a wildcard variation if enabled
+    function pickWild(arr){
       if(wildOn() && Math.random()<0.14){ return WILD; }
       return pick(arr);
     }
@@ -662,6 +662,10 @@
       if(val===WILD){ el.innerHTML=BOARD_SVG; }
       else { el.textContent=val; }
     }
+    // inline board icon (smaller) for the result string
+    var BOARD_INLINE='<svg viewBox="0 0 40 16" width="34" height="14" style="vertical-align:middle" fill="none" stroke="#39ff64" stroke-width="1.6"><rect x="3" y="4" width="34" height="6" rx="3"/><circle cx="12" cy="12.5" r="2.2"/><circle cx="28" cy="12.5" r="2.2"/></svg>';
+    function part(val){ return val===WILD ? BOARD_INLINE : val; }
+    function isWild(v){ return v===WILD; }
 
     rebuildFaces();
 
@@ -679,53 +683,56 @@
       dice.forEach(function(d){d.classList.add('rolling');});
 
       var interval=setInterval(function(){
-        if(useStance) v1.textContent=pick(c.stance);
-        setDie(v2, pickTrick(c.tricks));
+        if(useStance) setDie(v1, pickWild(c.stance));
+        setDie(v2, pickWild(c.tricks));
         if(useCombo){
-          var ca=c.comboApproach.length?pick(c.comboApproach)+' ':'';
-          v3.textContent=ca+pick(c.comboFrom);
+          var cw=pickWild(c.comboFrom);
+          if(cw===WILD){ setDie(v3, WILD); }
+          else { var ca=c.comboApproach.length?pick(c.comboApproach)+' ':''; v3.textContent=ca+cw; }
         }
       },80);
 
       setTimeout(function(){
         clearInterval(interval);
-        var r1=useStance?pick(c.stance):'';
-        var spin=useSpin?pick(spins):'';
-        var r2=pickTrick(c.tricks);
+        // each die rolls, each can be a wildcard
+        var r1=useStance?pickWild(c.stance):'';
+        var spin=useSpin?pickWild(spins):'';
+        var r2=pickWild(c.tricks);
         var r3='';
+        var r3wild=false;
         if(useCombo){
-          var ca=c.comboApproach.length?pick(c.comboApproach)+' ':'';
-          r3=ca+pick(c.comboFrom);
+          var cw=pickWild(c.comboFrom);
+          if(cw===WILD){ r3=WILD; r3wild=true; }
+          else { var ca=c.comboApproach.length?pick(c.comboApproach)+' ':''; r3=ca+cw; }
         }
-        if(useStance) v1.textContent=r1;
+        if(useStance) setDie(v1, r1);
         setDie(v2, r2);
-        if(useCombo) v3.textContent=r3;
+        if(useCombo) setDie(v3, r3wild?WILD:r3);
         [v1,v2,v3].forEach(function(v){v.classList.remove('rolling');});
         dice.forEach(function(d){d.classList.remove('rolling');});
-        faces('faces1',c.stance,r1);faces('faces2',c.tricks,r2===WILD?null:r2);faces('faces3',c.comboFrom,r3.replace(/^(FS|BS) /,''));
+        faces('faces1',c.stance,isWild(r1)?null:r1);faces('faces2',c.tricks,isWild(r2)?null:r2);faces('faces3',c.comboFrom,r3wild?null:r3.replace(/^(FS|BS) /,''));
 
         document.getElementById('resultRolling').style.display='none';
         var trickEl=document.getElementById('resultTrick'); trickEl.style.display='block';
         trickEl.style.animation='none';trickEl.offsetHeight;trickEl.style.animation='';
 
-        // build the trick name string
-        var trickText = (r2===WILD) ? 'Your Variation' : r2;
-        var parts=[];
-        if(useStance && r1 && r1!=='Regular') parts.push(r1);
-        if(useSpin && spin) parts.push(spin);
-        parts.push(trickText);
-        var trick=parts.join(' ');
-        if(useCombo) trick=trick+' to '+r3;
+        // build result: each part renders as text or a board icon if wild
+        var htmlParts=[], textParts=[];
+        if(useStance && r1 && !(r1==='Regular')){ htmlParts.push(part(r1)); textParts.push(isWild(r1)?'[variation]':r1); }
+        if(useSpin && spin){ htmlParts.push(part(spin)); textParts.push(isWild(spin)?'[variation]':spin); }
+        htmlParts.push(part(r2)); textParts.push(isWild(r2)?'[variation]':r2);
+        var mainHtml=htmlParts.join(' ');
+        var mainText=textParts.join(' ');
+        if(useCombo){ mainHtml += ' <span style="opacity:.7">to</span> '+part(r3); mainText += ' to '+(r3wild?'[variation]':r3); }
 
-        // show board icon in result if wildcard
-        if(r2===WILD){
-          document.getElementById('trickName').innerHTML=(parts.slice(0,-1).join(' ')+' ').replace(/^ /,'')+BOARD_SVG+' <span style="font-size:.6em;letter-spacing:2px;color:var(--neon)">YOUR VARIATION</span>'+(useCombo?' <span style="opacity:.7">to '+r3+'</span>':'');
+        var anyWild = isWild(r1)||isWild(spin)||isWild(r2)||r3wild;
+        if(anyWild){
+          document.getElementById('trickName').innerHTML=mainHtml;
         } else {
-          document.getElementById('trickName').textContent=trick;
+          document.getElementById('trickName').textContent=mainText;
         }
 
-        var histText = (r2===WILD? (parts.slice(0,-1).join(' ')+' [variation]').trim() : trick);
-        history.unshift(histText); if(history.length>10)history.pop(); updateHistory();
+        history.unshift(mainText); if(history.length>10)history.pop(); updateHistory();
         btn.disabled=false;
       },900);
     };
