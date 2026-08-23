@@ -120,10 +120,11 @@
   .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
   /* projects carousel */
   .proj-carousel{display:flex;align-items:stretch;gap:10px}
-  .proj-viewport{flex:1;overflow:hidden}
+  .proj-viewport{flex:1;overflow:hidden;padding-top:8px;margin-top:-8px}
   .proj-track{
     grid-template-columns:none;display:flex;gap:16px;
     transition:transform .4s cubic-bezier(.4,0,.2,1);
+    padding-bottom:6px;
   }
   .proj-track .card{flex:0 0 calc((100% - 48px) / 4);}
   .proj-arrow{
