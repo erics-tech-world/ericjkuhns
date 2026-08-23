@@ -3,10 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio | Eric J. Kuhns</title>
-<meta name="description" content="Professional portfolio of Eric J. Kuhns: video production, web design, marketing, SEO, design, and copywriting for brands like Paramount, Factor 75, RumbleOn, and more.">
+<title>Eric's Tech World | Eric J. Kuhns</title>
+<meta name="description" content="Eric's Tech World: robot reviews, future tech, articles, and the robot shop. The companion site to the Eric's Tech World YouTube channel.">
 <style>
-  :root{--bg:#0a0c0a;--panel:#101410;--panel2:#0d110d;--ink:#f4f6f4;--muted:#8a938c;--line:#1e241e;--neon:#39ff64;--neon-dim:#1f8a37;}
+  :root{
+    --bg:#0a0c0a;--panel:#101410;--panel2:#0d110d;--ink:#f4f6f4;--muted:#8a938c;
+    --line:#1e241e;--neon:#39ff64;--neon-dim:#1f8a37;
+  }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -15,12 +18,16 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
-  .hero{padding:90px 0 70px;border-bottom:1px solid var(--line)}
-  .hero .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--neon-dim);letter-spacing:2px;margin-bottom:20px;text-transform:uppercase}
-  .hero h1{font-size:clamp(32px,5.4vw,60px);line-height:1.08;font-weight:800;letter-spacing:-1.5px;margin-bottom:24px;max-width:900px;min-height:1.08em}
-  .hero h1 .hl{color:var(--neon)}
-  .hero-cursor{display:inline-block;width:.55ch;height:.92em;background:var(--neon);margin-left:4px;transform:translateY(3px);animation:blink 1.05s steps(1) infinite}
-  .hero .sub{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:600px;margin-bottom:34px}
+  /* hero */
+  .hero{padding:100px 0 84px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;min-height:460px;display:flex;align-items:center}
+  #matrix-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;opacity:.55}
+  .hero-inner{position:relative;z-index:2;width:100%}
+  .hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--bg) 0%,rgba(10,12,10,.7) 45%,rgba(10,12,10,.2) 100%);pointer-events:none}
+  .hero .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:1px;margin-bottom:14px;text-transform:uppercase}
+  .hero h1{font-size:clamp(38px,7vw,72px);line-height:1.02;font-weight:800;letter-spacing:-2px;margin-bottom:20px;min-height:1.02em}
+  .hero h1 .type-caret{color:var(--neon);font-weight:400;animation:blink 1.05s steps(1) infinite}
+  .hero p.lead{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:600px;margin-bottom:32px}
+  .hero p.lead em{color:var(--neon);font-style:normal}
   .cta-row{display:flex;gap:14px;flex-wrap:wrap}
   .btn{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.5px;padding:13px 22px;border:1px solid var(--line);border-radius:2px;transition:all .2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
   .btn-primary{background:var(--neon);color:#04160a;border-color:var(--neon);font-weight:700}
@@ -28,409 +35,323 @@
   .btn-ghost{color:var(--ink)}
   .btn-ghost:hover{border-color:var(--neon);color:var(--neon)}
 
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:52px}
-  .stat{background:var(--bg);padding:22px 20px}
-  .stat .n{font-size:clamp(24px,3vw,32px);font-weight:800;letter-spacing:-1px;color:var(--neon)}
-  .stat .l{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.5px;margin-top:6px;text-transform:uppercase}
+  section.blk{padding:72px 0;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:38px}
+  .sec-head .tag{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--neon);letter-spacing:1px}
+  .sec-head h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-1px}
+  .sec-head .line{flex:1;height:1px;background:var(--line)}
 
-  section.blk{padding:70px 0;border-bottom:1px solid var(--line)}
-  .sec-head{margin-bottom:14px}
-  .sec-head h2{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-1px}
-  .sec-head p{color:var(--muted);margin-top:12px;max-width:680px;text-wrap:balance}
-  .sec-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon-dim);margin:14px 0 0;padding:10px 14px;border:1px solid var(--line);border-radius:3px;background:var(--panel2);display:inline-block}
+  /* video (reused from home) */
+  .vid-loading,.vid-error{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);padding:40px 0;text-align:center}
+  .vid-error b{color:var(--neon)}
+  .vid-feature{margin-bottom:16px}
+  .embed{position:relative;width:100%;aspect-ratio:16/9;background:#050705;border:1px solid var(--line);border-radius:3px;overflow:hidden;z-index:10000}
+  .embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .vid-thumb{position:relative;width:100%;aspect-ratio:16/9;border:1px solid var(--line);border-radius:3px;overflow:hidden;cursor:pointer;background-size:cover;background-position:center;background-color:#050705}
+  .vid-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.55));transition:background .2s}
+  .vid-thumb:hover::after{background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.55))}
+  .vid-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:64px;height:64px;border-radius:50%;background:var(--neon);display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 0 30px rgba(57,255,100,.35)}
+  .vid-thumb:hover .vid-play{transform:translate(-50%,-50%) scale(1.08);box-shadow:0 0 42px rgba(57,255,100,.55)}
+  .vid-play svg{width:26px;height:26px;fill:#04160a;margin-left:3px}
+  .vid-title{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px;font-size:16px;font-weight:700;line-height:1.3}
+  .vid-feature .vid-sub{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:10px}
+  .vid-feature .vid-sub b{color:var(--neon)}
+  .vid-carousel{display:flex;align-items:stretch;gap:10px;margin-top:16px}
+  .car-viewport{flex:1;overflow:hidden}
+  .car-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
+  .car-track::-webkit-scrollbar{display:none}
+  .car-item{flex:0 0 calc((100% - 24px) / 3);scroll-snap-align:start}
+  .vid-mini{background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;cursor:pointer;transition:all .2s;display:block}
+  .vid-mini:hover{border-color:var(--neon-dim);transform:translateY(-2px)}
+  .vid-mini .m-thumb{aspect-ratio:16/9;background-size:cover;background-position:center;background-color:#050705;position:relative}
+  .vid-mini .m-thumb::after{content:"▶";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--neon);font-size:16px;opacity:0;transition:opacity .2s}
+  .vid-mini:hover .m-thumb::after{opacity:1}
+  .vid-mini .m-title{padding:10px 12px;font-size:12px;line-height:1.35;color:var(--ink)}
+  .car-arrow{flex:0 0 40px;align-self:center;height:64px;width:40px;background:var(--panel);border:1px solid var(--line);border-radius:3px;color:var(--neon);font-size:26px;line-height:1;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+  .car-arrow:hover{border-color:var(--neon);box-shadow:0 0 18px rgba(57,255,100,.25)}
+  .car-arrow.disabled{opacity:.25;pointer-events:none}
+  .vid-all .all-thumb{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d130d,#060806)}
+  .vid-all .all-thumb::after{content:none}
+  .vid-all .all-thumb span{color:var(--neon);font-size:30px;transition:transform .2s}
+  .vid-all:hover .all-thumb span{transform:translateX(4px)}
+  .vid-all .m-title{color:var(--neon);font-family:'JetBrains Mono',monospace}
+  .vid-cap{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:14px}
+  .vid-cap b{color:var(--neon)}
 
-  /* category carousel */
-  .cat-carousel{display:flex;align-items:stretch;gap:10px;margin-top:30px}
-  .cat-viewport{flex:1;overflow:hidden;padding-top:6px;margin-top:-6px}
-  .cat-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
-  .cat-track::-webkit-scrollbar{display:none}
-  .cat-item{flex:0 0 calc((100% - 32px) / 3);scroll-snap-align:start}
-  .cat-arrow{flex:0 0 42px;align-self:center;height:80px;width:42px;background:var(--panel);border:1px solid var(--line);border-radius:3px;color:var(--neon);font-size:28px;line-height:1;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
-  .cat-arrow:hover{border-color:var(--neon);box-shadow:0 0 18px rgba(57,255,100,.25)}
-  .cat-arrow.disabled{opacity:.25;pointer-events:none}
+  /* articles carousel */
+  .art-carousel{display:flex;align-items:stretch;gap:10px}
+  .art-viewport{flex:1;overflow:hidden;padding-top:6px;margin-top:-6px}
+  .art-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
+  .art-track::-webkit-scrollbar{display:none}
+  .art-card{flex:0 0 calc((100% - 32px) / 3);scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;transition:all .2s;display:flex;flex-direction:column}
+  .art-card:hover{border-color:var(--neon-dim);transform:translateY(-3px)}
+  .art-card:hover h3{color:var(--neon)}
+  .art-thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#0d130d,#060806);border-bottom:1px solid var(--line);background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon-dim)}
+  .art-body{padding:18px;display:flex;flex-direction:column;flex:1}
+  .art-body .date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+  .art-body h3{font-size:16px;font-weight:700;margin:8px 0;line-height:1.3;transition:color .2s}
+  .art-body .cat{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--neon);border:1px solid var(--line);padding:3px 9px;border-radius:2px;display:inline-block;align-self:flex-start;margin-top:auto}
+  .art-loading{font-family:'JetBrains Mono',monospace;color:var(--muted);padding:20px 0}
+  @media(max-width:820px){.car-item{flex:0 0 calc((100% - 12px) / 2)}.art-card{flex:0 0 calc((100% - 16px) / 2)}}
+  @media(max-width:560px){.car-item{flex:0 0 85%}.art-card{flex:0 0 85%}.car-arrow,.art-arrow{display:none}}
 
-  /* project card */
-  .proj{background:var(--panel);border:1px solid var(--line);border-radius:4px;overflow:hidden;transition:all .22s;display:flex;flex-direction:column;height:100%}
-  .proj:hover{border-color:var(--neon-dim);transform:translateY(-3px)}
-  .proj-media{aspect-ratio:16/10;position:relative;background:#050705;border-bottom:1px solid var(--line);overflow:hidden}
-  .proj-media img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
-  .proj-media .embed{position:absolute;inset:0}
-  .proj-media .embed iframe{width:100%;height:100%;border:0}
-  .proj-media.clickable{cursor:pointer}
-  .proj-media .gallery-badge{position:absolute;top:10px;right:10px;z-index:3;font-family:'JetBrains Mono',monospace;font-size:11px;color:#04160a;background:var(--neon);padding:4px 9px;border-radius:2px;font-weight:700}
-  .proj-media .play-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;width:54px;height:54px;border-radius:50%;background:var(--neon);display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(57,255,100,.35);transition:transform .2s}
-  .proj-media.clickable:hover .play-badge{transform:translate(-50%,-50%) scale(1.08)}
-  .proj-media .play-badge svg{width:22px;height:22px;fill:#04160a;margin-left:3px}
-  .proj-media .thumb-dim::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.25);transition:background .2s}
-  .proj-media.clickable:hover .thumb-dim::after{background:rgba(0,0,0,.1)}
-  .proj-body{padding:20px;display:flex;flex-direction:column;flex:1}
-  .proj .client{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon);letter-spacing:.5px;margin-bottom:6px}
-  .proj h3{font-size:17px;font-weight:700;margin-bottom:6px}
-  .proj .role{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:12px}
-  .proj p{font-size:13px;color:var(--muted);flex:1}
+  /* shop */
+  .shop{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
+  .shop-art{aspect-ratio:4/3;background:linear-gradient(135deg,#0d130d,#060806);border:1px solid var(--neon-dim);border-radius:4px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(57,255,100,.08);overflow:hidden}
+  .shop-art span{font-size:64px;filter:grayscale(.2)}
+  .shop-info h3{font-size:clamp(22px,3vw,30px);font-weight:800;margin-bottom:12px;letter-spacing:-.5px}
+  .shop-info p{color:var(--muted);margin-bottom:14px;max-width:460px}
+  .shop-info .note{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:22px}
 
-  /* writing links */
-  .linklist{display:flex;flex-direction:column;border-top:1px solid var(--line);margin-top:24px}
-  .linkrow{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--line);transition:all .2s}
-  .linkrow:hover{padding-left:10px}
-  .linkrow:hover h4{color:var(--neon)}
-  .linkrow h4{font-size:16px;font-weight:700;transition:color .2s}
-  .linkrow .meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
-  .linkrow .go{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--neon);white-space:nowrap}
-
-  /* specialties */
-  .spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
-  .spec{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:22px;transition:all .2s}
-  .spec:hover{border-color:var(--neon-dim);transform:translateY(-2px)}
-  .spec .ico{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--neon);margin-bottom:12px}
-  .spec h3{font-size:16px;font-weight:700;margin-bottom:8px}
-  .spec p{font-size:13px;color:var(--muted);line-height:1.6}
-
-  .cta-band{padding:80px 0;border-bottom:1px solid var(--line);text-align:center}
-  .cta-band h2{font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-1px;margin-bottom:16px}
-  .cta-band h2 .hl{color:var(--neon)}
-  .cta-band p{color:var(--muted);max-width:520px;margin:0 auto 30px}
-  .cta-band .cta-row{justify-content:center}
-
-  /* lightbox */
-  .lightbox{position:fixed;inset:0;z-index:10000;background:rgba(5,7,5,.94);display:none;align-items:center;justify-content:center;padding:40px 20px}
-  .lightbox.open{display:flex}
-  .lb-inner{max-width:1000px;width:100%;position:relative}
-  .lb-img{width:100%;max-height:80vh;object-fit:contain;border:1px solid var(--line);border-radius:4px}
-  .lb-close{position:absolute;top:-40px;right:0;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--muted);cursor:pointer;background:none;border:none}
-  .lb-close:hover{color:var(--neon)}
-  .lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;background:var(--panel);border:1px solid var(--line);border-radius:50%;color:var(--neon);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
-  .lb-nav:hover{border-color:var(--neon);box-shadow:0 0 18px rgba(57,255,100,.3)}
-  .lb-prev{left:-22px}.lb-next{right:-22px}
-  .lb-count{position:absolute;bottom:-34px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
   @media(max-width:820px){
-    .stats{grid-template-columns:repeat(2,1fr)}
-    .cat-item{flex:0 0 calc((100% - 16px) / 2)}
-    .spec-grid{grid-template-columns:1fr}
-    .linkrow{flex-direction:column;align-items:flex-start;gap:6px}
-    .lb-prev{left:6px}.lb-next{right:6px}
+    .shop{grid-template-columns:1fr;gap:24px}
   }
-  @media(max-width:560px){.cat-item{flex:0 0 86%}.cat-arrow{display:none}.spec-grid{grid-template-columns:1fr}}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
-<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="site.css?v=2">
 </head>
 <body>
-<script>window.SITE={active:"portfolio",base:""};</script>
-
+<script>window.SITE={active:"techworld",base:"",logo:"Eric's Tech World"};</script>
 <div id="site-nav"></div>
 
-
-<header class="hero">
-  <div class="wrap">
-    <div class="eyebrow mono">// professional portfolio</div>
-    <h1 id="hero-title"><span id="hero-typed"></span><span class="hero-cursor" id="hero-cursor"></span></h1>
-    <p class="sub">I'm Eric, a creator and digital marketer with 15+ years turning ideas into content that connects. Video, web, ads, design, and copy for brands big and small.</p>
+<header class="hero" id="tw-hero">
+  <canvas id="matrix-canvas"></canvas>
+  <div class="wrap hero-inner">
+    <div class="eyebrow mono">// official companion site to my YouTube</div>
+    <h1><span id="tw-typed"></span><span class="type-caret" id="tw-caret">_</span></h1>
+    <p class="lead"><em>Where tech and adventure meet.</em></p>
     <div class="cta-row">
-      <a href="index.html#contact" class="btn btn-primary mono">Let's work together</a>
-      <a href="https://www.linkedin.com/in/ericjkuhns/" target="_blank" rel="noopener" class="btn btn-ghost mono">LinkedIn ↗</a>
-    </div>
-    <div class="stats">
-      <div class="stat"><div class="n">100K+</div><div class="l">Subscribers grown</div></div>
-      <div class="stat"><div class="n">15+</div><div class="l">Years on camera</div></div>
-      <div class="stat"><div class="n">15+</div><div class="l">Years in marketing</div></div>
-      <div class="stat"><div class="n">50+</div><div class="l">Brands &amp; clients</div></div>
+      <a href="https://www.youtube.com/@ericstechworld" target="_blank" rel="noopener" class="btn btn-primary mono">▶ Subscribe on YouTube</a>
     </div>
   </div>
 </header>
 
-<!-- VIDEO -->
-<section class="blk" id="video">
+<section class="blk" id="videos">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Video, Editing &amp; Acting</h2>
-      <p>Concept to final cut. I write, film, edit, and act, for commercials, brand films, and social shorts.</p>
-      <div class="sec-note mono">A selection of my work. I've produced many more videos for these and other brands.</div>
+      <span class="tag mono">01</span>
+      <h2>Latest videos</h2>
+      <div class="line"></div>
     </div>
-    <div class="cat-carousel">
-      <button class="cat-arrow disabled" aria-label="Previous" onclick="catSlide('video',-1)">‹</button>
-      <div class="cat-viewport"><div class="cat-track" id="track-video">
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick="playVideo(this,'Vgn5s1XaRc8')"><div class="thumb-dim"><img src="https://i.ytimg.com/vi/Vgn5s1XaRc8/hqdefault.jpg" alt="Beni Robot"></div><div class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-          <div class="proj-body"><div class="client mono">MONDO / BENI ROBOT</div><h3>Product Feature</h3><div class="role mono">concept · film · edit · host</div><p>A feature on the Beni camera robot.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick="playVideo(this,'lISTbmyM9Co')"><div class="thumb-dim"><img src="https://i.ytimg.com/vi/lISTbmyM9Co/hqdefault.jpg" alt="Star Trek"></div><div class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-          <div class="proj-body"><div class="client mono">STAR TREK / PARAMOUNT</div><h3>Mobile Game Ad</h3><div class="role mono">concept · script · film · edit · act</div><p>Paramount gave me free rein to produce a spot for their new Star Trek mobile game.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick="playVideo(this,'x2TOJ3I1IpI')"><div class="thumb-dim"><img src="https://i.ytimg.com/vi/x2TOJ3I1IpI/hqdefault.jpg" alt="Factor 75"></div><div class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-          <div class="proj-body"><div class="client mono">FACTOR 75</div><h3>Ad / Commercial (Short)</h3><div class="role mono">concept · script · film · edit · act</div><p>A meal-delivery promo with one direction: get as weird as I wanted. So I did.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick="playVideo(this,'x-E-hxISLoo')"><div class="thumb-dim"><img src="https://i.ytimg.com/vi/x-E-hxISLoo/hqdefault.jpg" alt="RumbleOn"></div><div class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-          <div class="proj-body"><div class="client mono">RUMBLEON</div><h3>Ad / Commercial</h3><div class="role mono">concept · act · channel strategy</div><p>A spot for their vehicle marketplace, while growing their channel from 700 to 5,000+ subs in under 4 months.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick="playVideo(this,'AISLWKcmqeg')"><div class="thumb-dim"><img src="https://i.ytimg.com/vi/AISLWKcmqeg/hqdefault.jpg" alt="Stellar"></div><div class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-          <div class="proj-body"><div class="client mono">STELLAR HOME MAINTENANCE</div><h3>Internal Industrial Film</h3><div class="role mono">script · film · edit · host</div><p>Worked with C-suite leadership to script, shoot, and host a company kick-off video.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick="playVideo(this,'CH5xEOk-ge8')"><div class="thumb-dim"><img src="https://i.ytimg.com/vi/CH5xEOk-ge8/hqdefault.jpg" alt="Plaud"></div><div class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-          <div class="proj-body"><div class="client mono">PLAUD AI</div><h3>Ad / Commercial (Short)</h3><div class="role mono">concept · script · film · edit · act</div><p>A promo for Plaud's AI voice-transcription device.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick="playVideo(this,'FFzZ7-SFJb4')"><div class="thumb-dim"><img src="https://i.ytimg.com/vi/FFzZ7-SFJb4/hqdefault.jpg" alt="Mallgrab Coffee"></div><div class="play-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
-          <div class="proj-body"><div class="client mono">MALLGRAB COFFEE CO.</div><h3>Ad / Commercial</h3><div class="role mono">collaboration · film · edit</div><p>Teamed up with filmmaker Nigel Barros for Mallgrab's new coffee drop.</p></div>
-        </div></div>
-      </div></div>
-      <button class="cat-arrow" aria-label="More" onclick="catSlide('video',1)">›</button>
-    </div>
-    <div style="margin-top:24px"><a href="https://www.youtube.com/@ericstechworld" target="_blank" rel="noopener" class="btn btn-ghost mono">More on YouTube ↗</a></div>
-  </div>
-</section>
-
-<!-- SALES / ADS / DESIGN -->
-<section class="blk" id="design">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2>Sales, Ads &amp; Design</h2>
-      <p>Brochures, sales decks, infographics, social campaigns, and brand identities that look good and actually convert.</p>
-      <div class="sec-note mono">A sample of ongoing design work across many brands and campaigns.</div>
-    </div>
-    <div class="cat-carousel">
-      <button class="cat-arrow disabled" aria-label="Previous" onclick="catSlide('design',-1)">‹</button>
-      <div class="cat-viewport"><div class="cat-track" id="track-design">
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/ddrJxKD.jpeg","https://i.imgur.com/shtTez1.jpeg"])'><span class="gallery-badge mono">2 ▸</span><img src="https://i.imgur.com/ddrJxKD.jpeg" alt="Stellar trifold"></div>
-          <div class="proj-body"><div class="client mono">STELLAR HOME MAINTENANCE</div><h3>Tri-Fold Brochure</h3><div class="role mono">design · layout · copy</div><p>A print brochure for their field sales team, covering service area, app, and scheduling.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/v0bK3H2.jpeg"])'><img src="https://i.imgur.com/v0bK3H2.jpeg" alt="Stellar case study"></div>
-          <div class="proj-body"><div class="client mono">STELLAR HOME MAINTENANCE</div><h3>Case Study Infographic</h3><div class="role mono">design · data viz · copy</div><p>An integration case study built around their API, ROI, and resident experience.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/GMJ5o7J.png","https://i.imgur.com/jr4r642.png"])'><span class="gallery-badge mono">2 ▸</span><img src="https://i.imgur.com/GMJ5o7J.png" alt="FarmRanchStore trifold"></div>
-          <div class="proj-body"><div class="client mono">FARMRANCHSTORE.COM</div><h3>Tri-Fold Brochure</h3><div class="role mono">design · layout · copy</div><p>A print trifold for the farm &amp; ranch supply brand.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/OUZWJqg.png","https://i.imgur.com/8sbbrPG.png"])'><span class="gallery-badge mono">2 ▸</span><img src="https://i.imgur.com/OUZWJqg.png" alt="Cannon Republic handouts"></div>
-          <div class="proj-body"><div class="client mono">CANNON REPUBLIC</div><h3>Product Handouts</h3><div class="role mono">design · layout</div><p>Print handouts for Cannon Republic products.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/FDh92Df.jpeg","https://i.imgur.com/BTXFq3s.jpeg"])'><span class="gallery-badge mono">2 ▸</span><img src="https://i.imgur.com/FDh92Df.jpeg" alt="Five x 5 designs"></div>
-          <div class="proj-body"><div class="client mono">FIVE x 5</div><h3>BI Product Launch Designs</h3><div class="role mono">design · social · brand</div><p>Launch visuals and social assets for their new business-intelligence tool, "Insights."</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/kQ2uEj5.jpeg","https://i.imgur.com/XMRx2Yr.jpeg","https://i.imgur.com/9voME2H.jpeg","https://i.imgur.com/QesjAdG.jpeg","https://i.imgur.com/BdswdWo.jpeg","https://i.imgur.com/tLqOh29.jpeg"])'><span class="gallery-badge mono">6 ▸</span><img src="https://i.imgur.com/kQ2uEj5.jpeg" alt="Compass Realty carousel"></div>
-          <div class="proj-body"><div class="client mono">COMPASS REALTY</div><h3>Social Carousel</h3><div class="role mono">design · copy</div><p>A six-slide social carousel designed for engagement and shares.</p></div>
-        </div></div>
-      </div></div>
-      <button class="cat-arrow" aria-label="More" onclick="catSlide('design',1)">›</button>
+    <div class="vid-panel" id="vid-etw" data-playlist="PLC_X1O0yNkfTPBVDezefBILpkI6IDSnrk" data-label="Eric's Tech World">
+      <div class="vid-loading mono">Loading latest videos…</div>
     </div>
   </div>
 </section>
 
-<!-- WEBSITES -->
-<section class="blk" id="web">
+<section class="blk" id="articles">
   <div class="wrap">
     <div class="sec-head">
-      <h2>Websites, Coding &amp; Analytics</h2>
-      <p>Full website builds, including logo and brand creation, for nonprofits, local businesses, and consultancies. Designed to tell each brand's story and be effortless to use.</p>
-      <div class="sec-note mono">A selection of client builds, including logo and brand creation.</div>
+      <span class="tag mono">02</span>
+      <h2>Tech &amp; robot articles</h2>
+      <div class="line"></div>
     </div>
-    <div class="cat-carousel">
-      <button class="cat-arrow disabled" aria-label="Previous" onclick="catSlide('web',-1)">‹</button>
-      <div class="cat-viewport"><div class="cat-track" id="track-web">
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/bBer3yf.jpeg"])'><img src="https://i.imgur.com/bBer3yf.jpeg" alt="Stellar website"></div>
-          <div class="proj-body"><div class="client mono">STELLAR HOME MAINTENANCE</div><h3>Website &amp; Brand</h3><div class="role mono">design · build · brand</div><p>Full site build for the tech-enabled home maintenance company.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/Xn6YvBX.jpeg"])'><img src="https://i.imgur.com/Xn6YvBX.jpeg" alt="Wahlberg Texas website"></div>
-          <div class="proj-body"><div class="client mono">WAHLBERG TEXAS</div><h3>Website &amp; Brand</h3><div class="role mono">design · build · brand</div><p>Full e-commerce site build for the Wahlberg Texas brand.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/kJMLmvO.jpeg"])'><img src="https://i.imgur.com/kJMLmvO.jpeg" alt="Human Rights Day website"></div>
-          <div class="proj-body"><div class="client mono">HUMAN RIGHTS DAY</div><h3>Website &amp; Brand</h3><div class="role mono">design · build · brand</div><p>Site build for the Human Rights Day organization.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/yFJJE4d.jpeg"])'><img src="https://i.imgur.com/yFJJE4d.jpeg" alt="Inspect Tech Pro website"></div>
-          <div class="proj-body"><div class="client mono">INSPECT TECH PRO</div><h3>Website &amp; Brand</h3><div class="role mono">design · build · brand</div><p>Full site build for the inspection technology company.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/KoNbrmh.jpeg"])'><img src="https://i.imgur.com/KoNbrmh.jpeg" alt="Everglow Outdoor website"></div>
-          <div class="proj-body"><div class="client mono">EVERGLOW OUTDOOR</div><h3>Website &amp; Brand</h3><div class="role mono">design · build · brand</div><p>Full site build for the custom outdoor lighting company.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/ffg30wX.png"])'><img src="https://i.imgur.com/ffg30wX.png" alt="Jackalope Construction website"></div>
-          <div class="proj-body"><div class="client mono">JACKALOPE CONSTRUCTION</div><h3>Website &amp; Brand</h3><div class="role mono">design · build · brand</div><p>Full site build for the construction company.</p></div>
-        </div></div>
-        <div class="cat-item"><div class="proj">
-          <div class="proj-media clickable" onclick='openGallery(["https://i.imgur.com/yP1vERv.jpeg"])'><img src="https://i.imgur.com/yP1vERv.jpeg" alt="Asmus Consulting website"></div>
-          <div class="proj-body"><div class="client mono">ASMUS CONSULTING</div><h3>Website &amp; Brand</h3><div class="role mono">design · build · brand</div><p>A fresh digital start for the consulting firm.</p></div>
-        </div></div>
-      </div></div>
-      <button class="cat-arrow" aria-label="More" onclick="catSlide('web',1)">›</button>
+    <div class="art-carousel">
+      <button class="car-arrow art-prev disabled" aria-label="Previous" onclick="artSlide(-1)">‹</button>
+      <div class="art-viewport">
+        <div class="art-track" id="art-track"><div class="art-loading mono">Loading articles…</div></div>
+      </div>
+      <button class="car-arrow art-next" aria-label="More" onclick="artSlide(1)">›</button>
     </div>
-  </div>
-</section>
-
-<!-- COPY / WRITING -->
-<section class="blk" id="writing">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2>Copy &amp; Writing</h2>
-      <p>Articles, ad copy, SOPs, email campaigns, and ghostwritten content that gets read and remembered.</p>
-      <div class="sec-note mono">One sample per brand. I've written multiple articles per month for these clients and others. (More samples available upon request.)</div>
-    </div>
-    <div class="linklist">
-      <a class="linkrow" href="https://fx5.com/acsa-2025-a-recap-from-the-expo-floor/" target="_blank" rel="noopener">
-        <div><h4>ACSA 2025: A Recap From the Expo Floor</h4><div class="meta mono">Five x 5 · client article</div></div>
-        <span class="go mono">read ↗</span>
-      </a>
-      <a class="linkrow" href="https://farmranchstore.com/blogs/information/how-to-set-up-a-cattle-handling-system-that-works-for-a-one-or-two-man-operation" target="_blank" rel="noopener">
-        <div><h4>How to Set Up a Cattle Handling System for a One or Two-Man Operation</h4><div class="meta mono">FarmRanchStore.com · client article</div></div>
-        <span class="go mono">read ↗</span>
-      </a>
-      <a class="linkrow" href="index.html#contact">
-        <div><h4>Client SOPs &amp; Email Campaigns</h4><div class="meta mono">available upon request</div></div>
-        <span class="go mono">request →</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- SPECIALTIES -->
-<section class="blk" id="specialties">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2>What I do</h2>
-      <p>A full-stack creator's toolkit, strategy, production, and execution across every channel.</p>
-    </div>
-    <div class="spec-grid">
-      <div class="spec"><div class="ico mono">▸ growth</div><h3>YouTube Growth</h3><p>Grew Eric's Tech World from zero to 28K+ subs, and RumbleOn from ~300 to 6,000+ in four months. Sustainable strategy that keeps people coming back.</p></div>
-      <div class="spec"><div class="ico mono">▸ web</div><h3>Website Design</h3><p>Clean, story-driven sites for nonprofits, local services, and consultancies. Intuitive to use, built as a true extension of the brand.</p></div>
-      <div class="spec"><div class="ico mono">▸ ads</div><h3>Lead Gen &amp; Ads</h3><p>Google and Meta ad strategies that speak to the right audience and drive real clicks, not just impressions.</p></div>
-      <div class="spec"><div class="ico mono">▸ video</div><h3>Video Production</h3><p>Scripts, shots, and edits that mean something. Concept to final cut, with a love for the creative process.</p></div>
-      <div class="spec"><div class="ico mono">▸ ops</div><h3>Team &amp; Ops</h3><p>Clear communication and smart systems. Launched startups and managed strategy at 5miles and Stellar Home Maintenance.</p></div>
-      <div class="spec"><div class="ico mono">▸ social</div><h3>Social Media</h3><p>15+ years crafting content that connects, sharp visuals, clear messaging, and strategy true to the brand.</p></div>
-      <div class="spec"><div class="ico mono">▸ design</div><h3>Graphic Design</h3><p>Logos, brand identities, and digital illustration that look good and actually say something.</p></div>
-      <div class="spec"><div class="ico mono">▸ acting</div><h3>On-Camera &amp; Voiceover</h3><p>15+ years and national commercials (Tide, RumbleOn) to stage roles. Energy, versatility, and real storytelling.</p></div>
-      <div class="spec"><div class="ico mono">▸ copy</div><h3>Content &amp; Copywriting</h3><p>Blog posts, ad copy, and ghostwritten content shaped to get read, from fast-paced teams at 5miles and Stellar.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="cta-band">
-  <div class="wrap">
-    <h2>Let's tell your story <span class="hl">together.</span></h2>
-    <p>Whether it's a website, a campaign, a video, or all of it, I'd love to hear what you're working on and how I can help.</p>
-    <div class="cta-row">
-      <a href="index.html#contact" class="btn btn-primary mono">Let's work together</a>
-      <a href="https://www.linkedin.com/in/ericjkuhns/" target="_blank" rel="noopener" class="btn btn-ghost mono">Connect on LinkedIn ↗</a>
+    <div style="margin-top:24px">
+      <a href="blog/index.html" class="btn btn-ghost mono">Read all posts →</a>
     </div>
   </div>
 </section>
 
 <div id="site-footer"></div>
 
-<!-- lightbox -->
-<div class="lightbox" id="lightbox">
-  <div class="lb-inner">
-    <button class="lb-close mono" onclick="closeGallery()">[ close ✕ ]</button>
-    <img class="lb-img" id="lb-img" src="" alt="">
-    <button class="lb-nav lb-prev" onclick="lbNav(-1)">‹</button>
-    <button class="lb-nav lb-next" onclick="lbNav(1)">›</button>
-    <div class="lb-count mono" id="lb-count"></div>
-  </div>
-</div>
-
 <script>
-  // hero typewriter
+  // ---- matrix rain background ----
   (function(){
-    const typed = document.getElementById('hero-typed');
-    const cursor = document.getElementById('hero-cursor');
-    if(!typed) return;
-    const part1 = "Whether I'm building a website, filming a video, or designing an ad, ";
-    const part2 = "storytelling comes first.";
-    const full = part1 + part2;
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function render(n){
-      if(n <= part1.length){
-        typed.innerHTML = escapeHtml(full.slice(0, n));
-      } else {
-        typed.innerHTML = escapeHtml(part1) + '<span class="hl">' + escapeHtml(full.slice(part1.length, n)) + '</span>';
-      }
+    var canvas = document.getElementById('matrix-canvas');
+    if(!canvas) return;
+    var ctx = canvas.getContext('2d');
+    if(!ctx) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var W, H, cols, drops, fontSize = 15;
+    var chars = "アイウエオカキクケコサシスセソ0123456789ABCDEFｦｧｨｩｪ<>{}[]/*-+=".split("");
+    function resize(){
+      var host = canvas.parentElement.getBoundingClientRect();
+      W = host.width; H = host.height;
+      var DPR = Math.min(window.devicePixelRatio||1, 2);
+      canvas.width = W*DPR; canvas.height = H*DPR;
+      canvas.style.width = W+'px'; canvas.style.height = H+'px';
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+      cols = Math.floor(W / fontSize);
+      drops = [];
+      for(var i=0;i<cols;i++){ drops[i] = Math.random()*-H; }
     }
-    function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-    if(reduce){ render(full.length); return; }
-    let i = 0;
-    (function tick(){
-      if(i <= full.length){
-        render(i);
-        i++;
-        // slight variance for a natural typing feel
-        setTimeout(tick, i < part1.length ? 26 : 42);
+    function frame(){
+      ctx.fillStyle = 'rgba(10,12,10,0.08)';
+      ctx.fillRect(0,0,W,H);
+      ctx.font = fontSize + "px 'JetBrains Mono', monospace";
+      for(var i=0;i<cols;i++){
+        var ch = chars[Math.floor(Math.random()*chars.length)];
+        var x = i*fontSize, y = drops[i];
+        // leading char brighter
+        ctx.fillStyle = 'rgba(150,255,180,0.9)';
+        ctx.fillText(ch, x, y);
+        ctx.fillStyle = 'rgba(57,255,100,0.35)';
+        ctx.fillText(chars[Math.floor(Math.random()*chars.length)], x, y - fontSize);
+        if(y > H && Math.random() > 0.975){ drops[i] = Math.random()*-40; }
+        drops[i] += fontSize * 0.6;
       }
-    })();
+      requestAnimationFrame(frame);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    if(!reduce){ frame(); }
+    else { ctx.fillStyle='rgba(57,255,100,0.15)'; ctx.font=fontSize+"px monospace"; for(var i=0;i<cols;i++){ ctx.fillText(chars[i%chars.length], i*fontSize, (i*37)%H); } }
   })();
 
-  // category carousels
-  function catSlide(name, dir){
-    const track = document.getElementById('track-'+name);
-    const f = track.querySelector('.cat-item');
-    if(!f) return;
-    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap || 16) || 16;
-    const step = f.getBoundingClientRect().width + gap;
-    const per = Math.max(1, Math.round(track.getBoundingClientRect().width / step));
-    track.scrollBy({left: dir*step*per, behavior:'smooth'});
-  }
-  document.querySelectorAll('.cat-track').forEach(function(track){
-    function upd(){
-      const carousel = track.closest('.cat-carousel');
-      const prev = carousel.querySelector('.cat-arrow:first-child');
-      const next = carousel.querySelector('.cat-arrow:last-child');
-      const x = track.scrollLeft, maxS = track.scrollWidth - track.getBoundingClientRect().width;
-      prev.classList.toggle('disabled', x <= 2);
-      next.classList.toggle('disabled', x >= maxS - 2);
-    }
-    track.addEventListener('scroll', upd, {passive:true});
-    window.addEventListener('resize', upd);
-    setTimeout(upd, 60);
-  });
+  // ---- typing page title ----
+  (function(){
+    var el = document.getElementById('tw-typed');
+    if(!el) return;
+    var text = "Eric's Tech World";
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){ el.textContent = text; return; }
+    var i = 0;
+    (function tick(){ if(i<=text.length){ el.textContent = text.slice(0,i); i++; setTimeout(tick, 70); } })();
+  })();
 
-  // video play
-  function playVideo(el, id){
-    el.outerHTML = '<div class="proj-media"><div class="embed"><iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div></div>';
+  // ---- shared helpers ----
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+  function thumb(id,q){return "https://i.ytimg.com/vi/"+id+"/"+(q||"hqdefault")+".jpg";}
+  const YT_PROXY = "https://youtube-feed.silent-hall-684c.workers.dev/?url=";
+  const BLOG_ID = "ericjkuhns.blogspot.com";
+
+  // ================= VIDEOS =================
+  function feedUrl(pl){ return "https://www.youtube.com/feeds/videos.xml?playlist_id=" + pl; }
+  function playFeature(el, id, title){
+    el.innerHTML = '<div class="embed"><iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1" title="'+esc(title)+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>';
+  }
+  function renderVideos(panel, videos){
+    if(!videos.length){ return videoFallback(panel); }
+    const label = panel.getAttribute('data-label');
+    const pl = panel.getAttribute('data-playlist');
+    const feat = videos[0];
+    const rest = videos.slice(1);
+    const wrap = document.createElement('div');
+    const f = document.createElement('div'); f.className='vid-feature';
+    const ft = document.createElement('div'); ft.className='vid-thumb';
+    ft.style.backgroundImage = "url('"+thumb(feat.id,'maxresdefault')+"'),url('"+thumb(feat.id,'hqdefault')+"')";
+    ft.innerHTML = '<div class="vid-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="vid-title">'+esc(feat.title)+'</div>';
+    ft.onclick = function(){ playFeature(f, feat.id, feat.title); };
+    f.appendChild(ft);
+    const sub = document.createElement('div'); sub.className='vid-sub mono';
+    sub.innerHTML = '▸ Latest from <b>'+esc(label)+'</b>'; f.appendChild(sub);
+    wrap.appendChild(f);
+    const car = document.createElement('div'); car.className='vid-carousel';
+    const prev = document.createElement('button'); prev.className='car-arrow'; prev.innerHTML='‹'; prev.setAttribute('aria-label','Previous');
+    const next = document.createElement('button'); next.className='car-arrow'; next.innerHTML='›'; next.setAttribute('aria-label','More');
+    const vp = document.createElement('div'); vp.className='car-viewport';
+    const track = document.createElement('div'); track.className='car-track';
+    rest.forEach(function(v){
+      const m = document.createElement('div'); m.className='vid-mini car-item';
+      m.innerHTML = '<div class="m-thumb" style="background-image:url(\''+thumb(v.id,'mqdefault')+'\')"></div><div class="m-title">'+esc(v.title)+'</div>';
+      m.onclick = function(){ playFeature(f, v.id, v.title); window.scrollTo({top:f.getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'}); };
+      track.appendChild(m);
+    });
+    const all = document.createElement('a'); all.className='vid-mini car-item vid-all';
+    all.href="https://www.youtube.com/playlist?list="+pl; all.target="_blank"; all.rel="noopener";
+    all.innerHTML='<div class="m-thumb all-thumb"><span>▸</span></div><div class="m-title">See all videos on YouTube</div>';
+    track.appendChild(all);
+    vp.appendChild(track); car.appendChild(prev); car.appendChild(vp); car.appendChild(next);
+    wrap.appendChild(car);
+    const cap = document.createElement('div'); cap.className='vid-cap mono'; cap.innerHTML='Auto-updates from the channel playlist.'; wrap.appendChild(cap);
+    panel.innerHTML=''; panel.appendChild(wrap);
+    setupCar(track, prev, next);
+  }
+  function setupCar(track, prev, next){
+    function step(){ const f=track.querySelector('.car-item'); if(!f) return 0; const gap=parseFloat(getComputedStyle(track).columnGap||getComputedStyle(track).gap||0)||0; return f.getBoundingClientRect().width+gap; }
+    function per(){ return Math.max(1, Math.round(track.parentElement.getBoundingClientRect().width/step())); }
+    function maxS(){ return track.scrollWidth - track.parentElement.getBoundingClientRect().width; }
+    function upd(){ const x=track.scrollLeft; prev.classList.toggle('disabled',x<=2); next.classList.toggle('disabled',x>=maxS()-2); }
+    prev.onclick=function(){ track.scrollBy({left:-step()*per(),behavior:'smooth'}); };
+    next.onclick=function(){ track.scrollBy({left:step()*per(),behavior:'smooth'}); };
+    track.addEventListener('scroll',upd,{passive:true}); window.addEventListener('resize',upd); setTimeout(upd,60);
+  }
+  function videoFallback(panel){
+    const pl = panel.getAttribute('data-playlist');
+    panel.innerHTML = '<div class="embed"><iframe src="https://www.youtube.com/embed/videoseries?list='+pl+'" title="playlist" allow="encrypted-media;picture-in-picture" allowfullscreen></iframe></div><div class="vid-cap mono">▸ Newest upload plays first. <a href="https://www.youtube.com/playlist?list='+pl+'" target="_blank" rel="noopener" style="color:var(--neon)">See all videos on YouTube →</a></div>';
+  }
+  function loadVideos(panel){
+    const pl = panel.getAttribute('data-playlist');
+    const url = YT_PROXY + encodeURIComponent(feedUrl(pl));
+    let done=false;
+    const controller = ("AbortController" in window) ? new AbortController() : null;
+    const timer = setTimeout(function(){ if(done)return; done=true; if(controller)controller.abort(); videoFallback(panel); }, 6000);
+    fetch(url, controller?{signal:controller.signal}:{})
+      .then(function(r){ if(!r.ok) throw new Error('http'); return r.text(); })
+      .then(function(xml){
+        if(done) return;
+        const doc = new DOMParser().parseFromString(xml,"text/xml");
+        if(doc.getElementsByTagName('parsererror').length) throw new Error('parse');
+        const entries = Array.from(doc.getElementsByTagName('entry'));
+        const vids = entries.map(function(e){ const idEl=e.getElementsByTagName('yt:videoId')[0]||e.getElementsByTagName('videoId')[0]; const tEl=e.getElementsByTagName('title')[0]; return {id:idEl?idEl.textContent:null,title:tEl?tEl.textContent:''}; }).filter(function(v){return v.id;});
+        if(!vids.length) throw new Error('empty');
+        done=true; clearTimeout(timer); renderVideos(panel, vids);
+      })
+      .catch(function(){ if(done)return; done=true; clearTimeout(timer); videoFallback(panel); });
   }
 
-  // lightbox gallery
-  let lbImages = [], lbIndex = 0;
-  function openGallery(images){
-    lbImages = images; lbIndex = 0;
-    document.getElementById('lb-img').src = images[0];
-    document.getElementById('lb-count').textContent = images.length > 1 ? ('1 / ' + images.length) : '';
-    document.querySelector('.lb-prev').style.display = images.length > 1 ? 'flex' : 'none';
-    document.querySelector('.lb-next').style.display = images.length > 1 ? 'flex' : 'none';
-    document.getElementById('lightbox').classList.add('open');
-    document.body.style.overflow = 'hidden';
+  // ================= ARTICLES (Blogger tech label) =================
+  function firstImage(html){ const m=(html||'').match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:''; }
+  function postSlug(entry){ let alt=(entry.link||[]).find(function(l){return l.rel==='alternate';}); let href=alt?alt.href:''; let m=href.match(/\/(\d{4})\/(\d{2})\/([^\/]+)\.html/); return m?(m[1]+'/'+m[2]+'/'+m[3]):encodeURIComponent(entry.id.$t); }
+  function fmtDate(iso){ try{ return new Date(iso).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }catch(e){ return ''; } }
+  const artTrack = document.getElementById('art-track');
+  const CB = 'techArticles_' + Math.floor(Math.random()*1e9);
+  window[CB] = function(json){
+    const entries = (json.feed && json.feed.entry) ? json.feed.entry : [];
+    if(!entries.length){ artTrack.innerHTML = '<div class="art-loading mono">No tech articles yet.</div>'; return; }
+    artTrack.innerHTML = '';
+    entries.forEach(function(e){
+      const title = e.title ? e.title.$t : 'Untitled';
+      const content = (e.content && e.content.$t) || (e.summary && e.summary.$t) || '';
+      const date = e.published ? e.published.$t : '';
+      const img = firstImage(content);
+      const cats = (e.category||[]).map(function(c){ return c.term; });
+      const slug = postSlug(e);
+      const a = document.createElement('a');
+      a.className='art-card'; a.href='blog/post.html?p='+encodeURIComponent(slug);
+      const thumbStyle = img ? (' style="background-image:url(\''+img+'\')"') : '';
+      const thumbText = img ? '' : '[ tech ]';
+      a.innerHTML = '<div class="art-thumb"'+thumbStyle+'>'+thumbText+'</div>'+
+        '<div class="art-body"><span class="date mono">'+fmtDate(date)+'</span><h3>'+esc(title)+'</h3>'+
+        (cats.length?'<span class="cat mono">'+esc(cats[0])+'</span>':'')+'</div>';
+      artTrack.appendChild(a);
+    });
+    setupArt();
+  };
+  let artTrackEl;
+  function setupArt(){ artTrackEl = artTrack; artUpd(); }
+  function artUpd(){
+    const prev=document.querySelector('.art-prev'), next=document.querySelector('.art-next');
+    if(!artTrack) return;
+    const x=artTrack.scrollLeft, maxS=artTrack.scrollWidth-artTrack.parentElement.getBoundingClientRect().width;
+    prev.classList.toggle('disabled',x<=2); next.classList.toggle('disabled',x>=maxS-2);
   }
-  function closeGallery(){
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  function lbNav(dir){
-    lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
-    document.getElementById('lb-img').src = lbImages[lbIndex];
-    document.getElementById('lb-count').textContent = (lbIndex+1) + ' / ' + lbImages.length;
-  }
-  document.getElementById('lightbox').addEventListener('click', function(e){
-    if(e.target === this) closeGallery();
-  });
-  document.addEventListener('keydown', function(e){
-    if(!document.getElementById('lightbox').classList.contains('open')) return;
-    if(e.key === 'Escape') closeGallery();
-    if(e.key === 'ArrowLeft' && lbImages.length>1) lbNav(-1);
-    if(e.key === 'ArrowRight' && lbImages.length>1) lbNav(1);
+  window.artSlide = function(dir){
+    const f=artTrack.querySelector('.art-card'); if(!f) return;
+    const gap=parseFloat(getComputedStyle(artTrack).columnGap||getComputedStyle(artTrack).gap||16)||16;
+    const step=f.getBoundingClientRect().width+gap;
+    const per=Math.max(1,Math.round(artTrack.parentElement.getBoundingClientRect().width/step));
+    artTrack.scrollBy({left:dir*step*per,behavior:'smooth'});
+  };
+  if(artTrack){ artTrack.addEventListener('scroll',artUpd,{passive:true}); window.addEventListener('resize',artUpd); }
+
+  // ---- kick off ----
+  document.addEventListener('DOMContentLoaded', function(){
+    loadVideos(document.getElementById('vid-etw'));
+    const s = document.createElement('script');
+    s.src = 'https://'+BLOG_ID+'/feeds/posts/default/-/tech?alt=json-in-script&max-results=15&callback='+CB;
+    s.onerror = function(){ if(artTrack) artTrack.innerHTML='<div class="art-loading mono">Couldn\'t load articles right now.</div>'; };
+    document.body.appendChild(s);
   });
 </script>
-<script src="site.js"></script>
 
+<script src="site.js?v=2"></script>
 </body>
 </html>
