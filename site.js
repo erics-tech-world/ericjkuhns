@@ -37,10 +37,9 @@
     '</div>'+
   '</nav>';
 
-  /* ---------- SEARCH OVERLAY ---------- */
-  var search =
-  '<div class="site-search" id="site-search" style="display:none">'+
-    '<div class="search-inner">'+
+  /* ---------- SEARCH OVERLAY (built on demand, not injected on load) ---------- */
+  function buildSearchHTML(){
+    return '<div class="search-inner">'+
       '<div class="search-prompt mono">~/eric $ search</div>'+
       '<div class="search-box">'+
         '<span class="search-ico mono">▸</span>'+
@@ -49,8 +48,8 @@
       '</div>'+
       '<div class="search-results" id="site-search-results"></div>'+
       '<div class="search-hint mono">Press <b>enter</b> to search the site · <b>esc</b> to close</div>'+
-    '</div>'+
-  '</div>';
+    '</div>';
+  }
 
   /* ---------- FOOTER ---------- */
   var footer =
@@ -97,7 +96,7 @@
   function inject(){
     var navSlot = document.getElementById('site-nav');
     var footSlot = document.getElementById('site-footer');
-    if(navSlot) navSlot.outerHTML = nav + search;
+    if(navSlot) navSlot.outerHTML = nav;
     if(footSlot) footSlot.outerHTML = footer;
 
     // let a page override the logo text (e.g. Eric's Tech World page)
@@ -105,10 +104,6 @@
       var lg = document.getElementById('site-logo');
       if(lg) lg.innerHTML = S.logo + '<span class="logo-caret">_</span>';
     }
-
-    // HARD GUARANTEE: search overlay must start closed, no matter what.
-    var sb = document.getElementById('site-search');
-    if(sb){ sb.classList.remove('open'); sb.style.display = 'none'; }
   }
 
   if(document.readyState === 'loading'){
@@ -148,24 +143,23 @@
   ];
 
   window.siteOpenSearch = function(){
-    var box = document.getElementById('site-search');
-    if(!box) return;
-    box.style.display = 'flex';
-    box.classList.add('open');
+    // if already open, do nothing
+    if(document.getElementById('site-search')) return;
+    var box = document.createElement('div');
+    box.className = 'site-search open';
+    box.id = 'site-search';
+    box.innerHTML = buildSearchHTML();
+    document.body.appendChild(box);
     document.body.style.overflow = 'hidden';
+    // clicking the dark backdrop closes
+    box.addEventListener('click', function(e){ if(e.target === box) window.siteCloseSearch(); });
     var inp = document.getElementById('site-search-input');
-    setTimeout(function(){ inp && inp.focus(); }, 60);
+    setTimeout(function(){ inp && inp.focus(); }, 40);
   };
   window.siteCloseSearch = function(){
     var box = document.getElementById('site-search');
-    if(!box) return;
-    box.classList.remove('open');
-    box.style.display = 'none';
+    if(box && box.parentNode){ box.parentNode.removeChild(box); }
     document.body.style.overflow = '';
-    var res = document.getElementById('site-search-results');
-    if(res) res.innerHTML = '';
-    var inp = document.getElementById('site-search-input');
-    if(inp) inp.value = '';
   };
 
   function renderResults(q){
@@ -191,14 +185,14 @@
   });
   document.addEventListener('keydown', function(e){
     var box = document.getElementById('site-search');
-    if(!box) return;
-    if(e.key === 'Escape' && box.classList.contains('open')){ window.siteCloseSearch(); }
+    var isOpen = !!box;
+    if(e.key === 'Escape' && isOpen){ window.siteCloseSearch(); }
     // open with "/" shortcut
-    if(e.key === '/' && !box.classList.contains('open') && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA'){
+    if(e.key === '/' && !isOpen && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA'){
       e.preventDefault(); window.siteOpenSearch();
     }
     // enter -> go to blog search for the query
-    if(e.key === 'Enter' && box.classList.contains('open')){
+    if(e.key === 'Enter' && isOpen){
       var inp = document.getElementById('site-search-input');
       var q = inp ? inp.value.trim() : '';
       if(q){ window.location.href = B + 'blog/index.html?q=' + encodeURIComponent(q); }
