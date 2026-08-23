@@ -91,8 +91,8 @@
   .art-loading{font-family:'JetBrains Mono',monospace;color:var(--muted);padding:20px 0}
 
   /* SKATE DICE */
-  .dice-section{background:var(--panel2)}
-  .dice-app{max-width:640px;margin:0 auto;text-align:center;border:1px solid var(--line);border-radius:8px;padding:40px 24px;background:linear-gradient(180deg,#0c100c,#080a08)}
+  .dice-section{background:linear-gradient(180deg,#0e130e,#0a0d0a)}
+  .dice-app{max-width:660px;margin:0 auto;text-align:center;border:1px solid var(--neon-dim);border-radius:8px;padding:40px 24px;background:linear-gradient(180deg,#12181280,#0d110d);box-shadow:0 0 60px rgba(57,255,100,.06)}
   .dice-app .d-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:5px;color:var(--neon);margin-bottom:6px}
   .dice-app h3{font-size:44px;letter-spacing:6px;line-height:1;font-weight:800;margin-bottom:6px}
   .dice-app .d-divider{width:50px;height:2px;background:var(--neon);margin:12px auto 24px}
@@ -100,22 +100,26 @@
   .dice-tab{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.5px;padding:9px 16px;border:1px solid var(--line);border-radius:2px;background:var(--panel);color:var(--muted);cursor:pointer;transition:all .2s}
   .dice-tab:hover{color:var(--ink);border-color:var(--neon-dim)}
   .dice-tab.active{background:var(--neon);color:#04160a;border-color:var(--neon);font-weight:700}
+  .dice-toggles{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+  .d-toggle{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+  .d-toggle input{accent-color:var(--neon);width:15px;height:15px;cursor:pointer}
+  .d-toggle:hover{color:var(--ink)}
   .dice-row{display:flex;gap:36px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
   .die-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
-  .die-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--muted)}
-  .die{width:140px;height:140px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:#141814;border:0;display:flex;align-items:center;justify-content:center;transition:background .1s}
-  .die.rolling{background:#0f2a17 !important}
-  .die-value{font-family:'JetBrains Mono',monospace;font-size:22px;letter-spacing:1px;color:var(--ink);text-align:center;padding:0 16px;line-height:1.2;transition:all .1s}
-  .die-value.rolling{animation:diceBlink .15s linear infinite;color:var(--neon-dim)}
-  .faces{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;max-width:150px}
-  .face-chip{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:#2c332c;transition:color .3s}
+  .die-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--neon)}
+  .die{width:140px;height:140px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:#1a221a;border:0;display:flex;align-items:center;justify-content:center;transition:background .1s}
+  .die.rolling{background:#164023 !important}
+  .die-value{font-family:'JetBrains Mono',monospace;font-size:20px;letter-spacing:1px;color:var(--ink);text-align:center;padding:0 16px;line-height:1.2;transition:all .1s}
+  .die-value.rolling{animation:diceBlink .15s linear infinite;color:var(--neon)}
+  .faces{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;max-width:160px}
+  .face-chip{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:#5a6b5a;transition:color .3s}
   .face-chip.active{color:var(--neon)}
   .result-area{min-height:80px;display:flex;align-items:center;justify-content:center;margin-bottom:26px}
   .trick-box{text-align:center;animation:fadeUp .4s ease forwards}
-  .trick-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:var(--muted);margin-bottom:10px}
-  .trick-name{font-size:34px;letter-spacing:4px;color:var(--ink);border:1px solid var(--neon-dim);padding:12px 26px;background:rgba(57,255,100,.05);text-shadow:0 0 30px rgba(57,255,100,.3);display:inline-block;font-weight:700}
+  .trick-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:5px;color:var(--neon);margin-bottom:10px}
+  .trick-name{font-size:30px;letter-spacing:3px;color:var(--ink);border:1px solid var(--neon);padding:14px 28px;background:rgba(57,255,100,.08);text-shadow:0 0 30px rgba(57,255,100,.4);display:inline-block;font-weight:700;line-height:1.2}
   .rolling-text{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:6px;color:var(--neon)}
-  .idle-text{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:5px;color:#2c332c}
+  .idle-text{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:5px;color:var(--muted)}
   #rollBtn{background:var(--neon);color:#04160a;border:2px solid var(--neon);padding:15px 56px;font-family:'JetBrains Mono',monospace;font-size:16px;letter-spacing:4px;font-weight:700;cursor:pointer;transition:all .2s;border-radius:2px}
   #rollBtn:hover{box-shadow:0 0 28px rgba(57,255,100,.5);transform:scale(1.03)}
   #rollBtn:active{transform:scale(.97)}
@@ -231,18 +235,28 @@
       <div class="dice-tabs">
         <button class="dice-tab active" onclick="setDiceCat('general',this)">General</button>
         <button class="dice-tab" onclick="setDiceCat('grinds',this)">Grinds &amp; Slides</button>
+        <button class="dice-tab" onclick="setDiceCat('manuals',this)">Manuals</button>
         <button class="dice-tab" onclick="setDiceCat('vert',this)">Vert &amp; Transition</button>
       </div>
-      <div class="dice-row">
-        <div class="die-wrap">
-          <div class="die-label" id="die1-label">DIE 1 · STANCE</div>
+      <div class="dice-toggles">
+        <label class="d-toggle"><input type="checkbox" id="tog-stance" checked onchange="rebuildFaces()"> Stance die</label>
+        <label class="d-toggle"><input type="checkbox" id="tog-combo" onchange="rebuildFaces()"> Combo (link a 2nd trick)</label>
+      </div>
+      <div class="dice-row" id="dice-row">
+        <div class="die-wrap" id="wrap-stance">
+          <div class="die-label" id="die1-label">STANCE</div>
           <div class="die" id="die1"><div class="die-value" id="val1">—</div></div>
           <div class="faces" id="faces1"></div>
         </div>
-        <div class="die-wrap">
-          <div class="die-label" id="die2-label">DIE 2 · TRICK</div>
+        <div class="die-wrap" id="wrap-trick">
+          <div class="die-label" id="die2-label">TRICK</div>
           <div class="die" id="die2"><div class="die-value" id="val2">—</div></div>
           <div class="faces" id="faces2"></div>
+        </div>
+        <div class="die-wrap" id="wrap-combo" style="display:none">
+          <div class="die-label" id="die3-label">INTO</div>
+          <div class="die" id="die3"><div class="die-value" id="val3">—</div></div>
+          <div class="faces" id="faces3"></div>
         </div>
       </div>
       <div class="result-area">
@@ -263,14 +277,15 @@
 <div id="site-footer"></div>
 
 <script>
-  /* ===== skate hero canvas: moving grind rail + sparks ===== */
+  /* ===== skate hero canvas: ramps, loops, and skateboards that flip ===== */
   (function(){
     var canvas = document.getElementById('skate-canvas');
     if(!canvas) return;
     var ctx = canvas.getContext('2d');
     if(!ctx) return;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var W,H,DPR,t=0,boards=[];
+    var W,H,DPR,t=0,sparks=[],riders=[];
+
     function resize(){
       DPR=Math.min(window.devicePixelRatio||1,2);
       var r=canvas.parentElement.getBoundingClientRect();
@@ -278,81 +293,147 @@
       canvas.width=W*DPR;canvas.height=H*DPR;
       canvas.style.width=W+'px';canvas.style.height=H+'px';
       ctx.setTransform(DPR,0,0,DPR,0,0);
+      buildScene();
     }
-    // draw a tiny skateboard (deck + 2 wheels) at x,y, scaled, rotated
-    function drawBoard(x,y,scale,angle,alpha){
-      ctx.save();
-      ctx.translate(x,y);
-      ctx.rotate(angle);
-      ctx.globalAlpha=alpha;
-      var L=14*scale, Wd=4*scale;
-      // deck (rounded pill)
-      ctx.fillStyle='rgba(57,255,100,0.9)';
+
+    // The ground path: a wavy skatepark silhouette across the width.
+    // Returns {y, angle} at a given x. Built from ramps + a loop.
+    var groundBaseY;
+    var features=[];
+    function buildScene(){
+      groundBaseY = H*0.82;
+      features = [
+        {type:'quarter', x:W*0.12, w:150, h:90, dir:1},   // ramp up
+        {type:'flat',    x:W*0.30, w:120},
+        {type:'loop',    x:W*0.52, r:70},                  // vertical loop
+        {type:'quarter', x:W*0.74, w:160, h:100, dir:-1},  // ramp down
+        {type:'flat',    x:W*0.90, w:140}
+      ];
+    }
+    // ground height at x (a gentle rolling line with ramp bumps)
+    function groundY(x){
+      var y = groundBaseY;
+      // rolling hills
+      y += Math.sin(x*0.006 + 0.5)*10;
+      // ramp bumps
+      for(var i=0;i<features.length;i++){
+        var f=features[i];
+        if(f.type==='quarter'){
+          var d=(x-f.x)/f.w;
+          if(d>-1 && d<1){ y -= f.h * Math.max(0,1-Math.abs(d)) * Math.max(0,1-Math.abs(d)); }
+        }
+      }
+      return y;
+    }
+
+    function drawGround(){
+      ctx.strokeStyle='rgba(57,255,100,0.22)';
+      ctx.lineWidth=2;
       ctx.beginPath();
-      if(ctx.roundRect){ ctx.roundRect(-L/2,-Wd/2,L,Wd,Wd/2); }
-      else { ctx.rect(-L/2,-Wd/2,L,Wd); }
-      ctx.fill();
-      // wheels
-      ctx.fillStyle='rgba(150,255,180,0.95)';
-      var wy=Wd/2+1.4*scale, wr=1.5*scale;
-      [-L*0.28,L*0.28].forEach(function(wx){
-        ctx.beginPath();ctx.arc(wx,wy,wr,0,Math.PI*2);ctx.fill();
+      for(var x=0;x<=W;x+=6){
+        var y=groundY(x);
+        if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      // faint fill under the ground
+      ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();
+      ctx.fillStyle='rgba(57,255,100,0.03)';ctx.fill();
+      // draw the loop(s)
+      features.forEach(function(f){
+        if(f.type==='loop'){
+          var cy=groundY(f.x)-f.r;
+          ctx.strokeStyle='rgba(57,255,100,0.16)';
+          ctx.lineWidth=2;
+          ctx.beginPath();ctx.arc(f.x,cy,f.r,0,Math.PI*2);ctx.stroke();
+        }
       });
+    }
+
+    // a skateboard (deck + 2 wheels)
+    function drawBoard(x,y,scale,angle,alpha){
+      ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.globalAlpha=alpha;
+      var L=16*scale,Wd=4.5*scale;
+      ctx.fillStyle='rgba(57,255,100,0.95)';
+      ctx.beginPath();
+      if(ctx.roundRect){ctx.roundRect(-L/2,-Wd/2,L,Wd,Wd/2);}else{ctx.rect(-L/2,-Wd/2,L,Wd);}
+      ctx.fill();
+      ctx.fillStyle='rgba(160,255,190,0.98)';
+      var wy=Wd/2+1.5*scale,wr=1.7*scale;
+      [-L*0.28,L*0.28].forEach(function(wx){ctx.beginPath();ctx.arc(wx,wy,wr,0,Math.PI*2);ctx.fill();});
       ctx.restore();
     }
-    // diagonal moving "grind lines" with skateboards riding along them
+
+    function spawnRider(){
+      riders.push({ x:-30, speed:1.3+Math.random()*0.7, scale:1.4+Math.random()*0.5,
+                    airborne:false, vy:0, y:0, flip:0, flipSpeed:0, jumpCooldown:0 });
+    }
+
     function frame(){
       t++;
       ctx.clearRect(0,0,W,H);
-      // faint diagonal grid of rails
-      ctx.strokeStyle='rgba(57,255,100,0.05)';
-      ctx.lineWidth=1;
-      var spacing=70, off=(t*0.6)%spacing;
-      for(var x=-H;x<W+H;x+=spacing){
-        ctx.beginPath();
-        ctx.moveTo(x+off,0);
-        ctx.lineTo(x+off+H,H);
-        ctx.stroke();
-      }
-      // a few brighter "active" grind rails with a skateboard riding each
-      for(var g=0;g<3;g++){
-        var yBase=H*(0.3+g*0.24);
-        var slope=-40; // rail drops 40px across the width
-        var angle=Math.atan2(slope,W);
-        ctx.strokeStyle='rgba(57,255,100,0.16)';
-        ctx.lineWidth=2;
-        ctx.beginPath();ctx.moveTo(0,yBase);ctx.lineTo(W,yBase+slope);ctx.stroke();
-        // skateboard position travelling left->right along the rail
-        var speed=1.4+g*0.5;
-        var prog=((t*speed+g*260)%(W+160))-80;
-        var by=yBase+slope*(prog/W);
-        // little dust sparks trailing behind the board
-        if(t%3===0 && prog>0 && prog<W){
-          boards.push({x:prog-6,y:by+2,vx:-(Math.random()*1.2+0.4),vy:(Math.random()-0.5)*1.2,life:1,spark:true});
+
+      // faint diagonal speed lines
+      ctx.strokeStyle='rgba(57,255,100,0.04)';ctx.lineWidth=1;
+      var spacing=80, off=(t*0.5)%spacing;
+      for(var gx=-H;gx<W+H;gx+=spacing){ ctx.beginPath();ctx.moveTo(gx+off,0);ctx.lineTo(gx+off+H,H);ctx.stroke(); }
+
+      drawGround();
+
+      // riders
+      for(var i=riders.length-1;i>=0;i--){
+        var r=riders[i];
+        r.x += r.speed;
+        var gY = groundY(r.x);
+
+        // detect ramp lips to trigger a jump+flip
+        var slopeAhead = groundY(r.x+10) - groundY(r.x-10);
+        if(!r.airborne){
+          r.y = gY;
+          // if going up a steep ramp and near its top, launch
+          if(slopeAhead < -6 && r.jumpCooldown<=0 && Math.random()<0.5){
+            r.airborne=true; r.vy = -(4.2+Math.random()*1.6); r.flipSpeed = (Math.random()<0.5?1:-1)*(0.18+Math.random()*0.12); r.jumpCooldown=60;
+          }
+        } else {
+          r.vy += 0.14;          // gravity
+          r.y += r.vy;
+          r.flip += r.flipSpeed;  // spin the board (kickflip look)
+          if(r.y >= gY){          // landed
+            r.y=gY; r.airborne=false; r.flip=0; r.vy=0;
+            // landing sparks
+            for(var s=0;s<6;s++){ sparks.push({x:r.x,y:gY,vx:-(Math.random()*2+0.5),vy:-(Math.random()*2),life:1}); }
+          }
         }
-        if(prog>-40 && prog<W+40){
-          drawBoard(prog,by-4,1.5,angle,0.85);
-        }
+        if(r.jumpCooldown>0) r.jumpCooldown--;
+
+        // board angle follows the ground slope when riding, or flips when airborne
+        var angle = r.airborne ? r.flip : Math.atan2(groundY(r.x+8)-groundY(r.x-8),16);
+        drawBoard(r.x, r.y-4, r.scale, angle, 0.9);
+
+        if(r.x > W+40) riders.splice(i,1);
       }
-      // update trailing sparks
-      for(var i=boards.length-1;i>=0;i--){
-        var s=boards[i];
-        if(!s.spark) { boards.splice(i,1); continue; }
-        s.x+=s.vx;s.y+=s.vy;s.vy+=0.06;s.life-=0.035;
-        if(s.life<=0){boards.splice(i,1);continue;}
-        ctx.fillStyle='rgba(57,255,100,'+s.life*0.7+')';
-        ctx.fillRect(s.x,s.y,2,2);
+      // keep a couple of riders going
+      if(riders.length<2 && t%90===0) spawnRider();
+
+      // sparks
+      for(var j=sparks.length-1;j>=0;j--){
+        var sp=sparks[j];
+        sp.x+=sp.vx;sp.y+=sp.vy;sp.vy+=0.12;sp.life-=0.04;
+        if(sp.life<=0){sparks.splice(j,1);continue;}
+        ctx.fillStyle='rgba(57,255,100,'+sp.life*0.7+')';
+        ctx.fillRect(sp.x,sp.y,2,2);
       }
-      if(boards.length>200) boards.splice(0,boards.length-200);
+      if(sparks.length>220) sparks.splice(0,sparks.length-220);
+
       requestAnimationFrame(frame);
     }
+
     resize();
     window.addEventListener('resize',resize);
-    if(!reduce){ frame(); }
+    if(!reduce){ spawnRider(); frame(); }
     else {
-      ctx.strokeStyle='rgba(57,255,100,0.1)';ctx.lineWidth=1;
-      for(var x=-H;x<W+H;x+=70){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x+H,H);ctx.stroke();}
-      drawBoard(W*0.3,H*0.4,1.6,0,0.7);drawBoard(W*0.6,H*0.6,1.6,0,0.7);
+      drawGround();
+      drawBoard(W*0.3,groundY(W*0.3)-4,1.5,0,0.8);
+      drawBoard(W*0.7,groundY(W*0.7)-4,1.5,0,0.8);
     }
   })();
 
@@ -420,21 +501,24 @@
     var done=false;
     var controller=("AbortController" in window)?new AbortController():null;
     var timer=setTimeout(function(){ if(done)return; done=true; if(controller)controller.abort(); fallback(); },6000);
-    fetch(PROXY+encodeURIComponent(feedUrl(panel.getAttribute('data-playlist'))), controller?{signal:controller.signal}:{})
-      .then(function(r){ if(!r.ok) throw 0; return r.text(); })
-      .then(function(xml){
-        if(done)return;
-        var doc=new DOMParser().parseFromString(xml,"text/xml");
-        if(doc.getElementsByTagName('parsererror').length) throw 0;
-        var vids=Array.from(doc.getElementsByTagName('entry')).map(function(e){
-          var idEl=e.getElementsByTagName('yt:videoId')[0]||e.getElementsByTagName('videoId')[0];
-          var tEl=e.getElementsByTagName('title')[0];
-          return {id:idEl?idEl.textContent:null,title:tEl?tEl.textContent:''};
-        }).filter(function(v){return v.id;});
-        if(!vids.length) throw 0;
-        done=true; clearTimeout(timer); render(vids);
-      })
-      .catch(function(){ if(done)return; done=true; clearTimeout(timer); fallback(); });
+    try {
+      if(typeof fetch !== 'function') throw 0;
+      fetch(PROXY+encodeURIComponent(feedUrl(panel.getAttribute('data-playlist'))), controller?{signal:controller.signal}:{})
+        .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+        .then(function(xml){
+          if(done)return;
+          var doc=new DOMParser().parseFromString(xml,"text/xml");
+          if(doc.getElementsByTagName('parsererror').length) throw 0;
+          var vids=Array.from(doc.getElementsByTagName('entry')).map(function(e){
+            var idEl=e.getElementsByTagName('yt:videoId')[0]||e.getElementsByTagName('videoId')[0];
+            var tEl=e.getElementsByTagName('title')[0];
+            return {id:idEl?idEl.textContent:null,title:tEl?tEl.textContent:''};
+          }).filter(function(v){return v.id;});
+          if(!vids.length) throw 0;
+          done=true; clearTimeout(timer); render(vids);
+        })
+        .catch(function(){ if(done)return; done=true; clearTimeout(timer); fallback(); });
+    } catch(err){ if(!done){ done=true; clearTimeout(timer); fallback(); } }
   }
   loadVideoPanel('skate-vids');
   loadVideoPanel('skate-parts');
@@ -476,102 +560,137 @@
     document.body.appendChild(s);
   })();
 
-  /* ===== skate dice with categories ===== */
+  /* ===== skate dice with categories, toggles, and combos ===== */
   (function(){
-    // stance modifiers apply to general + vert; grinds use approach stance
     var stances=["Regular","Fakie","Switch","Nollie"];
 
-    // General street / flatground flip tricks
     var generalTricks=[
       "Ollie","Nollie","Shuvit","FS Shuvit","BS Shuvit","Pop Shuvit","Kickflip","Heelflip",
       "Varial Kickflip","Varial Heelflip","360 Flip (Tre Flip)","Hardflip","Inward Heelflip",
       "Double Kickflip","Laser Flip","Bigspin","FS Bigspin","Bigflip","360 Shuvit","Impossible",
       "No Comply","Boneless","Body Varial","Kickflip Body Varial","Half Cab","Full Cab (360)"
     ];
-
-    // Grinds & slides (stance = approach)
     var grindApproach=["FS","BS"];
     var grindTricks=[
-      "50-50 Grind","5-0 Grind","Nosegrind","Crooked Grind","Smith Grind","Feeble Grind",
+      "50-50","5-0","Nosegrind","Crooked Grind","Smith Grind","Feeble Grind",
       "Salad Grind","Willy Grind","Overcrook","Boardslide","Noseslide","Tailslide",
       "Bluntslide","Lipslide","Nose Bluntslide","Darkslide","Hurricane","Suski Grind"
     ];
-
-    // Vert / transition tricks
+    var manualTricks=[
+      "Manual","Nose Manual","Switch Manual","Switch Nose Manual","One-Wheel Manual",
+      "Manual to Nose Manual","Casper Slide","Primo Slide","Rail Stand (Primo)","Truckstand"
+    ];
     var vertTricks=[
       "Rock to Fakie","Rock n Roll","Axle Stall (50-50)","5-0 Stall","Blunt Stall","Disaster",
       "Feeble Stall","Smith Stall","Nose Stall","Tail Stall","Pivot to Fakie","Fakie Ollie",
-      "Air (Frontside)","Air (Backside)","Indy Grab","Method Grab","Melon Grab","Stalefish",
+      "FS Air","BS Air","Indy Grab","Method Grab","Melon Grab","Stalefish",
       "Nosegrab","Tailgrab","Mute Grab","Judo Air","Boneless","Andrecht","Invert / Handplant",
       "McTwist","Ollie North","Alley-Oop","Fakie to Rock"
     ];
 
     var CATS={
-      general:{ d1:stances, d2:generalTricks, l1:"STANCE", l2:"TRICK", combine:function(a,b){ return a+' '+b; } },
-      grinds:{ d1:grindApproach, d2:grindTricks, l1:"APPROACH", l2:"GRIND / SLIDE", combine:function(a,b){ return a+' '+b; } },
-      vert:{ d1:stances, d2:vertTricks, l1:"STANCE", l2:"TRICK", combine:function(a,b){ return a+' '+b; } }
+      general:{ tricks:generalTricks, stance:stances, l2:"TRICK", comboFrom:grindTricks, comboApproach:grindApproach },
+      grinds:{ tricks:grindTricks, stance:grindApproach, l2:"GRIND / SLIDE", comboFrom:grindTricks, comboApproach:grindApproach },
+      manuals:{ tricks:manualTricks, stance:stances, l2:"MANUAL", comboFrom:grindTricks, comboApproach:grindApproach },
+      vert:{ tricks:vertTricks, stance:stances, l2:"TRICK", comboFrom:vertTricks, comboApproach:[] }
     };
 
     var cat="general";
     var history=[]; var histVisible=false;
 
+    function stanceOn(){ return document.getElementById('tog-stance').checked; }
+    function comboOn(){ return document.getElementById('tog-combo').checked; }
+
     function faces(id,list,active){
       var el=document.getElementById(id);
-      // show a trimmed set of chips (too many looks cluttered); show up to 10
       var show=list.slice(0,10);
-      el.innerHTML=show.map(function(f,i){return '<span class="face-chip'+(f===active?' active':'')+'">'+f+(i<show.length-1?' ·':'')+'</span>';}).join('') + (list.length>10?' <span class="face-chip">+'+(list.length-10)+'</span>':'');
+      el.innerHTML=show.map(function(f,i){return '<span class="face-chip'+(f===active?' active':'')+'">'+f+(i<show.length-1?' ·':'')+'</span>';}).join('')+(list.length>10?' <span class="face-chip">+'+(list.length-10)+'</span>':'');
     }
-    function refreshFaces(){
+
+    window.rebuildFaces=function(){
       var c=CATS[cat];
-      document.getElementById('die1-label').textContent='DIE 1 · '+c.l1;
-      document.getElementById('die2-label').textContent='DIE 2 · '+c.l2;
-      faces('faces1',c.d1,null); faces('faces2',c.d2,null);
-      document.getElementById('val1').textContent='—';
-      document.getElementById('val2').textContent='—';
-      // reset result
+      // stance die visibility
+      document.getElementById('wrap-stance').style.display = stanceOn() ? '' : 'none';
+      // combo die visibility
+      document.getElementById('wrap-combo').style.display = comboOn() ? '' : 'none';
+      // labels
+      document.getElementById('die1-label').textContent = (cat==='grinds') ? 'APPROACH' : 'STANCE';
+      document.getElementById('die2-label').textContent = c.l2;
+      document.getElementById('die3-label').textContent = 'INTO';
+      // face chips
+      faces('faces1', c.stance, null);
+      faces('faces2', c.tricks, null);
+      faces('faces3', c.comboFrom, null);
+      // reset values
+      ['val1','val2','val3'].forEach(function(id){document.getElementById(id).textContent='—';});
       document.getElementById('resultIdle').style.display='block';
       document.getElementById('resultRolling').style.display='none';
       document.getElementById('resultTrick').style.display='none';
-    }
+    };
 
     window.setDiceCat=function(c,btn){
       cat=c;
       document.querySelectorAll('.dice-tab').forEach(function(t){t.classList.remove('active');});
       btn.classList.add('active');
-      refreshFaces();
+      rebuildFaces();
     };
 
-    refreshFaces();
+    function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+    rebuildFaces();
 
     window.rollDice=function(){
       var c=CATS[cat];
+      var useStance=stanceOn(), useCombo=comboOn();
       var btn=document.getElementById('rollBtn'); btn.disabled=true;
       document.getElementById('resultIdle').style.display='none';
       document.getElementById('resultTrick').style.display='none';
       document.getElementById('resultRolling').style.display='block';
-      var v1=document.getElementById('val1'),v2=document.getElementById('val2');
-      var d1el=document.getElementById('die1'),d2el=document.getElementById('die2');
-      v1.classList.add('rolling');v2.classList.add('rolling');d1el.classList.add('rolling');d2el.classList.add('rolling');
+
+      var v1=document.getElementById('val1'),v2=document.getElementById('val2'),v3=document.getElementById('val3');
+      var dice=[document.getElementById('die1'),document.getElementById('die2'),document.getElementById('die3')];
+      [v1,v2,v3].forEach(function(v){v.classList.add('rolling');});
+      dice.forEach(function(d){d.classList.add('rolling');});
+
       var interval=setInterval(function(){
-        v1.textContent=c.d1[Math.floor(Math.random()*c.d1.length)];
-        v2.textContent=c.d2[Math.floor(Math.random()*c.d2.length)];
+        if(useStance) v1.textContent=pick(c.stance);
+        v2.textContent=pick(c.tricks);
+        if(useCombo){
+          var ca=c.comboApproach.length?pick(c.comboApproach)+' ':'';
+          v3.textContent=ca+pick(c.comboFrom);
+        }
       },80);
+
       setTimeout(function(){
         clearInterval(interval);
-        var r1=c.d1[Math.floor(Math.random()*c.d1.length)];
-        var r2=c.d2[Math.floor(Math.random()*c.d2.length)];
-        v1.textContent=r1;v2.textContent=r2;
-        v1.classList.remove('rolling');v2.classList.remove('rolling');d1el.classList.remove('rolling');d2el.classList.remove('rolling');
-        faces('faces1',c.d1,r1);faces('faces2',c.d2,r2);
+        var r1=useStance?pick(c.stance):'';
+        var r2=pick(c.tricks);
+        var r3='';
+        if(useCombo){
+          var ca=c.comboApproach.length?pick(c.comboApproach)+' ':'';
+          r3=ca+pick(c.comboFrom);
+        }
+        if(useStance) v1.textContent=r1;
+        v2.textContent=r2;
+        if(useCombo) v3.textContent=r3;
+        [v1,v2,v3].forEach(function(v){v.classList.remove('rolling');});
+        dice.forEach(function(d){d.classList.remove('rolling');});
+        faces('faces1',c.stance,r1);faces('faces2',c.tricks,r2);faces('faces3',c.comboFrom,r3.replace(/^(FS|BS) /,''));
+
         document.getElementById('resultRolling').style.display='none';
         var trickEl=document.getElementById('resultTrick'); trickEl.style.display='block';
         trickEl.style.animation='none';trickEl.offsetHeight;trickEl.style.animation='';
-        var trick=c.combine(r1,r2);
+
+        var trick=((useStance&&r1!=='Regular')?r1+' ':'')+r2;   // omit "Regular" for cleaner read
+        if(useStance&&r1==='Regular') trick=r2; // regular stance implied
+        if(useCombo) trick=trick+' to '+r3;
         document.getElementById('trickName').textContent=trick;
+
         history.unshift(trick); if(history.length>10)history.pop(); updateHistory();
         btn.disabled=false;
       },900);
     };
+
     function updateHistory(){
       var toggle=document.getElementById('histToggle'); toggle.style.display='block';
       toggle.textContent=(histVisible?'HIDE':'SHOW')+' HISTORY ('+history.length+')';
