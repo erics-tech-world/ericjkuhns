@@ -39,7 +39,7 @@
 
   /* ---------- SEARCH OVERLAY ---------- */
   var search =
-  '<div class="site-search" id="site-search">'+
+  '<div class="site-search" id="site-search" style="display:none">'+
     '<div class="search-inner">'+
       '<div class="search-prompt mono">~/eric $ search</div>'+
       '<div class="search-box">'+
@@ -146,6 +146,7 @@
   window.siteOpenSearch = function(){
     var box = document.getElementById('site-search');
     if(!box) return;
+    box.style.display = 'flex';
     box.classList.add('open');
     document.body.style.overflow = 'hidden';
     var inp = document.getElementById('site-search-input');
@@ -155,6 +156,7 @@
     var box = document.getElementById('site-search');
     if(!box) return;
     box.classList.remove('open');
+    box.style.display = 'none';
     document.body.style.overflow = '';
     var res = document.getElementById('site-search-results');
     if(res) res.innerHTML = '';
