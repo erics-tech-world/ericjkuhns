@@ -18,39 +18,14 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
-  nav{position:sticky;top:0;z-index:100;background:rgba(10,12,10,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
-  .logo{font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.5px;font-size:15px}
-  .logo-caret{color:var(--neon);animation:blink 1.05s steps(1) infinite}
-  @keyframes blink{50%{opacity:0}}
-  .nav-links{display:flex;gap:28px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;align-items:center}
-  .nav-links a{color:var(--muted);transition:color .2s}
-  .nav-links a:hover{color:var(--neon)}
-  .nav-links a.active{color:var(--neon)}
-  .nav-drop{position:relative}
-  .nav-drop-btn{font-family:inherit;font-size:13px;letter-spacing:.5px;text-transform:uppercase;background:none;border:none;color:var(--muted);cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
-  .nav-drop-btn:hover{color:var(--neon)}
-  .nav-arrow{font-size:9px;color:var(--neon);transition:transform .2s}
-  .nav-drop.open .nav-drop-btn{color:var(--neon)}
-  .nav-drop.open .nav-arrow{transform:rotate(180deg)}
-  .nav-menu{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-6px);min-width:210px;background:var(--panel);border:1px solid var(--neon-dim);border-radius:4px;padding:8px;display:none;flex-direction:column;gap:2px;z-index:300;box-shadow:0 8px 40px rgba(0,0,0,.6)}
-  .nav-drop.open .nav-menu{display:flex;animation:navDrop .18s ease forwards}
-  @keyframes navDrop{to{transform:translateX(-50%) translateY(0);opacity:1}}
-  .nav-menu::before{content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);width:10px;height:10px;background:var(--panel);border-left:1px solid var(--neon-dim);border-top:1px solid var(--neon-dim)}
-  .nav-menu a{font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:none;letter-spacing:0;color:var(--muted);padding:9px 12px;border-radius:3px;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:8px}
-  .nav-menu a::before{content:"▸";color:var(--neon-dim);flex:0 0 auto}
-  .nav-menu a:hover{background:var(--panel2,#0d110d);color:var(--neon)}
-  .nav-menu a:hover::before{color:var(--neon)}
-  .nav-menu a.active{color:var(--neon)}
-  .menu-btn{display:none;background:none;border:none;color:var(--neon);font-size:22px;cursor:pointer;font-family:monospace}
-
   /* hero */
-  .hero{padding:80px 0 64px;border-bottom:1px solid var(--line);position:relative}
-  .prompt{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--neon-dim);letter-spacing:1px;margin-bottom:22px}
-  .prompt .path{color:var(--muted)}
+  .hero{padding:100px 0 84px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;min-height:460px;display:flex;align-items:center}
+  #matrix-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;opacity:.55}
+  .hero-inner{position:relative;z-index:2;width:100%}
+  .hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--bg) 0%,rgba(10,12,10,.7) 45%,rgba(10,12,10,.2) 100%);pointer-events:none}
   .hero .eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:1px;margin-bottom:14px;text-transform:uppercase}
-  .hero h1{font-size:clamp(38px,7vw,72px);line-height:1.02;font-weight:800;letter-spacing:-2px;margin-bottom:20px}
-  .hero h1 .cursor{display:inline-block;width:.5ch;height:.9em;background:var(--neon);margin-left:6px;transform:translateY(6px);animation:blink 1.05s steps(1) infinite}
+  .hero h1{font-size:clamp(38px,7vw,72px);line-height:1.02;font-weight:800;letter-spacing:-2px;margin-bottom:20px;min-height:1.02em}
+  .hero h1 .type-caret{color:var(--neon);font-weight:400;animation:blink 1.05s steps(1) infinite}
   .hero p.lead{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:600px;margin-bottom:32px}
   .hero p.lead em{color:var(--neon);font-style:normal}
   .cta-row{display:flex;gap:14px;flex-wrap:wrap}
@@ -105,7 +80,7 @@
 
   /* articles carousel */
   .art-carousel{display:flex;align-items:stretch;gap:10px}
-  .art-viewport{flex:1;overflow:hidden}
+  .art-viewport{flex:1;overflow:hidden;padding-top:6px;margin-top:-6px}
   .art-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
   .art-track::-webkit-scrollbar{display:none}
   .art-card{flex:0 0 calc((100% - 32px) / 3);scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;transition:all .2s;display:flex;flex-direction:column}
@@ -128,57 +103,22 @@
   .shop-info p{color:var(--muted);margin-bottom:14px;max-width:460px}
   .shop-info .note{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:22px}
 
-  footer{padding:48px 0 40px}
-  .foot-grid{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px}
-  .foot-note{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
-  .foot-note b{color:var(--neon)}
-  .foot-back{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted)}
-  .foot-back:hover{color:var(--neon)}
-
   @media(max-width:820px){
     .shop{grid-template-columns:1fr;gap:24px}
-    .nav-links{display:none}
-    .nav-links.open{display:flex;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:var(--panel);padding:20px 24px;gap:18px;border-bottom:1px solid var(--line);align-items:flex-start}
-    .nav-drop{width:100%}
-    .nav-menu{position:static;transform:none;min-width:0;width:100%;border:none;box-shadow:none;padding:10px 0 0 14px;background:none}
-    .nav-drop.open .nav-menu{animation:none}
-    .nav-menu::before{display:none}
-    .nav-menu a{padding:8px 0}
-    .menu-btn{display:block}
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+<link rel="stylesheet" href="site.css">
 </head>
 <body>
+<script>window.SITE={active:"techworld",base:"",logo:"Eric's Tech World"};</script>
+<div id="site-nav"></div>
 
-<nav>
-  <div class="wrap nav-inner">
-    <a href="index.html" class="logo">ericjkuhns<span class="logo-caret">_</span></a>
-    <button class="menu-btn" onclick="document.getElementById('nl').classList.toggle('open')">[≡]</button>
-    <div class="nav-links" id="nl">
-      <div class="nav-drop">
-        <button class="nav-drop-btn" onclick="toggleNav(this)">Projects <span class="nav-arrow">▾</span></button>
-        <div class="nav-menu">
-          <a href="eric-tech-world.html" class="active">Eric's Tech World</a>
-          <a href="index.html#projects">Books</a>
-          <a href="index.html#projects">Eric Skateboards</a>
-          <a href="index.html#projects">Acting</a>
-          <a href="index.html#projects">Music</a>
-        </div>
-      </div>
-      <a href="index.html#videos">Videos</a>
-      <a href="blog/index.html">Blog</a>
-      <a href="index.html#book">Book</a>
-      <a href="portfolio.html">Portfolio</a>
-      <a href="index.html#contact">Contact</a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="wrap">
+<header class="hero" id="tw-hero">
+  <canvas id="matrix-canvas"></canvas>
+  <div class="wrap hero-inner">
     <div class="eyebrow mono">// official companion site to my YouTube</div>
-    <h1>Eric's Tech World<span class="cursor"></span></h1>
+    <h1><span id="tw-typed"></span><span class="type-caret" id="tw-caret">_</span></h1>
     <p class="lead"><em>Where tech and adventure meet.</em></p>
     <div class="cta-row">
       <a href="https://www.youtube.com/@ericstechworld" target="_blank" rel="noopener" class="btn btn-primary mono">▶ Subscribe on YouTube</a>
@@ -219,26 +159,62 @@
   </div>
 </section>
 
-<footer>
-  <div class="wrap foot-grid">
-    <a href="index.html" class="foot-back mono">← back to ericjkuhns.com</a>
-    <div class="foot-note mono">Copyright © 2015 - 2026 Eric J. Kuhns / Eric's Tech World LLC</div>
-  </div>
-</footer>
+<div id="site-footer"></div>
 
 <script>
-  // ---- nav dropdown ----
-  function toggleNav(btn){
-    const drop = btn.closest('.nav-drop');
-    const isOpen = drop.classList.contains('open');
-    document.querySelectorAll('.nav-drop.open').forEach(function(d){ d.classList.remove('open'); });
-    if(!isOpen) drop.classList.add('open');
-  }
-  document.addEventListener('click', function(e){
-    if(!e.target.closest('.nav-drop')){
-      document.querySelectorAll('.nav-drop.open').forEach(function(d){ d.classList.remove('open'); });
+  // ---- matrix rain background ----
+  (function(){
+    var canvas = document.getElementById('matrix-canvas');
+    if(!canvas) return;
+    var ctx = canvas.getContext('2d');
+    if(!ctx) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var W, H, cols, drops, fontSize = 15;
+    var chars = "アイウエオカキクケコサシスセソ0123456789ABCDEFｦｧｨｩｪ<>{}[]/*-+=".split("");
+    function resize(){
+      var host = canvas.parentElement.getBoundingClientRect();
+      W = host.width; H = host.height;
+      var DPR = Math.min(window.devicePixelRatio||1, 2);
+      canvas.width = W*DPR; canvas.height = H*DPR;
+      canvas.style.width = W+'px'; canvas.style.height = H+'px';
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+      cols = Math.floor(W / fontSize);
+      drops = [];
+      for(var i=0;i<cols;i++){ drops[i] = Math.random()*-H; }
     }
-  });
+    function frame(){
+      ctx.fillStyle = 'rgba(10,12,10,0.08)';
+      ctx.fillRect(0,0,W,H);
+      ctx.font = fontSize + "px 'JetBrains Mono', monospace";
+      for(var i=0;i<cols;i++){
+        var ch = chars[Math.floor(Math.random()*chars.length)];
+        var x = i*fontSize, y = drops[i];
+        // leading char brighter
+        ctx.fillStyle = 'rgba(150,255,180,0.9)';
+        ctx.fillText(ch, x, y);
+        ctx.fillStyle = 'rgba(57,255,100,0.35)';
+        ctx.fillText(chars[Math.floor(Math.random()*chars.length)], x, y - fontSize);
+        if(y > H && Math.random() > 0.975){ drops[i] = Math.random()*-40; }
+        drops[i] += fontSize * 0.6;
+      }
+      requestAnimationFrame(frame);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    if(!reduce){ frame(); }
+    else { ctx.fillStyle='rgba(57,255,100,0.15)'; ctx.font=fontSize+"px monospace"; for(var i=0;i<cols;i++){ ctx.fillText(chars[i%chars.length], i*fontSize, (i*37)%H); } }
+  })();
+
+  // ---- typing page title ----
+  (function(){
+    var el = document.getElementById('tw-typed');
+    if(!el) return;
+    var text = "Eric's Tech World";
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){ el.textContent = text; return; }
+    var i = 0;
+    (function tick(){ if(i<=text.length){ el.textContent = text.slice(0,i); i++; setTimeout(tick, 70); } })();
+  })();
 
   // ---- shared helpers ----
   function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
@@ -376,5 +352,6 @@
   });
 </script>
 
+<script src="site.js"></script>
 </body>
 </html>
