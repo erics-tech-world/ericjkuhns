@@ -47,7 +47,7 @@
 
   /* articles carousel */
   .art-carousel{display:flex;align-items:stretch;gap:10px;margin-top:30px}
-  .art-viewport{flex:1;overflow:hidden}
+  .art-viewport{flex:1;overflow:hidden;padding-top:6px;margin-top:-6px}
   .art-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
   .art-track::-webkit-scrollbar{display:none}
   .art-card{flex:0 0 calc((100% - 32px) / 3);scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);border-radius:4px;overflow:hidden;transition:all .2s;display:flex;flex-direction:column}
@@ -112,11 +112,9 @@
           <p>Good evening, and thank you for tuning in. I've got a strange one for you tonight. Might be the strangest I'll ever tell.</p>
           <p>It starts with Dr. Natalia Zeal, who is brilliant, stubborn, and one of the most amazing human beings I've ever known. She left her dying home planet, Earth, on a ship built to outrun extinction, carrying her frozen consciousness, her life's work, and a photo of the woman she loved tucked somewhere close. She wakes up eons later, in a body that isn't hers and on a strange planet that isn't either. Someone, or something, has been watching. This is where our story truly begins...</p>
           <p>I won't tell you everything that happens next. I'll just say it's stranger than you're expecting, and it isn't only her story to tell. It's mine too, in ways I'm still working out even as I broadcast this.</p>
-          <div class="continues mono">[ Transmission continues inside ]</div>
         </div>
         <div class="cta-row">
           <a href="#" class="btn btn-primary mono">Buy Spacecosis Now</a>
-          <a href="https://spacecosis.com" target="_blank" rel="noopener" class="btn btn-ghost mono">Explore the universe ↗</a>
         </div>
       </div>
     </div>
@@ -128,7 +126,7 @@
   <div class="wrap">
     <div class="sec-head">
       <h2>From the writing desk</h2>
-      <p>Notes on craft, worldbuilding, sci-fi, and the making of Spacecosis.</p>
+      <p>Posts on various writing topics, short stories, fan fics I've written, and deep dives into the making of Spacecosis.</p>
     </div>
     <div class="art-carousel">
       <button class="cat-arrow art-prev disabled" aria-label="Previous" onclick="artSlide(-1)">‹</button>
@@ -157,6 +155,7 @@
     var raf = null;
     var planets = [];
     var galaxy = null;
+    var galaxy2 = null;
 
     function resize(){
       DPR = Math.min(window.devicePixelRatio || 1, 2);
@@ -180,8 +179,10 @@
       }
     }
     function makeScenery(){
-      // spiral galaxy in a back corner (the "rip in space")
+      // main spiral galaxy in a back corner (the "rip in space")
       galaxy = { x: W*0.82, y: H*0.28, r: Math.min(W,H)*0.34, rot: 0 };
+      // smaller distant galaxy on the left to balance the composition
+      galaxy2 = { x: W*0.12, y: H*0.66, r: Math.min(W,H)*0.13, rot: 1.2 };
       planets = [];
     }
     // draw a soft-shaded planet
@@ -284,6 +285,32 @@
         bob: Math.random()*Math.PI*2
       };
     }
+    // smaller elliptical/globular galaxy (denser, different look)
+    function drawGalaxy2(gx){
+      ctx.save();
+      ctx.translate(gx.x, gx.y);
+      ctx.rotate(gx.rot);
+      // soft elliptical glow
+      ctx.scale(1, 0.62);
+      var core = ctx.createRadialGradient(0,0,0,0,0,gx.r);
+      core.addColorStop(0, 'rgba(200,220,255,0.14)');
+      core.addColorStop(0.3, 'rgba(120,160,255,0.07)');
+      core.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = core;
+      ctx.beginPath(); ctx.arc(0,0,gx.r,0,Math.PI*2); ctx.fill();
+      // scattered dense star cluster
+      ctx.globalCompositeOperation = 'lighter';
+      for(var i=0;i<160;i++){
+        var ang = Math.random()*Math.PI*2;
+        var rad = Math.pow(Math.random(),1.7) * gx.r;   // dense center
+        var sx = Math.cos(ang)*rad;
+        var sy = Math.sin(ang)*rad;
+        var alpha = (1 - rad/gx.r) * 0.6;
+        ctx.fillStyle = i%9===0 ? 'rgba(57,255,100,'+alpha+')' : 'rgba(215,228,255,'+alpha+')';
+        ctx.fillRect(sx, sy, 1, 1);
+      }
+      ctx.restore();
+    }
     var t = 0;
     function frame(){
       t++;
@@ -295,6 +322,7 @@
       ctx.fillStyle = ng; ctx.fillRect(0,0,W,H);
       // galaxy (slow rotation)
       if(galaxy){ galaxy.rot += 0.0006; drawGalaxy(galaxy); }
+      if(galaxy2){ galaxy2.rot += 0.0004; drawGalaxy2(galaxy2); }
       // planets
       for(var p=0;p<planets.length;p++){ drawPlanet(planets[p]); }
       // stars
@@ -328,6 +356,7 @@
       ng2.addColorStop(0, 'rgba(31,138,55,0.06)'); ng2.addColorStop(1, 'rgba(10,12,10,0)');
       ctx.fillStyle = ng2; ctx.fillRect(0,0,W,H);
       if(galaxy) drawGalaxy(galaxy);
+      if(galaxy2) drawGalaxy2(galaxy2);
       for(var p2=0;p2<planets.length;p2++){ drawPlanet(planets[p2]); }
       for(var i2=0;i2<stars.length;i2++){ var st2=stars[i2]; ctx.fillStyle='rgba(244,246,244,'+(0.3*st2.z)+')'; ctx.fillRect(st2.x,st2.y,st2.z*1.6,st2.z*1.6); }
     }
