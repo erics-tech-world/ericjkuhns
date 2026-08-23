@@ -96,6 +96,13 @@
   .dice-app .d-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:5px;color:var(--neon);margin-bottom:6px}
   .dice-app h3{font-size:44px;letter-spacing:6px;line-height:1;font-weight:800;margin-bottom:6px}
   .dice-app .d-divider{width:50px;height:2px;background:var(--neon);margin:12px auto 24px}
+  .diff-row{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:22px}
+  .diff-title{font-size:10px;letter-spacing:4px;color:var(--muted)}
+  .diff-tabs{display:inline-flex;border:1px solid var(--neon-dim);border-radius:3px;overflow:hidden}
+  .diff-tab{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;padding:8px 20px;background:transparent;color:var(--muted);cursor:pointer;border:0;border-right:1px solid var(--neon-dim);transition:all .2s}
+  .diff-tab:last-child{border-right:0}
+  .diff-tab:hover{color:var(--ink);background:rgba(57,255,100,.06)}
+  .diff-tab.active{background:var(--neon);color:#04160a;font-weight:700}
   .dice-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
   .dice-tab{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.5px;padding:9px 16px;border:1px solid var(--line);border-radius:2px;background:var(--panel);color:var(--muted);cursor:pointer;transition:all .2s}
   .dice-tab:hover{color:var(--ink);border-color:var(--neon-dim)}
@@ -234,6 +241,14 @@
       <div class="d-label mono">TRICK GENERATOR</div>
       <h3 class="mono">SKATE DICE</h3>
       <div class="d-divider"></div>
+      <div class="diff-row">
+        <span class="diff-title mono">DIFFICULTY</span>
+        <div class="diff-tabs">
+          <button class="diff-tab" onclick="setDiceDiff('chill',this)">Chill</button>
+          <button class="diff-tab active" onclick="setDiceDiff('normal',this)">Normal</button>
+          <button class="diff-tab" onclick="setDiceDiff('gnarly',this)">Gnarly</button>
+        </div>
+      </div>
       <div class="dice-tabs">
         <button class="dice-tab active" onclick="setDiceCat('general',this)">General</button>
         <button class="dice-tab" onclick="setDiceCat('grinds',this)">Grinds &amp; Slides</button>
@@ -565,54 +580,81 @@
     document.body.appendChild(s);
   })();
 
-  /* ===== skate dice with categories, toggles, and combos ===== */
+  /* ===== skate dice with categories, difficulty tiers, toggles, and combos ===== */
   (function(){
     var stances=["Regular","Fakie","Switch","Nollie"];
+    // stance difficulty: Regular/Fakie easy, Nollie medium, Switch hard
+    var stanceByDiff={
+      chill:["Regular","Regular","Fakie"],
+      normal:["Regular","Fakie","Nollie","Switch"],
+      gnarly:["Regular","Fakie","Nollie","Switch","Switch"]
+    };
+    // spins by difficulty
+    var spinByDiff={
+      chill:["FS 180","BS 180"],
+      normal:["FS 180","BS 180","FS 360","BS 360"],
+      gnarly:["FS 180","BS 180","FS 360","BS 360","FS 540","BS 540"]
+    };
 
-    var generalTricks=[
-      "Ollie","Nollie","Shuvit","FS Shuvit","BS Shuvit","Pop Shuvit","Kickflip","Heelflip",
-      "Varial Kickflip","Varial Heelflip","360 Flip (Tre Flip)","Hardflip","Inward Heelflip",
-      "Double Kickflip","Laser Flip","Bigspin","FS Bigspin","Bigflip","360 Shuvit","Impossible",
-      "No Comply","Boneless","Body Varial","Kickflip Body Varial","Half Cab","Full Cab (360)"
-    ];
+    // GENERAL flatground/flip tricks, tiered
+    var generalByDiff={
+      chill:["Ollie","Nollie","Shuvit","FS Shuvit","BS Shuvit","Pop Shuvit","Frontside 180","Backside 180","Boneless","No Comply"],
+      normal:["Kickflip","Heelflip","Varial Kickflip","Varial Heelflip","360 Shuvit","Bigspin","FS Bigspin","Half Cab","Body Varial","Kickflip Body Varial"],
+      gnarly:["360 Flip (Tre Flip)","Hardflip","Inward Heelflip","Laser Flip","Double Kickflip","Bigflip","Impossible","Full Cab (360)","Gazelle Flip","Dolphin Flip"]
+    };
+    // GRINDS & SLIDES, tiered (stance = approach)
     var grindApproach=["FS","BS"];
-    var grindTricks=[
-      "50-50","5-0","Nosegrind","Crooked Grind","Smith Grind","Feeble Grind",
-      "Salad Grind","Willy Grind","Overcrook","Boardslide","Noseslide","Tailslide",
-      "Bluntslide","Lipslide","Nose Bluntslide","Darkslide","Hurricane","Suski Grind"
-    ];
-    var manualTricks=[
-      "Manual","Nose Manual","Switch Manual","Switch Nose Manual","One-Wheel Manual",
-      "Manual to Nose Manual","Casper Slide","Primo Slide","Rail Stand (Primo)","Truckstand"
-    ];
-    var vertTricks=[
-      "Rock to Fakie","Rock n Roll","Axle Stall (50-50)","5-0 Stall","Blunt Stall","Disaster",
-      "Feeble Stall","Smith Stall","Nose Stall","Tail Stall","Pivot to Fakie","Fakie Ollie",
-      "FS Air","BS Air","Indy Grab","Method Grab","Melon Grab","Stalefish",
-      "Nosegrab","Tailgrab","Mute Grab","Judo Air","Boneless","Andrecht","Invert / Handplant",
-      "McTwist","Ollie North","Alley-Oop","Fakie to Rock"
-    ];
+    var grindByDiff={
+      chill:["50-50","Boardslide","Noseslide","5-0"],
+      normal:["Nosegrind","Crooked Grind","Smith Grind","Feeble Grind","Tailslide","Lipslide","Salad Grind"],
+      gnarly:["Overcrook","Bluntslide","Nose Bluntslide","Darkslide","Hurricane","Suski Grind","Willy Grind"]
+    };
+    // MANUALS, tiered
+    var manualByDiff={
+      chill:["Manual","Nose Manual"],
+      normal:["Switch Manual","Switch Nose Manual","Manual to Nose Manual","One-Wheel Manual"],
+      gnarly:["Casper Slide","Primo Slide","Rail Stand (Primo)","Truckstand"]
+    };
+    // VERT / TRANSITION, tiered
+    var vertByDiff={
+      chill:["Rock to Fakie","Rock n Roll","Axle Stall (50-50)","5-0 Stall","Pivot to Fakie","Fakie Ollie","Tail Stall","Nose Stall"],
+      normal:["Disaster","Blunt Stall","Feeble Stall","Smith Stall","FS Air","BS Air","Indy Grab","Melon Grab","Mute Grab","Boneless","Ollie North"],
+      gnarly:["Method Grab","Stalefish","Judo Air","Andrecht","Invert / Handplant","McTwist","Alley-Oop","Nosegrab","Tailgrab"]
+    };
+
+    // build a difficulty-scoped list: chill = chill only; normal = chill+normal; gnarly = all
+    function scoped(byDiff, diff){
+      if(diff==='chill') return byDiff.chill.slice();
+      if(diff==='normal') return byDiff.chill.concat(byDiff.normal);
+      return byDiff.chill.concat(byDiff.normal, byDiff.gnarly);
+    }
 
     var CATS={
-      general:{ tricks:generalTricks, stance:stances, l2:"TRICK", comboFrom:grindTricks, comboApproach:grindApproach },
-      grinds:{ tricks:grindTricks, stance:grindApproach, l2:"GRIND / SLIDE", comboFrom:grindTricks, comboApproach:grindApproach },
-      manuals:{ tricks:manualTricks, stance:stances, l2:"MANUAL", comboFrom:grindTricks, comboApproach:grindApproach },
-      vert:{ tricks:vertTricks, stance:stances, l2:"TRICK", comboFrom:vertTricks, comboApproach:[] }
+      general:{ byDiff:generalByDiff, l2:"TRICK", stanceKind:'stance', comboFrom:grindByDiff, comboApproach:grindApproach },
+      grinds:{ byDiff:grindByDiff, l2:"GRIND / SLIDE", stanceKind:'approach', comboFrom:grindByDiff, comboApproach:grindApproach },
+      manuals:{ byDiff:manualByDiff, l2:"MANUAL", stanceKind:'stance', comboFrom:grindByDiff, comboApproach:grindApproach },
+      vert:{ byDiff:vertByDiff, l2:"TRICK", stanceKind:'stance', comboFrom:vertByDiff, comboApproach:[] }
     };
 
     var cat="general";
+    var diff="normal";
     var history=[]; var histVisible=false;
 
-    // rotation spins that can prefix a trick
-    var spins=["FS 180","BS 180","FS 360","BS 360"];
-    // wildcard marker (renders as a skateboard outline) = "your variation / skater's choice"
-    var WILD="\u25AC"; // placeholder; we render an SVG board instead when detected
+    // wildcard marker
+    var WILD="\u25AC";
     var BOARD_SVG='<svg viewBox="0 0 40 16" width="42" height="17" style="vertical-align:middle" fill="none" stroke="#39ff64" stroke-width="1.6"><rect x="3" y="4" width="34" height="6" rx="3"/><circle cx="12" cy="12.5" r="2.2"/><circle cx="28" cy="12.5" r="2.2"/></svg>';
+    var BOARD_INLINE='<svg viewBox="0 0 40 16" width="34" height="14" style="vertical-align:middle" fill="none" stroke="#39ff64" stroke-width="1.6"><rect x="3" y="4" width="34" height="6" rx="3"/><circle cx="12" cy="12.5" r="2.2"/><circle cx="28" cy="12.5" r="2.2"/></svg>';
 
     function stanceOn(){ return document.getElementById('tog-stance').checked; }
     function comboOn(){ return document.getElementById('tog-combo').checked; }
     function spinOn(){ return document.getElementById('tog-spin').checked; }
     function wildOn(){ return document.getElementById('tog-wild').checked; }
+
+    // current scoped lists
+    function tricks(){ return scoped(CATS[cat].byDiff, diff); }
+    function stanceList(){ return CATS[cat].stanceKind==='approach' ? grindApproach.slice() : (stanceByDiff[diff]||stances).slice(); }
+    function spinList(){ return spinByDiff[diff].slice(); }
+    function comboList(){ return scoped(CATS[cat].comboFrom, diff); }
 
     function faces(id,list,active){
       var el=document.getElementById(id);
@@ -630,10 +672,10 @@
       document.getElementById('die1-label').textContent = (cat==='grinds') ? 'APPROACH' : 'STANCE';
       document.getElementById('die2-label').textContent = (spinOn()?'SPIN + ':'')+c.l2;
       document.getElementById('die3-label').textContent = 'INTO';
-      // face chips
-      faces('faces1', c.stance, null);
-      faces('faces2', c.tricks, null);
-      faces('faces3', c.comboFrom, null);
+      // face chips (difficulty-scoped)
+      faces('faces1', stanceList(), null);
+      faces('faces2', tricks(), null);
+      faces('faces3', comboList(), null);
       // wildcard legend under trick die
       var leg=document.getElementById('wild-legend');
       if(leg) leg.style.display = wildOn() ? 'block' : 'none';
@@ -644,6 +686,14 @@
       document.getElementById('resultTrick').style.display='none';
     };
 
+    window.setDiceDiff=function(d,btn){
+      diff=d;
+      document.querySelectorAll('.diff-tab').forEach(function(t){t.classList.remove('active');});
+      btn.classList.add('active');
+      // gnarly-only: auto-suggest spins available; keep user toggles as-is
+      rebuildFaces();
+    };
+
     window.setDiceCat=function(c,btn){
       cat=c;
       document.querySelectorAll('.dice-tab').forEach(function(t){t.classList.remove('active');});
@@ -652,9 +702,10 @@
     };
 
     function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-    // pick from a list, with a ~1-in-7 chance of a wildcard variation if enabled
+    // wildcard chance scales slightly with difficulty (more freestyle when gnarly)
+    function wildChance(){ return diff==='chill'?0.10:(diff==='gnarly'?0.16:0.13); }
     function pickWild(arr){
-      if(wildOn() && Math.random()<0.14){ return WILD; }
+      if(wildOn() && Math.random()<wildChance()){ return WILD; }
       return pick(arr);
     }
     // render a value into a die, swapping in the board SVG for wildcards
@@ -662,8 +713,6 @@
       if(val===WILD){ el.innerHTML=BOARD_SVG; }
       else { el.textContent=val; }
     }
-    // inline board icon (smaller) for the result string
-    var BOARD_INLINE='<svg viewBox="0 0 40 16" width="34" height="14" style="vertical-align:middle" fill="none" stroke="#39ff64" stroke-width="1.6"><rect x="3" y="4" width="34" height="6" rx="3"/><circle cx="12" cy="12.5" r="2.2"/><circle cx="28" cy="12.5" r="2.2"/></svg>';
     function part(val){ return val===WILD ? BOARD_INLINE : val; }
     function isWild(v){ return v===WILD; }
 
@@ -672,6 +721,7 @@
     window.rollDice=function(){
       var c=CATS[cat];
       var useStance=stanceOn(), useCombo=comboOn(), useSpin=spinOn();
+      var ST=stanceList(), TR=tricks(), SP=spinList(), CO=comboList();
       var btn=document.getElementById('rollBtn'); btn.disabled=true;
       document.getElementById('resultIdle').style.display='none';
       document.getElementById('resultTrick').style.display='none';
@@ -683,10 +733,10 @@
       dice.forEach(function(d){d.classList.add('rolling');});
 
       var interval=setInterval(function(){
-        if(useStance) setDie(v1, pickWild(c.stance));
-        setDie(v2, pickWild(c.tricks));
+        if(useStance) setDie(v1, pickWild(ST));
+        setDie(v2, pickWild(TR));
         if(useCombo){
-          var cw=pickWild(c.comboFrom);
+          var cw=pickWild(CO);
           if(cw===WILD){ setDie(v3, WILD); }
           else { var ca=c.comboApproach.length?pick(c.comboApproach)+' ':''; v3.textContent=ca+cw; }
         }
@@ -695,13 +745,13 @@
       setTimeout(function(){
         clearInterval(interval);
         // each die rolls, each can be a wildcard
-        var r1=useStance?pickWild(c.stance):'';
-        var spin=useSpin?pickWild(spins):'';
-        var r2=pickWild(c.tricks);
+        var r1=useStance?pickWild(ST):'';
+        var spin=useSpin?pickWild(SP):'';
+        var r2=pickWild(TR);
         var r3='';
         var r3wild=false;
         if(useCombo){
-          var cw=pickWild(c.comboFrom);
+          var cw=pickWild(CO);
           if(cw===WILD){ r3=WILD; r3wild=true; }
           else { var ca=c.comboApproach.length?pick(c.comboApproach)+' ':''; r3=ca+cw; }
         }
@@ -710,7 +760,7 @@
         if(useCombo) setDie(v3, r3wild?WILD:r3);
         [v1,v2,v3].forEach(function(v){v.classList.remove('rolling');});
         dice.forEach(function(d){d.classList.remove('rolling');});
-        faces('faces1',c.stance,isWild(r1)?null:r1);faces('faces2',c.tricks,isWild(r2)?null:r2);faces('faces3',c.comboFrom,r3wild?null:r3.replace(/^(FS|BS) /,''));
+        faces('faces1',ST,isWild(r1)?null:r1);faces('faces2',TR,isWild(r2)?null:r2);faces('faces3',CO,r3wild?null:r3.replace(/^(FS|BS) /,''));
 
         document.getElementById('resultRolling').style.display='none';
         var trickEl=document.getElementById('resultTrick'); trickEl.style.display='block';
