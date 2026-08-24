@@ -260,10 +260,40 @@ for(let i=0;i<52;i++){const b=document.createElement('i');b.className='bar';b.st
         const titleEl = e.getElementsByTagName('title')[0];
         return {id:idEl ? idEl.textContent : null,title:titleEl ? titleEl.textContent : ''};
       }).filter(function(v){ return v.id; });
-      if(!videos.length) throw new Error('empty');
+
+      // Standalone music video that is not part of the playlist.
+      const robotParty = {id:'U6OLR5Q5h2A', title:'Emo, Looi, EIliko & More Robots! (ROBOT PARTY RAP SONG)'};
+
+      // Custom display order:
+      // 1) Robot Party Rap Song
+      // 2) Dream
+      // 3) This Is Halloween
+      // 4) Everything else stays in playlist order
+      const dreamIndex = videos.findIndex(function(v){
+        return /\bdream\b/i.test(v.title || '');
+      });
+      const halloweenIndex = videos.findIndex(function(v){
+        return /this\s+is\s+halloween/i.test(v.title || '');
+      });
+
+      const dream = dreamIndex >= 0 ? videos[dreamIndex] : null;
+      const halloween = halloweenIndex >= 0 ? videos[halloweenIndex] : null;
+
+      const ordered = [robotParty];
+      if(dream) ordered.push(dream);
+      if(halloween && (!dream || halloween.id !== dream.id)) ordered.push(halloween);
+
+      videos.forEach(function(v){
+        if(v.id === robotParty.id) return;
+        if(dream && v.id === dream.id) return;
+        if(halloween && v.id === halloween.id) return;
+        ordered.push(v);
+      });
+
+      if(!ordered.length) throw new Error('empty');
       done = true;
       clearTimeout(timer);
-      render(videos);
+      render(ordered);
     })
     .catch(function(){
       if(done) return;
