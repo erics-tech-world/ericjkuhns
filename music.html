@@ -20,6 +20,10 @@
 section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:38px} .sec-head .tag{font:12px 'JetBrains Mono';color:var(--neon);letter-spacing:1px} .sec-head h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-1px} .sec-head .line{flex:1;height:1px;background:var(--line)}
 
 /* ============ CUSTOM WMP-STYLE PLAYER ============ */
+.song-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.song-tab{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.5px;padding:9px 16px;border:1px solid var(--line);border-radius:2px;background:var(--panel);color:var(--muted);cursor:pointer;transition:all .2s}
+.song-tab:hover{color:var(--ink);border-color:var(--neon-dim)}
+.song-tab.active{background:var(--neon);color:#04160a;border-color:var(--neon);font-weight:700}
 .wmp{border-radius:14px;padding:3px;background:linear-gradient(180deg,#2b332b,#0c100c 42%,#070907 58%,#161c16);box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 40px rgba(57,255,100,.06),inset 0 1px 0 rgba(255,255,255,.08)}
 .wmp-inner{border-radius:12px;background:radial-gradient(120% 90% at 50% -10%,rgba(57,255,100,.10),transparent 55%),linear-gradient(180deg,#0e130e,#0a0d0a);border:1px solid #05070599;overflow:hidden}
 .wmp-bar{display:flex;align-items:center;gap:8px;padding:9px 14px;background:linear-gradient(180deg,#182018,#0d110d);border-bottom:1px solid #05070599;position:relative}
@@ -111,10 +115,7 @@ section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{displa
 .music-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 @media(max-width:820px){.music-item{flex:0 0 calc((100% - 12px) / 2)}}
 @media(max-width:560px){.music-item{flex:0 0 85%}.music-arrow{display:none}}
-.genre-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px} .genre{min-height:180px;border:1px solid var(--line);background:var(--panel);padding:24px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden} .genre::before{content:attr(data-word);position:absolute;right:-5px;top:-20px;font-size:72px;font-weight:800;color:rgba(57,255,100,.045);letter-spacing:-5px} .genre .code{font:10px 'JetBrains Mono';color:var(--neon);margin-bottom:8px} .genre h3{font-size:20px} .genre p{font-size:13px;color:var(--muted);margin-top:7px}
-.soundcloud{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;background:linear-gradient(120deg,rgba(57,255,100,.07),transparent 45%),var(--panel);border:1px solid var(--line);padding:32px;border-radius:4px} .soundcloud p{color:var(--muted);max-width:650px;margin-top:9px} .btn{font:13px 'JetBrains Mono';letter-spacing:.5px;padding:13px 22px;border:1px solid var(--line);border-radius:2px;transition:.2s;display:inline-flex;align-items:center;gap:8px} .btn-primary{background:var(--neon);color:#04160a;border-color:var(--neon);font-weight:700} .btn-primary:hover{box-shadow:0 0 24px rgba(57,255,100,.4)} .btn-ghost:hover{border-color:var(--neon);color:var(--neon)}
 .archive-note{font:11px 'JetBrains Mono';color:var(--muted);margin-top:16px} .archive-note b{color:var(--neon)}
-@media(max-width:800px){.genre-grid{grid-template-columns:1fr}.soundcloud{grid-template-columns:1fr}}
 @media(max-width:580px){.hero h1{letter-spacing:-2px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -126,7 +127,14 @@ section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{displa
 <header class="hero"><div class="audio-grid"></div><div class="bars" id="bars"></div><div class="wave"><svg viewBox="0 0 1400 100" preserveAspectRatio="none"><path d="M0,50 C55,15 105,85 160,50 S265,15 320,50 S425,85 480,50 S585,15 640,50 S745,85 800,50 S905,15 960,50 S1065,85 1120,50 S1225,15 1280,50 S1340,80 1400,50"/></svg></div><div class="wrap"><div class="hero-content"><div class="kicker">// AUDIO_ENGINE: ONLINE</div><h1>Eric Kuhns<br><span>Music.</span></h1><p class="lead">A mix of acoustic rock, alternative and hip hop, blending whatever genres fit the idea. Some serious. Some ridiculous. Usually both.</p><div class="playerline"><span>FORMAT <b>MESSY</b></span><span>GENRE <b>VARIABLE</b></span><span>YEARS ACTIVE <b>2009→NOW</b></span></div></div></div></header>
 
 <section class="blk"><div class="wrap">
-  <div class="sec-head"><span class="tag">01</span><h2>Player</h2><div class="line"></div></div>
+  <div class="sec-head"><span class="tag">01</span><h2>Songs</h2><div class="line"></div></div>
+
+  <div class="song-tabs">
+    <button class="song-tab active" onclick="setSongCat('all',this)">All</button>
+    <button class="song-tab" onclick="setSongCat('hiphop',this)">Hip Hop</button>
+    <button class="song-tab" onclick="setSongCat('acoustic',this)">Acoustic / Rock</button>
+    <button class="song-tab" onclick="setSongCat('random',this)">Randomize ⤮</button>
+  </div>
 
   <div class="wmp" id="player">
     <div class="wmp-inner">
@@ -173,20 +181,6 @@ section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{displa
   <div class="archive-note">// <b>PLAYLIST:</b> This section auto-updates whenever a new video is added to the YouTube playlist.</div>
 </div></section>
 
-<section class="blk"><div class="wrap">
-  <div class="sec-head"><span class="tag">03</span><h2>Signal Mix</h2><div class="line"></div></div>
-  <div class="genre-grid">
-    <div class="genre" data-word="ACOUSTIC"><div class="code">// CH_01</div><h3>Acoustic Rock</h3><p>Guitars, stripped-down songs, melody and the occasional sincere moment.</p></div>
-    <div class="genre" data-word="ALT"><div class="code">// CH_02</div><h3>Alternative</h3><p>The catch-all lane for whatever doesn't want to behave like one clean genre.</p></div>
-    <div class="genre" data-word="HIPHOP"><div class="code">// CH_03</div><h3>Hip Hop</h3><p>Friendship raps, alien propaganda, Earth Day bars and other questionable decisions.</p></div>
-  </div>
-</div></section>
-
-<section class="blk"><div class="wrap">
-  <div class="sec-head"><span class="tag">04</span><h2>Listen to the Archive</h2><div class="line"></div></div>
-  <div class="soundcloud"><div><div class="kicker">// SOUNDCLOUD_LIBRARY</div><h3>Tracks from across the years</h3><p>My SoundCloud is a mixture of music I've made over the past couple decades: acoustic songs, experiments, old Dabbledooya material and whatever else survived long enough to upload.</p></div><a class="btn btn-primary" href="https://soundcloud.com/dabbledooya" target="_blank" rel="noopener">Open SoundCloud ↗</a></div>
-</div></section>
-
 <div id="site-footer"></div>
 
 <!-- hero equalizer bars -->
@@ -197,10 +191,12 @@ for(let i=0;i<52;i++){const b=document.createElement('i');b.className='bar';b.st
 
 <!-- ============ CUSTOM PLAYER LOGIC ============ -->
 <audio id="audio" crossorigin="anonymous"></audio>
-<script src="music-tracks.js?v=1"></script>
+<script src="music-tracks.js?v=2"></script>
 <script>
 (function(){
-  var tracks = window.MUSIC_TRACKS || [];
+  var allTracks = window.MUSIC_TRACKS || [];
+  var tracks = allTracks.slice();   // the active (possibly filtered/shuffled) list
+  var cat = 'all';
   var audio = document.getElementById('audio');
   var idx = 0, playing = false;
   var elTitle=document.getElementById('npTitle'), elArtist=document.getElementById('npArtist');
@@ -212,10 +208,31 @@ for(let i=0;i<52;i++){const b=document.createElement('i');b.className='bar';b.st
 
   function fmt(s){ if(!s||isNaN(s)||!isFinite(s))return"00:00"; var m=Math.floor(s/60),x=Math.floor(s%60); return (m<10?"0":"")+m+":"+(x<10?"0":"")+x; }
 
-  if(!tracks.length){
+  if(!allTracks.length){
     // leave the empty-state message
     return;
   }
+
+  function shuffle(arr){
+    var a=arr.slice();
+    for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var tmp=a[i];a[i]=a[j];a[j]=tmp; }
+    return a;
+  }
+
+  // switch category: filter the master list, rebuild, and reset to the first track
+  window.setSongCat=function(c,btn){
+    cat=c;
+    document.querySelectorAll('.song-tab').forEach(function(t){t.classList.remove('active');});
+    if(btn) btn.classList.add('active');
+    if(c==='all'){ tracks=allTracks.slice(); }
+    else if(c==='random'){ tracks=shuffle(allTracks); }
+    else { tracks=allTracks.filter(function(t){ return (t.genre||'').toLowerCase()===c; }); }
+    if(!tracks.length){ tracks=allTracks.slice(); } // safety: never empty
+    idx=0;
+    buildList();
+    var wasPlaying=playing;
+    load(0, wasPlaying);   // if music was playing, keep playing into the new list
+  };
 
   function buildList(){
     list.innerHTML='';
