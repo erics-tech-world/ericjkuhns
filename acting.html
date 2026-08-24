@@ -33,7 +33,7 @@ a{color:inherit;text-decoration:none} .mono{font-family:'JetBrains Mono',monospa
 .role-strip{display:flex;gap:8px;flex-wrap:wrap} .role-strip span{font-size:10px;letter-spacing:.8px;color:var(--muted);padding:6px 9px;border:1px solid var(--line);background:rgba(16,20,16,.7);border-radius:2px}
 section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:38px} .sec-head .tag{font-size:12px;color:var(--neon);letter-spacing:1px} .sec-head h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-1px} .sec-head .line{flex:1;height:1px;background:var(--line)}
 .reel-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px} .reel-panel,.info-panel{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:28px;position:relative;overflow:hidden} .reel-panel::before,.info-panel::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--neon),transparent 60%)}
-.reel-screen{aspect-ratio:16/9;border:1px solid var(--neon-dim);background:radial-gradient(circle at center,rgba(57,255,100,.08),transparent 45%),#050705;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:22px} .reel-screen::before{content:"DEMO_REEL_2023.MOV";position:absolute;top:12px;left:14px;font:10px 'JetBrains Mono';color:var(--muted);letter-spacing:1px} .play{width:78px;height:78px;border:1px solid var(--neon);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--neon);font-size:28px;transition:.2s;background:rgba(57,255,100,.04)} .reel-screen:hover .play{background:var(--neon);color:#04160a;box-shadow:0 0 34px rgba(57,255,100,.3);transform:scale(1.05)}
+.reel-screen{width:100%;aspect-ratio:16/9;border:1px solid var(--neon-dim);background:radial-gradient(circle at center,rgba(57,255,100,.08),transparent 45%),#050705;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:22px;cursor:pointer;color:inherit;padding:0} .reel-screen::before{content:"DEMO_REEL_2023.MOV";position:absolute;top:12px;left:14px;font:10px 'JetBrains Mono';color:var(--muted);letter-spacing:1px;z-index:2}.reel-screen.playing::before{display:none}.reel-screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0} .play{width:78px;height:78px;border:1px solid var(--neon);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--neon);font-size:28px;transition:.2s;background:rgba(57,255,100,.04)} .reel-screen:hover .play{background:var(--neon);color:#04160a;box-shadow:0 0 34px rgba(57,255,100,.3);transform:scale(1.05)}
 .btn{font:13px 'JetBrains Mono';letter-spacing:.5px;padding:13px 22px;border:1px solid var(--line);border-radius:2px;transition:.2s;display:inline-flex;align-items:center;gap:8px} .btn-primary{background:var(--neon);color:#04160a;border-color:var(--neon);font-weight:700} .btn-primary:hover{box-shadow:0 0 24px rgba(57,255,100,.4)} .btn-ghost:hover{border-color:var(--neon);color:var(--neon)}
 .chapter-list{display:grid;gap:10px;margin-top:8px} .chapter{display:grid;grid-template-columns:56px 1fr;gap:12px;border-bottom:1px solid var(--line);padding:0 0 10px;font-size:13px} .chapter:last-child{border:0} .chapter time{font-family:'JetBrains Mono';color:var(--neon)} .chapter span{color:var(--muted)}
 .headshots{display:grid;grid-template-columns:1fr 1fr;gap:18px} .photo-card{background:var(--panel);border:1px solid var(--line);padding:10px;border-radius:4px;overflow:hidden;transition:.2s;display:flex;flex-direction:column;color:inherit;font:inherit;text-align:left;cursor:zoom-in} .photo-card:hover{border-color:var(--neon-dim);transform:translateY(-3px)} .photo-card img{width:100%;height:auto;display:block;filter:saturate(.94) contrast(1.02)} .headshots .photo-card:nth-child(2) img{width:84%;margin:0 auto} .photo-cap{padding:10px 4px 2px;font-size:11px;color:var(--muted);letter-spacing:.7px}
@@ -75,8 +75,8 @@ section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{displa
   <div class="sec-head"><span class="tag mono">01</span><h2>Demo Reel</h2><div class="line"></div></div>
   <div class="reel-grid">
     <div class="reel-panel">
-      <a class="reel-screen" href="https://www.youtube.com/results?search_query=Eric+J.+Kuhns+Acting+Demo+Reel" target="_blank" rel="noopener" aria-label="Watch Eric J. Kuhns acting demo reel"><div class="play">▶</div></a>
-      <a class="btn btn-primary mono" href="https://www.youtube.com/results?search_query=Eric+J.+Kuhns+Acting+Demo+Reel" target="_blank" rel="noopener">▶ Watch Demo Reel</a>
+      <button class="reel-screen" type="button" id="demo-reel-play" aria-label="Play Eric J. Kuhns acting demo reel"><div class="play">▶</div></button>
+      <a class="btn btn-primary mono" href="https://www.youtube.com/watch?v=JlF0g2WupJc" target="_blank" rel="noopener">▶ Watch on YouTube</a>
     </div>
     <div class="info-panel">
       <div class="hero-kicker mono">// REEL INDEX</div>
@@ -193,6 +193,18 @@ section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{displa
   if(close) close.addEventListener('click', closeImage);
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape' && box && box.classList.contains('open')) closeImage();
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  const reel = document.getElementById('demo-reel-play');
+  if(!reel) return;
+  reel.addEventListener('click', function(){
+    reel.classList.add('playing');
+    reel.innerHTML = '<iframe src="https://www.youtube.com/embed/JlF0g2WupJc?autoplay=1&rel=0" title="Eric J. Kuhns Acting Demo Reel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
   });
 })();
 </script>
