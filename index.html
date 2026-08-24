@@ -286,7 +286,7 @@
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
-<link rel="stylesheet" href="site.css?v=4">
+<link rel="stylesheet" href="site.css?v=5">
 </head>
 <body>
 <script>window.SITE={active:"home",base:""};</script>
@@ -299,7 +299,6 @@
     <div class="cta-row">
       <a href="#videos" class="btn btn-primary mono">▶ Watch latest</a>
       <a href="#blog" class="btn btn-ghost mono">Read the blog</a>
-      <a href="about.html" class="btn btn-ghost mono">About me</a>
     </div>
   </div>
 </header>
@@ -334,20 +333,18 @@
             <h3>100% Skateboarding</h3>
             <p>Skate spots, articles, videos and more from 20+ years of skating.</p>
           </div>
-          <a class="card card-link" href="acting.html">
+          <div class="card">
             <img class="card-img" src="https://i.imgur.com/Pr4ka3Q.jpeg" alt="Professional Acting" onerror="this.style.display='none'">
             <div class="k mono">// Professional Acting</div>
             <h3>On Screen</h3>
             <p>Acting work across film and video. Bringing characters and stories to life in front of the camera and on stage.</p>
-            <span class="card-cta mono">Explore →</span>
-          </a>
-          <a class="card card-link" href="music.html">
-            <div class="card-img card-img-placeholder"><span class="mono">♪ ♫ ♪</span></div>
+          </div>
+          <div class="card">
+            <img class="card-img" src="https://i.imgur.com/a7Mq2pk.jpeg" alt="My Music" onerror="this.style.display='none'">
             <div class="k mono">// Music Projects</div>
             <h3>My Music</h3>
             <p>Assorted music I've made over the years spanning acoustic rock to hip hop.</p>
-            <span class="card-cta mono">Explore →</span>
-          </a>
+          </div>
         </div>
       </div>
       <button class="proj-arrow proj-next" aria-label="More" onclick="projSlide(1)">›</button>
@@ -365,7 +362,7 @@
     <div class="vid-tabs">
       <button class="vid-tab active" onclick="showVid('etw',this)">Eric's Tech World</button>
       <button class="vid-tab" onclick="showVid('skate',this)">Eric Skateboards</button>
-      <button class="vid-tab" onclick="showVid('backrooms',this)">Erics Sidequests</button>
+      <button class="vid-tab" onclick="showVid('backrooms',this)">Eric's Backrooms</button>
     </div>
 
     <div class="vid-panel active" id="vid-etw" data-playlist="PLC_X1O0yNkfTPBVDezefBILpkI6IDSnrk" data-label="Eric's Tech World">
@@ -374,8 +371,8 @@
     <div class="vid-panel" id="vid-skate" data-playlist="PLC2mvj5J6lOrVJiPYsC9dm7GqwbpyfzKJ" data-label="Eric Skateboards">
       <div class="vid-loading mono">Loading latest from Eric Skateboards…</div>
     </div>
-    <div class="vid-panel" id="vid-backrooms" data-playlist="PL1q99RsUT0U_dHnIDDyXukynggahCS1ha" data-label="Erics Sidequests">
-      <div class="vid-loading mono">Loading latest from Erics Sidequests…</div>
+    <div class="vid-panel" id="vid-backrooms" data-playlist="PL1q99RsUT0U_dHnIDDyXukynggahCS1ha" data-label="Eric's Backrooms">
+      <div class="vid-loading mono">Loading latest from Eric's Backrooms…</div>
     </div>
   </div>
 </section>
@@ -699,6 +696,6 @@
   })();
 </script>
 
-<script src="site.js?v=4"></script>
+<script src="site.js?v=5"></script>
 </body>
 </html>
