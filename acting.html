@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acting | Eric J. Kuhns</title>
+<meta name="description" content="Eric J. Kuhns acting portfolio: demo reel, headshots, credits, production stills, training, and booking information.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css?v=4">
+
+<style>
+:root{--bg:#0a0c0a;--panel:#101410;--panel2:#0d110d;--ink:#f4f6f4;--muted:#8a938c;--line:#1e241e;--neon:#39ff64;--neon-dim:#1f8a37}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(0,0,0,.14) 3px,transparent 4px);mix-blend-mode:overlay;opacity:.5}
+a{color:inherit;text-decoration:none} .mono{font-family:'JetBrains Mono',monospace} .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.hero{position:relative;min-height:560px;border-bottom:1px solid var(--line);overflow:hidden;display:flex;align-items:center}
+.camera-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(57,255,100,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(57,255,100,.055) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,black 30%,transparent 100%)}
+.sweep{position:absolute;left:-20%;right:-20%;height:1px;background:linear-gradient(90deg,transparent,var(--neon),transparent);top:28%;opacity:.35;animation:sweep 5.5s ease-in-out infinite}
+@keyframes sweep{0%,100%{transform:translateY(-110px);opacity:.08}50%{transform:translateY(250px);opacity:.45}}
+.frame{position:absolute;inset:42px;pointer-events:none;opacity:.75}
+.corner{position:absolute;width:56px;height:56px;border-color:var(--neon-dim)} .c1{top:0;left:0;border-top:2px solid;border-left:2px solid} .c2{top:0;right:0;border-top:2px solid;border-right:2px solid} .c3{bottom:0;left:0;border-bottom:2px solid;border-left:2px solid} .c4{bottom:0;right:0;border-bottom:2px solid;border-right:2px solid}
+.rec{position:absolute;top:28px;left:30px;font-size:11px;letter-spacing:1px;color:var(--muted)} .rec b{color:#ff5d5d;font-weight:700} .rec-dot{display:inline-block;width:7px;height:7px;background:#ff5d5d;border-radius:50%;margin-right:7px;animation:rec 1.2s steps(1) infinite} @keyframes rec{50%{opacity:.25}}
+.timecode{position:absolute;top:28px;right:30px;font-size:11px;color:var(--neon)} .cam-meta{position:absolute;bottom:25px;left:30px;right:30px;display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:.8px}
+.hero-content{position:relative;z-index:2;padding:100px 0 86px;max-width:800px}
+.hero-kicker{font-size:12px;color:var(--neon);letter-spacing:1.4px;margin-bottom:20px}
+.hero h1{font-size:clamp(48px,8vw,92px);line-height:.95;letter-spacing:-4px;margin-bottom:24px;font-weight:800} .hero h1 span{color:var(--neon)} 
+.hero .lead{max-width:680px;color:var(--muted);font-size:clamp(16px,2vw,19px);margin-bottom:28px}
+.role-strip{display:flex;gap:8px;flex-wrap:wrap} .role-strip span{font-size:10px;letter-spacing:.8px;color:var(--muted);padding:6px 9px;border:1px solid var(--line);background:rgba(16,20,16,.7);border-radius:2px}
+section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:38px} .sec-head .tag{font-size:12px;color:var(--neon);letter-spacing:1px} .sec-head h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-1px} .sec-head .line{flex:1;height:1px;background:var(--line)}
+.reel-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px} .reel-panel,.info-panel{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:28px;position:relative;overflow:hidden} .reel-panel::before,.info-panel::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--neon),transparent 60%)}
+.reel-screen{aspect-ratio:16/9;border:1px solid var(--neon-dim);background:radial-gradient(circle at center,rgba(57,255,100,.08),transparent 45%),#050705;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:22px} .reel-screen::before{content:"DEMO_REEL_2023.MOV";position:absolute;top:12px;left:14px;font:10px 'JetBrains Mono';color:var(--muted);letter-spacing:1px} .play{width:78px;height:78px;border:1px solid var(--neon);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--neon);font-size:28px;transition:.2s;background:rgba(57,255,100,.04)} .reel-screen:hover .play{background:var(--neon);color:#04160a;box-shadow:0 0 34px rgba(57,255,100,.3);transform:scale(1.05)}
+.btn{font:13px 'JetBrains Mono';letter-spacing:.5px;padding:13px 22px;border:1px solid var(--line);border-radius:2px;transition:.2s;display:inline-flex;align-items:center;gap:8px} .btn-primary{background:var(--neon);color:#04160a;border-color:var(--neon);font-weight:700} .btn-primary:hover{box-shadow:0 0 24px rgba(57,255,100,.4)} .btn-ghost:hover{border-color:var(--neon);color:var(--neon)}
+.chapter-list{display:grid;gap:10px;margin-top:8px} .chapter{display:grid;grid-template-columns:56px 1fr;gap:12px;border-bottom:1px solid var(--line);padding:0 0 10px;font-size:13px} .chapter:last-child{border:0} .chapter time{font-family:'JetBrains Mono';color:var(--neon)} .chapter span{color:var(--muted)}
+.headshots{display:grid;grid-template-columns:1fr 1fr;gap:18px} .photo-card{background:var(--panel);border:1px solid var(--line);padding:10px;border-radius:4px;overflow:hidden;transition:.2s;display:flex;flex-direction:column} .photo-card:hover{border-color:var(--neon-dim);transform:translateY(-3px)} .photo-card img{width:100%;height:auto;display:block;filter:saturate(.94) contrast(1.02)} .headshots .photo-card:nth-child(2) img{width:84%;margin:0 auto} .photo-cap{padding:10px 4px 2px;font-size:11px;color:var(--muted);letter-spacing:.7px}
+.credit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px} .credit{background:var(--panel);border:1px solid var(--line);padding:24px;border-radius:4px} .credit .k{font-size:10px;color:var(--neon);letter-spacing:1px;margin-bottom:9px} .credit h3{font-size:18px;margin-bottom:12px} .credit ul{list-style:none;display:grid;gap:7px;color:var(--muted);font-size:13px} .credit li::before{content:"▸";color:var(--neon-dim);margin-right:8px}
+.gallery{columns:3 240px;column-gap:14px} .gallery a{display:block;break-inside:avoid;margin-bottom:14px;border:1px solid var(--line);background:var(--panel);padding:7px;border-radius:3px;transition:.2s} .gallery a:hover{border-color:var(--neon);transform:translateY(-2px)} .gallery img{display:block;width:100%;height:auto}
+.history-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:26px} .story p{color:var(--muted);margin-bottom:18px} .facts{display:grid;gap:12px} .fact{border:1px solid var(--line);background:var(--panel);padding:17px} .fact b{display:block;color:var(--ink);margin-bottom:4px} .fact span{font-size:12px;color:var(--muted)} .fact .label{font:10px 'JetBrains Mono';color:var(--neon);letter-spacing:1px;margin-bottom:8px}
+.resume-box{display:grid;grid-template-columns:.75fr 1.25fr;gap:26px;align-items:center;background:var(--panel);border:1px solid var(--line);padding:24px;border-radius:4px} .resume-preview{border:1px solid var(--line);max-height:530px;overflow:hidden;background:white} .resume-preview img{width:100%;display:block} .resume-copy p{color:var(--muted);margin:10px 0 22px}
+.cta{text-align:center;padding:86px 0} .cta h2{font-size:clamp(30px,5vw,50px);letter-spacing:-2px;margin-bottom:12px} .cta p{color:var(--muted);margin-bottom:24px}
+@media(max-width:820px){.frame{inset:20px}.reel-grid,.history-grid,.resume-box{grid-template-columns:1fr}.credit-grid{grid-template-columns:1fr}.hero h1{letter-spacing:-2px}}
+@media(max-width:560px){.headshots{grid-template-columns:1fr}.cam-meta{display:none}.timecode{right:20px}.rec{left:20px}.hero{min-height:520px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<script>window.SITE={active:"acting",base:""};</script>
+<div id="site-nav"></div>
+
+<header class="hero">
+  <div class="camera-grid"></div><div class="sweep"></div>
+  <div class="frame"><i class="corner c1"></i><i class="corner c2"></i><i class="corner c3"></i><i class="corner c4"></i><div class="rec mono"><span class="rec-dot"></span><b>REC</b> / CAMERA A</div><div class="timecode mono" id="tc">00:00:00:00</div><div class="cam-meta mono"><span>4K / 24FPS / LOG</span><span>AF-C · FACE TRACKING</span><span>BAT 87%</span></div></div>
+  <div class="wrap"><div class="hero-content">
+    <div class="hero-kicker mono">// PERFORMANCE_MODE: ACTIVE</div>
+    <h1>Acting<br><span>Portfolio.</span></h1>
+    <p class="lead">Film, commercials, industrials, theatre, hosting and voiceover. I like disappearing into a character, but I’m just as comfortable being myself on camera.</p>
+    <div class="role-strip mono"><span>FILM</span><span>COMMERCIAL</span><span>INDUSTRIAL</span><span>THEATRE</span><span>HOSTING</span><span>VOICEOVER</span></div>
+  </div></div>
+</header>
+
+<section class="blk" id="reel"><div class="wrap">
+  <div class="sec-head"><span class="tag mono">01</span><h2>Demo Reel</h2><div class="line"></div></div>
+  <div class="reel-grid">
+    <div class="reel-panel">
+      <a class="reel-screen" href="https://www.ericjkuhns.com/videos/v/acting-demo-reel-eric-j-kuhns" target="_blank" rel="noopener" aria-label="Watch Eric J. Kuhns acting demo reel"><div class="play">▶</div></a>
+      <a class="btn btn-primary mono" href="https://www.ericjkuhns.com/videos/v/acting-demo-reel-eric-j-kuhns" target="_blank" rel="noopener">▶ Watch Demo Reel</a>
+    </div>
+    <div class="info-panel">
+      <div class="hero-kicker mono">// REEL INDEX</div>
+      <div class="chapter-list">
+        <div class="chapter"><time>0:00</time><span>Husband - RumbleOn commercial</span></div>
+        <div class="chapter"><time>0:49</time><span>Marty McFly - Marriage Conference commercial</span></div>
+        <div class="chapter"><time>2:00</time><span>Beat Boxer - New Jersey Anti-Litter PSA</span></div>
+        <div class="chapter"><time>2:17</time><span>Hipster Chaz - Chuck E. Cheese industrial</span></div>
+        <div class="chapter"><time>2:30</time><span>Myself - Apparition Expedition documentary</span></div>
+        <div class="chapter"><time>4:04</time><span>Runner - The Train Station</span></div>
+        <div class="chapter"><time>4:16</time><span>Wes - Com Home</span></div>
+        <div class="chapter"><time>4:54</time><span>Wynn Mowerly - Crop Circles</span></div>
+        <div class="chapter"><time>5:59</time><span>Host - 5miles weekly web series</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="blk" id="headshots"><div class="wrap">
+  <div class="sec-head"><span class="tag mono">02</span><h2>Headshots</h2><div class="line"></div></div>
+  <div class="headshots">
+    <a class="photo-card" href="https://i.imgur.com/ruizZQg.png" target="_blank"><img src="https://i.imgur.com/ruizZQg.png" alt="Eric J. Kuhns headshot"><div class="photo-cap mono">HEADSHOT_A.JPG</div></a>
+    <a class="photo-card" href="https://i.imgur.com/3lHhTsQ.png" target="_blank"><img src="https://i.imgur.com/3lHhTsQ.png" alt="Eric J. Kuhns headshot"><div class="photo-cap mono">HEADSHOT_B.JPG</div></a>
+  </div>
+</div></section>
+
+<section class="blk" id="credits"><div class="wrap">
+  <div class="sec-head"><span class="tag mono">03</span><h2>Selected Credits</h2><div class="line"></div></div>
+  <div class="credit-grid">
+    <div class="credit"><div class="k mono">// COMMERCIAL</div><h3>Commercial Work</h3><ul><li>Tide - Multiple Characters</li><li>Chuck E. Cheese - Hipster Chaz</li><li>Applebee's - Customer</li><li>RumbleOn - Husband</li><li>Driver's License Link - Car Owner</li></ul></div>
+    <div class="credit"><div class="k mono">// FILM / TV / DOC</div><h3>Film &amp; Television</h3><ul><li>The Train Station - Angry Runner</li><li>City of Plano Haunted - Storyteller</li><li>Crop Circles - Alien Expert</li><li>That Man - Lead</li><li>The Lamp - Lead</li></ul></div>
+    <div class="credit"><div class="k mono">// THEATRE</div><h3>Stage</h3><ul><li>Comedy of Errors - Dromio of Ephesus</li><li>Jack and Jill - Jack</li><li>From Oz - Munchkin Mayer</li><li>The “One-Armed” Man - McHenry</li><li>Dewey Boy and Wookie - Wookie</li></ul></div>
+    <div class="credit"><div class="k mono">// INDUSTRIAL / HOSTING</div><h3>Industrial &amp; Web</h3><ul><li>MallGrab Coffee - Skateboarder</li><li>Back to the Future Valentine's Promo - Marty McFly</li><li>AMC Theaters - Movie-goer</li><li>New Jersey DMV - Rapper / Convict</li><li>5miles App - Host of Weekly Series</li><li>Good Morning Texas - IZOD Model</li></ul></div>
+  </div>
+</div></section>
+
+<section class="blk" id="stills"><div class="wrap">
+  <div class="sec-head"><span class="tag mono">04</span><h2>Production Stills</h2><div class="line"></div></div>
+  <div class="gallery">
+    <a href="https://i.imgur.com/Xq5RGgI.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/Xq5RGgI.png" alt="Eric J. Kuhns production still"></a><a href="https://i.imgur.com/6KApyHT.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/6KApyHT.png" alt="Eric J. Kuhns production still"></a><a href="https://i.imgur.com/Q2lGFHr.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/Q2lGFHr.png" alt="Eric J. Kuhns production still"></a><a href="https://i.imgur.com/sbV2oPz.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/sbV2oPz.png" alt="Eric J. Kuhns production still"></a><a href="https://i.imgur.com/Vuq4Ckc.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/Vuq4Ckc.png" alt="Eric J. Kuhns production still"></a><a href="https://i.imgur.com/lRLKTVS.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/lRLKTVS.png" alt="Eric J. Kuhns production still"></a><a href="https://i.imgur.com/EdFDgXS.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/EdFDgXS.png" alt="Eric J. Kuhns production still"></a><a href="https://i.imgur.com/d4mpN0X.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/d4mpN0X.png" alt="Eric J. Kuhns production still"></a><a href="https://i.imgur.com/jDT7FeB.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/jDT7FeB.png" alt="Eric J. Kuhns production still"></a><a href="https://i.imgur.com/oTjKRNu.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/oTjKRNu.png" alt="Eric J. Kuhns production still"></a><a href="https://i.imgur.com/Xcy0mTY.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/Xcy0mTY.png" alt="Eric J. Kuhns production still"></a><a href="https://i.imgur.com/qUfhJmY.png" target="_blank"><img loading="lazy" src="https://i.imgur.com/qUfhJmY.png" alt="Eric J. Kuhns production still"></a>
+  </div>
+</div></section>
+
+<section class="blk" id="resume"><div class="wrap">
+  <div class="sec-head"><span class="tag mono">05</span><h2>Resume &amp; Training</h2><div class="line"></div></div>
+  <div class="resume-box">
+    <a class="resume-preview" href="https://images.squarespace-cdn.com/content/v1/61cb7ef545294b57836f442e/3d0493c6-06f7-435c-8736-5f41ff310741/Eric%2BJ%2BKuhns%2B2025%2BActing%2BResume.jpg" target="_blank"><img src="https://images.squarespace-cdn.com/content/v1/61cb7ef545294b57836f442e/3d0493c6-06f7-435c-8736-5f41ff310741/Eric%2BJ%2BKuhns%2B2025%2BActing%2BResume.jpg" alt="Eric J. Kuhns acting resume"></a>
+    <div class="resume-copy"><div class="hero-kicker mono">// ACTOR_PROFILE</div><h3>Film, theatre &amp; voiceover</h3><p>Associate of Applied Arts in Acting Performance, with training in film and theatre plus improvisation. Skills include voice acting, advanced skateboarding, intermediate rollerblading, improvisational theatre, writing, story building, gymnastics and parkour.</p><div class="cta-row"><a class="btn btn-primary mono" href="https://images.squarespace-cdn.com/content/v1/61cb7ef545294b57836f442e/3d0493c6-06f7-435c-8736-5f41ff310741/Eric%2BJ%2BKuhns%2B2025%2BActing%2BResume.jpg" target="_blank">View Full Resume ↗</a></div></div>
+  </div>
+</div></section>
+
+<section class="blk" id="history"><div class="wrap">
+  <div class="sec-head"><span class="tag mono">06</span><h2>My Acting History</h2><div class="line"></div></div>
+  <div class="history-grid">
+    <div class="story"><p>I first played a U.S. patriot in a kindergarten play and ever since, I’ve been obsessed with acting and film. There’s something both mythical and natural about stepping into someone else’s shoes and taking on their personality and mannerisms.</p><p>After high school, I started filming skits with friends and decided to pursue acting more seriously in 2010. I entered a 15-month Acting Performance program and earned my associate degree in 2012. Soon after, I joined the Kim Dawson Agency in Dallas and worked through them from 2012 to 2016.</p><p>Since then, I’ve continued acting through independent projects, commercials, industrials, documentaries, skits and my own videos. I’m interested in both the controlled process of film and the immediacy of live performance.</p></div>
+    <div class="facts">
+      <div class="fact"><div class="label">TRAINING</div><b>Acting Performance</b><span>Film + theatre concentration</span></div>
+      <div class="fact"><div class="label">REPRESENTATION</div><b>Kim Dawson Agency</b><span>Dallas, 2012–2016 · no agency currently</span></div>
+      <div class="fact"><div class="label">SPECIAL SKILLS</div><b>Movement + performance</b><span>Skateboarding, rollerblading, improv, gymnastics, parkour, voiceover</span></div>
+    </div>
+  </div>
+</div></section>
+
+<div class="wrap"><div class="cta"><div class="hero-kicker mono">// AVAILABLE_FOR_PROJECTS</div><h2>Need an actor?</h2><p>Commercial, film, industrial, hosting or voiceover inquiries.</p><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a class="btn btn-primary mono" href="mailto:info@ericjkuhns.com">Book Me →</a><a class="btn btn-ghost mono" href="https://www.imdb.com/name/nm7044202/" target="_blank" rel="noopener">IMDb ↗</a><a class="btn btn-ghost mono" href="https://www.youtube.com/@ericstechworld" target="_blank" rel="noopener">YouTube ↗</a></div></div></div>
+
+<div id="site-footer"></div>
+<script>
+(function(){
+  const tc=document.getElementById('tc'); let f=0;
+  function tick(){f=(f+1)%24;const d=new Date();tc.textContent=[d.getHours(),d.getMinutes(),d.getSeconds(),f].map(n=>String(n).padStart(2,'0')).join(':');requestAnimationFrame(tick)} tick();
+})();
+</script>
+<script src="site.js?v=4"></script>
+</body>
+</html>
