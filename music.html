@@ -19,12 +19,41 @@
 .hero-content{position:relative;z-index:2;padding:100px 0 115px;text-align:center} .kicker{font:12px 'JetBrains Mono';color:var(--neon);letter-spacing:1.4px;margin-bottom:20px} .hero h1{font-size:clamp(48px,8vw,92px);line-height:.95;letter-spacing:-4px;margin-bottom:22px} .hero h1 span{color:var(--neon)} .lead{max-width:660px;margin:0 auto;color:#cfd6d0;font-size:clamp(16px,2vw,19px);text-shadow:0 2px 14px rgba(0,0,0,.9);background:rgba(10,12,10,.48);border:1px solid rgba(30,36,30,.65);padding:12px 16px;border-radius:3px;backdrop-filter:blur(2px)} .playerline{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:28px;font:10px 'JetBrains Mono';color:var(--muted)} .playerline b{color:var(--neon);font-weight:500}
 section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:38px} .sec-head .tag{font:12px 'JetBrains Mono';color:var(--neon);letter-spacing:1px} .sec-head h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-1px} .sec-head .line{flex:1;height:1px;background:var(--line)}
 .nowplaying{display:grid;grid-template-columns:160px 1fr auto;align-items:center;gap:22px;background:var(--panel);border:1px solid var(--neon-dim);padding:20px;border-radius:4px;box-shadow:0 0 35px rgba(57,255,100,.05)} .disc{width:140px;aspect-ratio:1;border-radius:50%;border:1px solid var(--neon-dim);background:repeating-radial-gradient(circle,#0d110d 0,#0d110d 5px,#131913 6px,#131913 7px);position:relative;animation:spin 11s linear infinite} .disc::after{content:"";position:absolute;inset:42%;border-radius:50%;background:var(--neon);box-shadow:0 0 20px rgba(57,255,100,.35)} @keyframes spin{to{transform:rotate(360deg)}} .np-meta .tiny{font:10px 'JetBrains Mono';color:var(--neon);letter-spacing:1px;margin-bottom:8px} .np-meta h3{font-size:23px;margin-bottom:5px} .np-meta p{color:var(--muted);font-size:13px} .np-time{font:12px 'JetBrains Mono';color:var(--muted);text-align:right} .np-time b{color:var(--neon)}
-.tracklist{display:grid;gap:8px} .track{display:grid;grid-template-columns:46px 1fr 110px 46px;align-items:center;gap:14px;padding:16px 18px;background:var(--panel);border:1px solid var(--line);border-radius:3px;transition:.2s} .track:hover{border-color:var(--neon-dim);transform:translateX(4px)} .track .num{font:11px 'JetBrains Mono';color:var(--neon-dim)} .track h3{font-size:15px;margin-bottom:2px} .track p{font-size:11px;color:var(--muted)} .track .year{font:11px 'JetBrains Mono';color:var(--muted);text-align:right} .track .go{font-size:16px;color:var(--neon);text-align:center}
+.music-feature{margin-bottom:18px}
+.music-feature .vid-thumb{position:relative;width:100%;aspect-ratio:16/9;border:1px solid var(--line);border-radius:4px;overflow:hidden;cursor:pointer;background-size:cover;background-position:center;background-color:#050705}
+.music-feature .vid-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02) 35%,rgba(0,0,0,.72));transition:.2s}
+.music-feature .vid-thumb:hover::after{background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.72))}
+.music-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:68px;height:68px;border-radius:50%;background:var(--neon);color:#04160a;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 0 30px rgba(57,255,100,.35);transition:.2s}
+.music-feature .vid-thumb:hover .music-play{transform:translate(-50%,-50%) scale(1.07);box-shadow:0 0 42px rgba(57,255,100,.52)}
+.music-title{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:18px;font-size:17px;font-weight:700}
+.music-sub{font:11px 'JetBrains Mono';color:var(--muted);margin-top:9px}.music-sub b{color:var(--neon)}
+.music-carousel{display:flex;align-items:stretch;gap:10px;margin-top:16px}
+.music-viewport{flex:1;overflow:hidden}
+.music-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
+.music-track::-webkit-scrollbar{display:none}
+.music-item{flex:0 0 calc((100% - 24px) / 3);scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;cursor:pointer;transition:.2s}
+.music-item:hover{border-color:var(--neon-dim);transform:translateY(-2px)}
+.music-item .m-thumb{aspect-ratio:16/9;background-size:cover;background-position:center;background-color:#050705;position:relative}
+.music-item .m-thumb::after{content:"▶";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--neon);font-size:17px;opacity:0;transition:.2s}
+.music-item:hover .m-thumb::after{opacity:1}
+.music-item .m-title{padding:11px 12px;font-size:12px;line-height:1.35;color:var(--ink)}
+.music-arrow{flex:0 0 40px;align-self:center;height:64px;width:40px;background:var(--panel);border:1px solid var(--line);border-radius:3px;color:var(--neon);font-size:26px;line-height:1;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center}
+.music-arrow:hover{border-color:var(--neon);box-shadow:0 0 18px rgba(57,255,100,.25)}
+.music-arrow.disabled{opacity:.25;pointer-events:none}
+.music-all .m-thumb{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0d130d,#060806)}
+.music-all .m-thumb::after{content:none}
+.music-all .m-thumb span{font:28px 'JetBrains Mono';color:var(--neon)}
+.music-all .m-title{color:var(--neon);font-family:'JetBrains Mono',monospace}
+.music-loading,.music-error{font:13px 'JetBrains Mono';color:var(--muted);padding:36px 0;text-align:center}
+.music-embed{position:relative;width:100%;aspect-ratio:16/9;background:#050705;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.music-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media(max-width:820px){.music-item{flex:0 0 calc((100% - 12px) / 2)}}
+@media(max-width:560px){.music-item{flex:0 0 85%}.music-arrow{display:none}}
 .genre-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px} .genre{min-height:180px;border:1px solid var(--line);background:var(--panel);padding:24px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden} .genre::before{content:attr(data-word);position:absolute;right:-5px;top:-20px;font-size:72px;font-weight:800;color:rgba(57,255,100,.045);letter-spacing:-5px} .genre .code{font:10px 'JetBrains Mono';color:var(--neon);margin-bottom:8px} .genre h3{font-size:20px} .genre p{font-size:13px;color:var(--muted);margin-top:7px}
 .soundcloud{display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;background:linear-gradient(120deg,rgba(57,255,100,.07),transparent 45%),var(--panel);border:1px solid var(--line);padding:32px;border-radius:4px} .soundcloud p{color:var(--muted);max-width:650px;margin-top:9px} .btn{font:13px 'JetBrains Mono';letter-spacing:.5px;padding:13px 22px;border:1px solid var(--line);border-radius:2px;transition:.2s;display:inline-flex;align-items:center;gap:8px} .btn-primary{background:var(--neon);color:#04160a;border-color:var(--neon);font-weight:700} .btn-primary:hover{box-shadow:0 0 24px rgba(57,255,100,.4)} .btn-ghost:hover{border-color:var(--neon);color:var(--neon)}
 .archive-note{font:11px 'JetBrains Mono';color:var(--muted);margin-top:16px} .archive-note b{color:var(--neon)}
 @media(max-width:800px){.nowplaying{grid-template-columns:100px 1fr}.disc{width:92px}.np-time{grid-column:1/-1;text-align:left}.genre-grid{grid-template-columns:1fr}.soundcloud{grid-template-columns:1fr}}
-@media(max-width:580px){.track{grid-template-columns:32px 1fr 34px}.track .year{display:none}.hero h1{letter-spacing:-2px}}
+@media(max-width:580px){.hero h1{letter-spacing:-2px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -41,16 +70,10 @@ section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{displa
 
 <section class="blk"><div class="wrap">
   <div class="sec-head"><span class="tag">02</span><h2>Music Videos</h2><div class="line"></div></div>
-  <div class="tracklist">
-    <a class="track" href="https://www.youtube.com/results?search_query=Dream+Eric+Kuhns+2024+Music+Video+Dabbledooya" target="_blank" rel="noopener"><div class="num">01</div><div><h3>Dream</h3><p>A song recorded for Valentine’s Day 2024.</p></div><div class="year">2024</div><div class="go">↗</div></a>
-    <a class="track" href="https://www.youtube.com/results?search_query=2+Best+2+Friends+Dabbledooya+Music+2021" target="_blank" rel="noopener"><div class="num">02</div><div><h3>2 Best 2 Friends</h3><p>Two dudes rappin’ about their 20+ year friendship.</p></div><div class="year">2021</div><div class="go">↗</div></a>
-    <a class="track" href="https://www.youtube.com/results?search_query=ANTI+EARTH+DAY+RAP+Dabbledooya+Music+2019" target="_blank" rel="noopener"><div class="num">03</div><div><h3>Anti Earth Day Rap</h3><p>An alien-minded sequel to the original Earth Day Rap.</p></div><div class="year">2019</div><div class="go">↗</div></a>
-    <a class="track" href="https://www.youtube.com/@ericsbackrooms/videos" target="_blank" rel="noopener"><div class="num">04</div><div><h3>Osiris</h3><p>Experimental dark-web story song and music video.</p></div><div class="year">2018</div><div class="go">↗</div></a>
-    <a class="track" href="https://www.youtube.com/@ericsbackrooms/videos" target="_blank" rel="noopener"><div class="num">05</div><div><h3>Memories</h3><p>A song written for longtime friend Neil Aguilar.</p></div><div class="year">2018</div><div class="go">↗</div></a>
-    <a class="track" href="https://www.youtube.com/@ericsbackrooms/videos" target="_blank" rel="noopener"><div class="num">06</div><div><h3>This Is Halloween</h3><p>An old-school Dabbledooya ode to Halloween.</p></div><div class="year">2012</div><div class="go">↗</div></a>
-    <a class="track" href="https://www.youtube.com/@ericsbackrooms/videos" target="_blank" rel="noopener"><div class="num">07</div><div><h3>Earth Day Rap</h3><p>Early Wacker Than Wack / Dabbledooya-era hip hop.</p></div><div class="year">2009</div><div class="go">↗</div></a>
+  <div id="music-videos" data-playlist="PL1q99RsUT0U-s3iLLBhIR224Y9t0Bm4SW">
+    <div class="music-loading mono">Loading music videos...</div>
   </div>
-  <div class="archive-note">// <b>ARCHIVE:</b> music stretches back across a couple decades, so this page is intentionally more mixtape than discography.</div>
+  <div class="archive-note">// <b>PLAYLIST:</b> This section auto-updates whenever a new video is added to the YouTube playlist.</div>
 </div></section>
 
 <section class="blk"><div class="wrap">
@@ -72,6 +95,185 @@ section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{displa
 const bars=document.getElementById('bars');
 for(let i=0;i<52;i++){const b=document.createElement('i');b.className='bar';b.style.setProperty('--h',(24+Math.random()*150)+'px');b.style.setProperty('--d',(.35+Math.random()*.95)+'s');b.style.animationDelay=(-Math.random()*1.2)+'s';bars.appendChild(b)}
 </script>
+
+<script>
+(function(){
+  const panel = document.getElementById('music-videos');
+  if(!panel) return;
+
+  const playlist = panel.getAttribute('data-playlist');
+  const PROXY = "https://youtube-feed.silent-hall-684c.workers.dev/?url=";
+
+  function feedUrl(pl){
+    return "https://www.youtube.com/feeds/videos.xml?playlist_id=" + pl;
+  }
+  function esc(s){
+    return (s || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+  function thumb(id,q){
+    return "https://i.ytimg.com/vi/" + id + "/" + (q || "hqdefault") + ".jpg";
+  }
+
+  function playFeature(feature, video){
+    feature.innerHTML =
+      '<div class="music-embed"><iframe src="https://www.youtube.com/embed/' + video.id +
+      '?autoplay=1&rel=0" title="' + esc(video.title) +
+      '" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share" allowfullscreen></iframe></div>';
+  }
+
+  function setupCarousel(track, prev, next){
+    function step(){
+      const first = track.querySelector('.music-item');
+      if(!first) return 0;
+      const gap = parseFloat(getComputedStyle(track).gap || 0) || 0;
+      return first.getBoundingClientRect().width + gap;
+    }
+    function perView(){
+      const viewport = track.parentElement.getBoundingClientRect().width;
+      const s = step();
+      return s ? Math.max(1, Math.round(viewport / s)) : 1;
+    }
+    function maxScroll(){
+      return track.scrollWidth - track.parentElement.getBoundingClientRect().width;
+    }
+    function update(){
+      const x = track.scrollLeft;
+      prev.classList.toggle('disabled', x <= 2);
+      next.classList.toggle('disabled', x >= maxScroll() - 2);
+    }
+    prev.onclick = function(){ track.scrollBy({left:-step()*perView(),behavior:'smooth'}); };
+    next.onclick = function(){ track.scrollBy({left: step()*perView(),behavior:'smooth'}); };
+    track.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update);
+    setTimeout(update, 60);
+  }
+
+  function render(videos){
+    if(!videos.length) return fallback();
+
+    const featureVideo = videos[0];
+    const rest = videos.slice(1);
+
+    const feature = document.createElement('div');
+    feature.className = 'music-feature';
+
+    const hero = document.createElement('div');
+    hero.className = 'vid-thumb';
+    hero.style.backgroundImage =
+      "url('" + thumb(featureVideo.id,'maxresdefault') + "'),url('" + thumb(featureVideo.id,'hqdefault') + "')";
+    hero.innerHTML =
+      '<div class="music-play">▶</div>' +
+      '<div class="music-title">' + esc(featureVideo.title) + '</div>';
+    hero.onclick = function(){ playFeature(feature, featureVideo); };
+
+    const sub = document.createElement('div');
+    sub.className = 'music-sub mono';
+    sub.innerHTML = '▸ Featured from <b>Eric Kuhns Music</b>';
+
+    feature.appendChild(hero);
+    feature.appendChild(sub);
+
+    const carousel = document.createElement('div');
+    carousel.className = 'music-carousel';
+
+    const prev = document.createElement('button');
+    prev.className = 'music-arrow disabled';
+    prev.setAttribute('aria-label','Previous music videos');
+    prev.innerHTML = '‹';
+
+    const next = document.createElement('button');
+    next.className = 'music-arrow';
+    next.setAttribute('aria-label','More music videos');
+    next.innerHTML = '›';
+
+    const viewport = document.createElement('div');
+    viewport.className = 'music-viewport';
+
+    const track = document.createElement('div');
+    track.className = 'music-track';
+
+    rest.forEach(function(v){
+      const item = document.createElement('div');
+      item.className = 'music-item';
+      item.innerHTML =
+        '<div class="m-thumb" style="background-image:url(\'' + thumb(v.id,'mqdefault') + '\')"></div>' +
+        '<div class="m-title">' + esc(v.title) + '</div>';
+      item.onclick = function(){
+        playFeature(feature, v);
+        window.scrollTo({
+          top: feature.getBoundingClientRect().top + window.scrollY - 90,
+          behavior:'smooth'
+        });
+      };
+      track.appendChild(item);
+    });
+
+    const all = document.createElement('a');
+    all.className = 'music-item music-all';
+    all.href = 'https://www.youtube.com/playlist?list=' + playlist;
+    all.target = '_blank';
+    all.rel = 'noopener';
+    all.innerHTML =
+      '<div class="m-thumb"><span>▸</span></div>' +
+      '<div class="m-title">See full playlist on YouTube</div>';
+    track.appendChild(all);
+
+    viewport.appendChild(track);
+    carousel.appendChild(prev);
+    carousel.appendChild(viewport);
+    carousel.appendChild(next);
+
+    panel.innerHTML = '';
+    panel.appendChild(feature);
+    panel.appendChild(carousel);
+
+    setupCarousel(track, prev, next);
+  }
+
+  function fallback(){
+    panel.innerHTML =
+      '<div class="music-embed"><iframe src="https://www.youtube.com/embed/videoseries?list=' + playlist +
+      '" title="Eric Kuhns music videos" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>';
+  }
+
+  let done = false;
+  const controller = ("AbortController" in window) ? new AbortController() : null;
+  const timer = setTimeout(function(){
+    if(done) return;
+    done = true;
+    if(controller) controller.abort();
+    fallback();
+  }, 6000);
+
+  fetch(PROXY + encodeURIComponent(feedUrl(playlist)), controller ? {signal:controller.signal} : {})
+    .then(function(r){
+      if(!r.ok) throw new Error('http ' + r.status);
+      return r.text();
+    })
+    .then(function(xml){
+      if(done) return;
+      const doc = new DOMParser().parseFromString(xml,"text/xml");
+      if(doc.getElementsByTagName('parsererror').length) throw new Error('parse');
+      const entries = Array.from(doc.getElementsByTagName('entry'));
+      const videos = entries.map(function(e){
+        const idEl = e.getElementsByTagName('yt:videoId')[0] || e.getElementsByTagName('videoId')[0];
+        const titleEl = e.getElementsByTagName('title')[0];
+        return {id:idEl ? idEl.textContent : null,title:titleEl ? titleEl.textContent : ''};
+      }).filter(function(v){ return v.id; });
+      if(!videos.length) throw new Error('empty');
+      done = true;
+      clearTimeout(timer);
+      render(videos);
+    })
+    .catch(function(){
+      if(done) return;
+      done = true;
+      clearTimeout(timer);
+      fallback();
+    });
+})();
+</script>
+
 <script src="site.js?v=4"></script>
 </body>
 </html>
