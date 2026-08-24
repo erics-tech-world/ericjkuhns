@@ -21,7 +21,7 @@ window.MUSIC_TRACKS = [
   { title:"Bring It", artist:"Eric Kuhns Music", src:"audio/Bring%20It.mp3", genre:"hiphop", art:ART_NILBOG, year:"Nilbog's Finest · 2007" },
   { title:"Twerk Twerk (Who Is Twerking)", artist:"Eric Kuhns Music", src:"audio/Twerk%20Twerk%20(Who%20is%20twerking).mp3", genre:"hiphop", art:ART_NILBOG, year:"Nilbog's Finest · 2009" },
   { title:"Earth Day", artist:"Eric Kuhns Music", src:"audio/Earthday.mp3", genre:"hiphop", art:ART_NILBOG, year:"Nilbog's Finest · 2009" },
-  { title:"This Is Halloween", artist:"Eric Kuhns Music", src:"audio/This%20is%20halloween.mp3", genre:"hiphop", art:ART_NILBOG, year:"Nilbog's Finest · 2012" },
+  { title:"This Is Halloween", artist:"Eric Kuhns Music", src:"audio/this-is-halloween.mp3", genre:"hiphop", art:ART_NILBOG, year:"Nilbog's Finest · 2012" },
   { title:"Memories", artist:"Eric Kuhns Music", src:"audio/Memories.mp3", genre:"hiphop", art:ART_DABBLE, year:"Lil' Dabbledooya · 2018" },
   { title:"Osiris", artist:"Eric Kuhns Music", src:"audio/Osiris.mp3", genre:"hiphop", art:ART_DABBLE, year:"Lil' Dabbledooya · 2018" },
   { title:"Robot Party", artist:"Eric Kuhns Music", src:"audio/Robot%20Party%20(Erics%20Tech%20World).m4a", genre:"hiphop", art:ART_DABBLE, year:"Lil' Dabbledooya · 2025" },
