@@ -13,6 +13,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,12,10,.82);backdrop-fil
 .nav-drop{position:relative}
 .nav-drop-btn{font-family:inherit;font-size:13px;letter-spacing:.5px;text-transform:uppercase;background:none;border:none;color:var(--muted);cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
 .nav-drop-btn:hover{color:var(--neon)}
+.nav-drop-btn.active{color:var(--neon)}
 .nav-arrow{font-size:9px;color:var(--neon);transition:transform .2s}
 .nav-drop.open .nav-drop-btn{color:var(--neon)}
 .nav-drop.open .nav-arrow{transform:rotate(180deg)}
@@ -70,7 +71,8 @@ footer{padding:48px 0 40px;border-top:1px solid var(--line)}
 .foot-note a{color:var(--muted)}
 .foot-note a:hover{color:var(--neon)}
 
-@media(max-width:820px){
+/* Switch to the mobile nav slightly earlier now that About is a top-level item. */
+@media(max-width:900px){
   .nav-links{display:none}
   .nav-links.open{display:flex;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:var(--panel);padding:20px 24px;gap:18px;border-bottom:1px solid var(--line);align-items:flex-start}
   .nav-drop{width:100%}
