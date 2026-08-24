@@ -124,7 +124,7 @@ section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{displa
 <script>window.SITE={active:"music",base:""};</script>
 <div id="site-nav"></div>
 
-<header class="hero"><div class="audio-grid"></div><div class="bars" id="bars"></div><div class="wave"><svg viewBox="0 0 1400 100" preserveAspectRatio="none"><path d="M0,50 C55,15 105,85 160,50 S265,15 320,50 S425,85 480,50 S585,15 640,50 S745,85 800,50 S905,15 960,50 S1065,85 1120,50 S1225,15 1280,50 S1340,80 1400,50"/></svg></div><div class="wrap"><div class="hero-content"><div class="kicker">// AUDIO_ENGINE: ONLINE</div><h1>Eric Kuhns<br><span>Music.</span></h1><p class="lead">A mix of acoustic rock, alternative and hip hop, blending whatever genres fit the idea. Some serious. Some ridiculous. Usually both.</p><div class="playerline"><span>FORMAT <b>MESSY</b></span><span>GENRE <b>VARIABLE</b></span><span>YEARS ACTIVE <b>2009→NOW</b></span></div></div></div></header>
+<header class="hero"><div class="audio-grid"></div><div class="bars" id="bars"></div><div class="wave"><svg viewBox="0 0 1400 100" preserveAspectRatio="none"><path d="M0,50 C55,15 105,85 160,50 S265,15 320,50 S425,85 480,50 S585,15 640,50 S745,85 800,50 S905,15 960,50 S1065,85 1120,50 S1225,15 1280,50 S1340,80 1400,50"/></svg></div><div class="wrap"><div class="hero-content"><div class="kicker">// AUDIO_ENGINE: ONLINE</div><h1>Eric Kuhns<br><span>Music.</span></h1><p class="lead">A mix of acoustic rock, alternative and hip hop, blending whatever genres fit the idea. Some serious. Some ridiculous. Usually both.</p><div class="playerline"><span>GENRE <b>VARIABLE</b></span><span>YEARS ACTIVE <b>2007→NOW</b></span></div></div></div></header>
 
 <section class="blk"><div class="wrap">
   <div class="sec-head"><span class="tag">01</span><h2>Songs</h2><div class="line"></div></div>
@@ -177,7 +177,6 @@ section.blk{padding:72px 0;border-bottom:1px solid var(--line)} .sec-head{displa
   <div id="music-videos" data-playlist="PL1q99RsUT0U-s3iLLBhIR224Y9t0Bm4SW">
     <div class="music-loading mono">Loading music videos...</div>
   </div>
-  <div class="archive-note">// <b>PLAYLIST:</b> This section auto-updates whenever a new video is added to the YouTube playlist.</div>
 </div></section>
 
 <div id="site-footer"></div>
@@ -190,7 +189,7 @@ for(let i=0;i<52;i++){const b=document.createElement('i');b.className='bar';b.st
 
 <!-- ============ CUSTOM PLAYER LOGIC ============ -->
 <audio id="audio" crossorigin="anonymous"></audio>
-<script src="music-tracks.js?v=5"></script>
+<script src="music-tracks.js?v=7"></script>
 <script>
 (function(){
   var allTracks = window.MUSIC_TRACKS || [];
@@ -218,15 +217,19 @@ for(let i=0;i<52;i++){const b=document.createElement('i');b.className='bar';b.st
     return a;
   }
 
+  // extract a 4-digit year from the year label for sorting (newest first)
+  function trackYear(t){ var m=(t.year||'').match(/(\d{4})/); return m?parseInt(m[1],10):0; }
+  function byNewest(a,b){ return trackYear(b)-trackYear(a); }
+
   // switch category: filter the master list, rebuild, and reset to the first track
   window.setSongCat=function(c,btn){
     cat=c;
     document.querySelectorAll('.song-tab').forEach(function(t){t.classList.remove('active');});
     if(btn) btn.classList.add('active');
-    if(c==='all'){ tracks=allTracks.slice(); }
+    if(c==='all'){ tracks=allTracks.slice().sort(byNewest); }
     else if(c==='random'){ tracks=shuffle(allTracks); }
-    else { tracks=allTracks.filter(function(t){ return (t.genre||'').toLowerCase()===c; }); }
-    if(!tracks.length){ tracks=allTracks.slice(); } // safety: never empty
+    else { tracks=allTracks.filter(function(t){ return (t.genre||'').toLowerCase()===c; }).sort(byNewest); }
+    if(!tracks.length){ tracks=allTracks.slice().sort(byNewest); } // safety: never empty
     idx=0;
     buildList();
     var wasPlaying=playing;
@@ -350,6 +353,7 @@ for(let i=0;i<52;i++){const b=document.createElement('i');b.className='bar';b.st
     }
   }
 
+  tracks = allTracks.slice().sort(byNewest);  // default view: All, newest first
   buildList();
   load(0,false);
   drawIdle(); // ambient ring until Web Audio kicks in on first play
