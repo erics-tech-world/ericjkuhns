@@ -275,9 +275,17 @@ for(let i=0;i<52;i++){const b=document.createElement('i');b.className='bar';b.st
       const halloweenIndex = videos.findIndex(function(v){
         return /this\s+is\s+halloween/i.test(v.title || '');
       });
+      const heavyMetalIndex = videos.findIndex(function(v){
+        return /heavy\s+metal\s+raises\s+the\s+dead/i.test(v.title || '');
+      });
+      const darkwebIndex = videos.findIndex(function(v){
+        return /dark\s*web/i.test(v.title || '');
+      });
 
       const dream = dreamIndex >= 0 ? videos[dreamIndex] : null;
       const halloween = halloweenIndex >= 0 ? videos[halloweenIndex] : null;
+      const heavyMetal = heavyMetalIndex >= 0 ? videos[heavyMetalIndex] : null;
+      const darkweb = darkwebIndex >= 0 ? videos[darkwebIndex] : null;
 
       const ordered = [robotParty];
       if(dream) ordered.push(dream);
@@ -287,8 +295,13 @@ for(let i=0;i<52;i++){const b=document.createElement('i');b.className='bar';b.st
         if(v.id === robotParty.id) return;
         if(dream && v.id === dream.id) return;
         if(halloween && v.id === halloween.id) return;
+        if(heavyMetal && v.id === heavyMetal.id) return;
+        if(darkweb && v.id === darkweb.id) return;
         ordered.push(v);
       });
+
+      if(heavyMetal) ordered.push(heavyMetal);
+      if(darkweb && (!heavyMetal || darkweb.id !== heavyMetal.id)) ordered.push(darkweb);
 
       if(!ordered.length) throw new Error('empty');
       done = true;
