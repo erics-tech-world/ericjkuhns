@@ -66,6 +66,10 @@
   .form-success .check{font-size:44px;color:var(--neon);margin-bottom:16px}
   .form-success h3{font-size:22px;font-weight:800;margin-bottom:10px}
   .form-success p{color:var(--muted);font-size:14px}
+  .form-error{display:none;margin-top:16px;padding:14px 16px;border:1px solid #5a2a2a;background:rgba(120,40,40,.12);border-radius:4px}
+  .form-error.show{display:block}
+  .form-error p{color:#e8b0b0;font-size:13px;margin:0}
+  .form-error a{color:var(--neon)}
 
   @media(max-width:820px){
     .contact-grid{grid-template-columns:1fr;gap:32px}
@@ -123,8 +127,11 @@
       </form>
       <div class="form-success" id="form-success">
         <div class="check">✓</div>
-        <h3>Ready to send</h3>
-        <p>Your email app should have opened with your message. If it didn't, email me directly at info@ericjkuhns.com.</p>
+        <h3>Thanks for reaching out!</h3>
+        <p>Your message came through. I'll get back to you soon. In the meantime, feel free to explore the rest of the site.</p>
+      </div>
+      <div class="form-error" id="form-error">
+        <p>Hmm, something went wrong sending that. Please email me directly at <a href="mailto:info@ericjkuhns.com">info@ericjkuhns.com</a> and I'll get right back to you.</p>
       </div>
     </div>
 
@@ -179,21 +186,41 @@
 <div id="site-footer"></div>
 
 <script>
+  // ====== Formspree endpoint ======
+  // Replace YOUR_FORM_ID with the ID from your Formspree form
+  // (it looks like https://formspree.io/f/abcdwxyz — paste just the part after /f/ or the whole URL)
+  var FORMSPREE_ENDPOINT = "https://formspree.io/f/maewgbbl";
+
   function submitForm(e){
     e.preventDefault();
-    const f = e.target;
-    const name = encodeURIComponent(f.name.value.trim());
-    const email = encodeURIComponent(f.email.value.trim());
-    const subject = encodeURIComponent(f.subject.value);
-    const message = encodeURIComponent(f.message.value.trim());
-    const body = 'Name: ' + decodeURIComponent(name) + '%0D%0A' +
-                 'Email: ' + decodeURIComponent(email) + '%0D%0A%0D%0A' +
-                 decodeURIComponent(message);
-    const mailto = 'mailto:info@ericjkuhns.com?subject=' + subject + '%20-%20' + name + '&body=' + body;
-    window.location.href = mailto;
-    // show confirmation
-    f.style.display = 'none';
-    document.getElementById('form-success').classList.add('show');
+    var f = e.target;
+    var btn = f.querySelector('.submit-btn');
+    var origBtn = btn ? btn.textContent : '';
+    if(btn){ btn.disabled = true; btn.textContent = 'Sending…'; }
+
+    var data = new FormData(f);
+
+    fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(function(res){
+      if(res.ok){
+        // success: hide form, show thank-you
+        f.style.display = 'none';
+        document.getElementById('form-success').classList.add('show');
+      } else {
+        return res.json().then(function(j){ throw new Error((j && j.error) || 'send failed'); });
+      }
+    })
+    .catch(function(){
+      // graceful fallback: let them know + point to direct email
+      if(btn){ btn.disabled = false; btn.textContent = origBtn; }
+      var err = document.getElementById('form-error');
+      if(err) err.classList.add('show');
+    });
+
     return false;
   }
 </script>
