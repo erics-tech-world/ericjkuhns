@@ -242,6 +242,7 @@
   @media(max-width:560px){
     .car-item{flex:0 0 85%}
     .car-arrow{display:none}
+    .vid-tabs{justify-content:center}
   }
 
   .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -643,7 +644,7 @@
     const pl = panel.getAttribute('data-playlist');
     const url = PROXY + encodeURIComponent(feedUrl(pl));
 
-    // Fail fast: if the feed doesn't answer in 6s, fall back to the embed.
+    // Fail fast: if the feed doesn't answer in 10s, fall back to the embed.
     let done = false;
     const controller = ("AbortController" in window) ? new AbortController() : null;
     const timer = setTimeout(function(){
@@ -653,7 +654,7 @@
       renderFallback(panel);
       panel.dataset.loaded = "1";
       panel.dataset.loading = "0";
-    }, 6000);
+    }, 10000);
 
     fetch(url, controller ? {signal:controller.signal} : {})
       .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.text(); })
