@@ -39,6 +39,14 @@
   .content ul,.content ol{margin:0 0 20px 22px}
   .content li{margin:0 0 8px}
   .content img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:3px;margin:12px 0;display:block}
+  .content img.zoomable{cursor:zoom-in;transition:opacity .15s}
+  .content img.zoomable:hover{opacity:.9}
+  .img-lightbox{position:fixed;inset:0;z-index:99999;background:rgba(5,7,5,.94);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:30px;cursor:zoom-out}
+  .img-lightbox.open{display:flex;animation:lbfade .18s ease}
+  @keyframes lbfade{from{opacity:0}to{opacity:1}}
+  .img-lightbox img{max-width:94vw;max-height:90vh;border:1px solid var(--neon-dim);border-radius:4px;box-shadow:0 0 60px rgba(57,255,100,.12)}
+  .img-lightbox .lb-close{position:absolute;top:18px;right:24px;background:none;border:1px solid var(--line);color:var(--ink);font-size:22px;width:42px;height:42px;border-radius:4px;cursor:pointer;line-height:1;transition:all .2s}
+  .img-lightbox .lb-close:hover{border-color:var(--neon);color:var(--neon)}
   .content a{color:var(--neon)}
   .content blockquote{border-left:3px solid var(--neon-dim);padding:4px 0 4px 20px;margin:0 0 20px;color:var(--muted);font-style:italic}
   .content b,.content strong{color:var(--ink)}
@@ -93,6 +101,23 @@
       const w=document.createElement('div'); w.className='yt-wrap';
       f.parentNode.insertBefore(w,f); w.appendChild(f);
       f.removeAttribute('width'); f.removeAttribute('height');
+    });
+    // Blogger wraps each image in an <a> to the full-size file on their servers.
+    // Unwrap those so clicking an image opens our on-site lightbox instead of leaving the site.
+    tmp.querySelectorAll('a').forEach(function(a){
+      var img=a.querySelector('img');
+      // only unwrap links whose sole purpose is to open an image (link points at an image file or blogger image host)
+      if(img && (/\.(jpe?g|png|gif|webp|bmp)(\?|$)/i.test(a.href) || /blogger\.googleusercontent|bp\.blogspot/i.test(a.href))){
+        // prefer the full-size href as the image's zoom source
+        img.setAttribute('data-full', a.getAttribute('href') || img.src);
+        a.parentNode.insertBefore(img, a);
+        a.remove();
+      }
+    });
+    // mark remaining content images as zoomable
+    tmp.querySelectorAll('img').forEach(function(img){
+      img.classList.add('zoomable');
+      if(!img.getAttribute('data-full')) img.setAttribute('data-full', img.src);
     });
     return tmp.innerHTML;
   }
@@ -160,6 +185,32 @@
   }
 </script>
 
+<div class="img-lightbox" id="imgLightbox">
+  <button class="lb-close" type="button" aria-label="Close image" onclick="closeImgLightbox()">×</button>
+  <img id="imgLightboxImg" src="" alt="">
+</div>
+<script>
+  (function(){
+    var lb=document.getElementById('imgLightbox');
+    var lbImg=document.getElementById('imgLightboxImg');
+    if(!lb||!lbImg) return;
+    // event delegation: any zoomable image inside the article opens the lightbox
+    document.addEventListener('click', function(e){
+      var img=e.target;
+      if(img && img.tagName==='IMG' && img.classList.contains('zoomable')){
+        e.preventDefault();
+        lbImg.src=img.getAttribute('data-full')||img.src;
+        lbImg.alt=img.alt||'';
+        lb.classList.add('open');
+        document.body.style.overflow='hidden';
+      }
+    });
+    // click backdrop closes (but not clicks on the image itself)
+    lb.addEventListener('click', function(e){ if(e.target===lb) closeImgLightbox(); });
+    window.closeImgLightbox=function(){ lb.classList.remove('open'); lbImg.src=''; document.body.style.overflow=''; };
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape' && lb.classList.contains('open')) closeImgLightbox(); });
+  })();
+</script>
 <script src="../site.js?v=5"></script>
 </body>
 </html>
