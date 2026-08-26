@@ -38,7 +38,7 @@ window.MUSIC_TRACKS = [
   { title:"Thanks", artist:"Eric Kuhns Music", src:"audio/Thanks.mp3", genre:"acoustic", art:ART_YOURUN, year:"You Run I Run · 2008" },
   { title:"A Bit Too Clever (Live)", artist:"Eric Kuhns Music", src:"audio/A%20Bit%20Too%20Clever%20LIVE.mp3", genre:"acoustic", art:ART_YOURUN, year:"You Run I Run · 2008" },
   { title:"A Thousand More Lies (Live)", artist:"Eric Kuhns Music", src:"audio/A%20Thousand%20More%20Lies%20LIVE.mp3", genre:"acoustic", art:ART_YOURUN, year:"You Run I Run · 2008" },
-  { title:"New vs Old (Live)", artist:"Eric Kuhns Music", src:"audio/New%20Vs.%20Old.mp3", genre:"acoustic", art:ART_YOURUN, year:"You Run I Run · 2008" },
+  { title:"New vs Old (Live)", artist:"Eric Kuhns Music", src:"audio/New%20Vs.%20Old%20LIVE.mp3", genre:"acoustic", art:ART_YOURUN, year:"You Run I Run · 2008" },
   { title:"After Life", artist:"Eric Kuhns Music", src:"audio/After%20Life.mp3", genre:"acoustic", art:ART_DINO, year:"Boy Meets Dinosaur · 2009" },
   { title:"Crazy", artist:"Eric Kuhns Music", src:"audio/Crazy.mp3", genre:"acoustic", art:ART_DINO, year:"Boy Meets Dinosaur · 2009" },
   { title:"First Love", artist:"Eric Kuhns Music", src:"audio/First%20Love.mp3", genre:"acoustic", art:ART_DINO, year:"Boy Meets Dinosaur · 2009" },
