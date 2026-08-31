@@ -93,6 +93,21 @@
   .spec p{font-size:13px;color:var(--muted);line-height:1.6}
 
   .cta-band{padding:80px 0;border-bottom:1px solid var(--line);text-align:center}
+
+  /* behind the screens blog carousel */
+  .bts-carousel{display:flex;align-items:stretch;gap:10px;margin-top:30px}
+  .bts-viewport{flex:1;overflow:hidden;padding-top:6px;margin-top:-6px}
+  .bts-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
+  .bts-track::-webkit-scrollbar{display:none}
+  .bts-card{flex:0 0 calc((100% - 32px) / 3);scroll-snap-align:start;background:var(--panel);border:1px solid var(--line);border-radius:4px;overflow:hidden;transition:all .2s;display:flex;flex-direction:column}
+  .bts-card:hover{border-color:var(--neon-dim);transform:translateY(-3px)}
+  .bts-card:hover h3{color:var(--neon)}
+  .bts-thumb{aspect-ratio:16/10;background:linear-gradient(135deg,#0d130d,#060806);border-bottom:1px solid var(--line);background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon-dim)}
+  .bts-body{padding:20px;display:flex;flex-direction:column;flex:1}
+  .bts-body .date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+  .bts-body h3{font-size:16px;font-weight:700;margin:8px 0;line-height:1.3;transition:color .2s}
+  .bts-body .cat{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--neon);border:1px solid var(--line);padding:3px 9px;border-radius:2px;display:inline-block;align-self:flex-start;margin-top:auto}
+  .bts-loading{font-family:'JetBrains Mono',monospace;color:var(--muted);padding:20px 0}
   .cta-band h2{font-size:clamp(26px,4vw,42px);font-weight:800;letter-spacing:-1px;margin-bottom:16px}
   .cta-band h2 .hl{color:var(--neon)}
   .cta-band p{color:var(--muted);max-width:520px;margin:0 auto 30px}
@@ -303,6 +318,22 @@
   </div>
 </section>
 
+<!-- BEHIND THE SCREENS (client breakdowns from the blog) -->
+<section class="blk" id="behind-the-screens">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Behind the Screens</h2>
+      <p>My blog series breaking down real client work, the strategy, the process, and the results behind the projects.</p>
+    </div>
+    <div class="bts-carousel">
+      <button class="cat-arrow disabled" aria-label="Previous" onclick="btsSlide(-1)">‹</button>
+      <div class="bts-viewport"><div class="bts-track" id="bts-track"><div class="bts-loading mono">Loading breakdowns…</div></div></div>
+      <button class="cat-arrow" aria-label="More" onclick="btsSlide(1)">›</button>
+    </div>
+    <div style="margin-top:24px"><a href="blog/index.html" class="btn btn-ghost mono">Read all posts →</a></div>
+  </div>
+</section>
+
 <!-- SPECIALTIES -->
 <section class="blk" id="specialties">
   <div class="wrap">
@@ -311,15 +342,15 @@
       <p>A full-stack creator's toolkit, strategy, production, and execution across every channel.</p>
     </div>
     <div class="spec-grid">
-      <div class="spec"><div class="ico mono">▸ growth</div><h3>YouTube Growth</h3><p>Grew Eric's Tech World from zero to 55K+ subs, and RumbleOn from ~300 to 6,000+ in four months though evolving strategies.</p></div>
+      <div class="spec"><div class="ico mono">▸ growth</div><h3>YouTube Growth</h3><p>Grew Eric's Tech World from zero to 28K+ subs, and RumbleOn from ~300 to 6,000+ in four months. Sustainable strategy that keeps people coming back.</p></div>
       <div class="spec"><div class="ico mono">▸ web</div><h3>Website Design</h3><p>Clean, story-driven sites for nonprofits, local services, and consultancies. Intuitive to use, built as a true extension of the brand.</p></div>
-      <div class="spec"><div class="ico mono">▸ ads</div><h3>Lead Gen &amp; Ads</h3><p>Google and Meta ad strategies that speak to the right audience and drive organic clicks, not just impressions.</p></div>
-      <div class="spec"><div class="ico mono">▸ video</div><h3>Video Production</h3><p>Scripts, shots, and edits that are human-created (not AI). Concept to final cut, with a love for the creative process.</p></div>
-      <div class="spec"><div class="ico mono">▸ ops</div><h3>Team &amp; Ops</h3><p>Clear communication and smart systems. Launched startups and managed strategy at 5miles, Stellar Home Maintenance, and many more.</p></div>
-      <div class="spec"><div class="ico mono">▸ social</div><h3>Social Media</h3><p>15+ years creating content that connects to your audience, sharp visuals, clear messaging, and strategy true to the brand.</p></div>
+      <div class="spec"><div class="ico mono">▸ ads</div><h3>Lead Gen &amp; Ads</h3><p>Google and Meta ad strategies that speak to the right audience and drive real clicks, not just impressions.</p></div>
+      <div class="spec"><div class="ico mono">▸ video</div><h3>Video Production</h3><p>Scripts, shots, and edits that mean something. Concept to final cut, with a love for the creative process.</p></div>
+      <div class="spec"><div class="ico mono">▸ ops</div><h3>Team &amp; Ops</h3><p>Clear communication and smart systems. Launched startups and managed strategy at 5miles and Stellar Home Maintenance.</p></div>
+      <div class="spec"><div class="ico mono">▸ social</div><h3>Social Media</h3><p>15+ years crafting content that connects, sharp visuals, clear messaging, and strategy true to the brand.</p></div>
       <div class="spec"><div class="ico mono">▸ design</div><h3>Graphic Design</h3><p>Logos, brand identities, and digital illustration that look good and actually say something.</p></div>
-      <div class="spec"><div class="ico mono">▸ acting</div><h3>On-Camera &amp; Voiceover</h3><p>20+ years performing and national commercials (Tide, RumbleOn) to stage roles.</p></div>
-      <div class="spec"><div class="ico mono">▸ copy</div><h3>Content &amp; Copywriting</h3><p>Blog posts, ad copy, and ghostwritten content that matches your brand.</p></div>
+      <div class="spec"><div class="ico mono">▸ acting</div><h3>On-Camera &amp; Voiceover</h3><p>15+ years and national commercials (Tide, RumbleOn) to stage roles. Energy, versatility, and real storytelling.</p></div>
+      <div class="spec"><div class="ico mono">▸ copy</div><h3>Content &amp; Copywriting</h3><p>Blog posts, ad copy, and ghostwritten content shaped to get read, from fast-paced teams at 5miles and Stellar.</p></div>
     </div>
   </div>
 </section>
@@ -504,6 +535,42 @@
     if(e.key === 'ArrowLeft' && lbImages.length>1) lbNav(-1);
     if(e.key === 'ArrowRight' && lbImages.length>1) lbNav(1);
   });
+  /* ===== Behind the Screens: pulls Blogger posts labeled "client" ===== */
+  (function(){
+    var BLOG_ID="ericjkuhns.blogspot.com";
+    var track=document.getElementById('bts-track');
+    if(!track) return;
+    function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+    function firstImage(html){var m=(html||'').match(/<img[^>]+src=["']([^"']+)["']/i);return m?m[1]:'';}
+    function fmtDate(iso){try{return new Date(iso).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});}catch(e){return '';}}
+    function postSlug(entry){var alt=(entry.link||[]).find(function(l){return l.rel==='alternate';});var href=alt?alt.href:'';var m=href.match(/\/(\d{4})\/(\d{2})\/([^\/]+)\.html/);return m?(m[1]+'/'+m[2]+'/'+m[3]):encodeURIComponent(entry.id.$t);}
+    var CB='btsBlog_'+Math.floor(Math.random()*1e9);
+    window[CB]=function(json){
+      var entries=(json.feed&&json.feed.entry)?json.feed.entry:[];
+      if(!entries.length){ track.innerHTML='<div class="bts-loading mono">No breakdowns yet. Label Blogger posts "client" to feature them here.</div>'; return; }
+      track.innerHTML='';
+      entries.forEach(function(e){
+        var title=e.title?e.title.$t:'Untitled';
+        var content=(e.content&&e.content.$t)||(e.summary&&e.summary.$t)||'';
+        var date=e.published?e.published.$t:'';
+        var img=firstImage(content);
+        var cats=(e.category||[]).map(function(c){return c.term;});
+        var slug=postSlug(e);
+        var a=document.createElement('a'); a.className='bts-card'; a.href='blog/post.html?p='+encodeURIComponent(slug);
+        var ts=img?(' style="background-image:url(\''+img+'\')"'):''; var tt=img?'':'[ behind the screens ]';
+        a.innerHTML='<div class="bts-thumb"'+ts+'>'+tt+'</div><div class="bts-body"><span class="date mono">'+fmtDate(date)+'</span><h3>'+esc(title)+'</h3>'+(cats.length?'<span class="cat mono">'+esc(cats[0])+'</span>':'')+'</div>';
+        track.appendChild(a);
+      });
+      btsUpd();
+    };
+    function btsUpd(){var c=track.closest('.bts-carousel');var prev=c.querySelector('.cat-arrow:first-child'),next=c.querySelector('.cat-arrow:last-child');if(!prev||!next)return;var x=track.scrollLeft,ms=track.scrollWidth-track.getBoundingClientRect().width;prev.classList.toggle('disabled',x<=2);next.classList.toggle('disabled',x>=ms-2);}
+    window.btsSlide=function(dir){var f=track.querySelector('.bts-card');if(!f)return;var gap=parseFloat(getComputedStyle(track).gap||16)||16;var step=f.getBoundingClientRect().width+gap;var per=Math.max(1,Math.round(track.getBoundingClientRect().width/step));track.scrollBy({left:dir*step*per,behavior:'smooth'});};
+    track.addEventListener('scroll',btsUpd,{passive:true}); window.addEventListener('resize',btsUpd);
+    var s=document.createElement('script');
+    s.src='https://'+BLOG_ID+'/feeds/posts/default/-/client?alt=json-in-script&max-results=15&callback='+CB;
+    s.onerror=function(){ track.innerHTML='<div class="bts-loading mono">Couldn\'t load breakdowns right now.</div>'; };
+    document.body.appendChild(s);
+  })();
 </script>
 <script src="site.js?v=5"></script>
 
