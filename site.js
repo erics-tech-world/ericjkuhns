@@ -22,13 +22,14 @@
             '<a href="'+B+'eric-tech-world.html">Eric\'s Tech World</a>'+
             '<a href="'+B+'writing.html">Writing</a>'+
             '<a href="'+B+'skateboarding.html">Skateboarding</a>'+
-            '<a href="'+B+'index.html#projects">Acting</a>'+
-            '<a href="'+B+'index.html#projects">Music</a>'+
+            '<a href="'+B+'acting.html">Acting</a>'+
+            '<a href="'+B+'music.html">Music</a>'+
           '</div>'+
         '</div>'+
         '<a href="'+B+'index.html#videos"'+isActive("videos")+'>Videos</a>'+
         '<a href="'+B+'blog/index.html"'+isActive("blog")+'>Blog</a>'+
         '<a href="'+B+'portfolio.html"'+isActive("portfolio")+'>Portfolio</a>'+
+        '<a href="'+B+'about.html"'+isActive("about")+'>About</a>'+
         '<a href="'+B+'contact.html"'+isActive("contact")+'>Contact</a>'+
       '</div>'+
     '</div>'+
