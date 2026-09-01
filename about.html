@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css?v=4">
+<link rel="stylesheet" href="site.css?v=6">
 
 <style>
 :root{--bg:#0a0c0a;--panel:#101410;--panel2:#0d110d;--ink:#f4f6f4;--muted:#8a938c;--line:#1e241e;--neon:#39ff64;--neon-dim:#1f8a37}
@@ -102,6 +102,6 @@ const words=["VIDEO_EDIT","STORY_BUILD","SKATE_SPOT","ACTING_TAKE","ROBOT_TEST",
 const matrix=document.getElementById('matrix');
 for(let i=0;i<28;i++){const s=document.createElement('span');s.textContent=words[i%words.length]+"_"+String(i).padStart(2,"0");s.style.setProperty('--x',(Math.random()*94)+'%');s.style.setProperty('--dur',(9+Math.random()*13)+'s');s.style.setProperty('--op',(.25+Math.random()*.65));s.style.animationDelay=(-Math.random()*18)+'s';matrix.appendChild(s)}
 </script>
-<script src="site.js?v=4"></script>
+<script src="site.js?v=6"></script>
 </body>
 </html>
