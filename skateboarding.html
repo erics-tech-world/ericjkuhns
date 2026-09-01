@@ -114,7 +114,6 @@
   .d-toggle{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);display:inline-flex;align-items:center;gap:8px;cursor:pointer}
   .d-toggle input{accent-color:var(--neon);width:15px;height:15px;cursor:pointer}
   .d-toggle:hover{color:var(--ink)}
-  .dice-filter-note{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;color:#596159;margin-top:-18px;margin-bottom:24px}
   .dice-row{display:flex;gap:36px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
   .die-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
   .die-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--neon)}
@@ -155,7 +154,7 @@
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
-<link rel="stylesheet" href="site.css?v=5">
+<link rel="stylesheet" href="site.css?v=6">
 </head>
 <body>
 <script>window.SITE={active:"",base:""};</script>
@@ -240,7 +239,7 @@
     <div class="sec-head" style="text-align:center">
       <h2 style="width:100%">Skate dice</h2>
     </div>
-    <p style="text-align:center;color:var(--muted);max-width:520px;margin:0 auto 30px">Learn a new trick! Roll the dice for a random trick.</p>
+    <p style="text-align:center;color:var(--muted);max-width:520px;margin:0 auto 30px">Stuck in a session? Roll the dice for a random trick. Berrics-style: stance plus trick.</p>
     <div class="dice-app">
       <div class="d-label mono">TRICK GENERATOR</div>
       <h3 class="mono">SKATE DICE</h3>
@@ -260,24 +259,16 @@
         <button class="dice-tab" onclick="setDiceCat('vert',this)">Vert &amp; Transition</button>
       </div>
       <div class="dice-toggles">
-        <label class="d-toggle"><input type="checkbox" id="tog-stance" checked onchange="rebuildFaces()"> Stance / approach</label>
-        <label class="d-toggle"><input type="checkbox" id="tog-spin" checked onchange="rebuildFaces()"> Spins / direction</label>
-        <label class="d-toggle"><input type="checkbox" id="tog-single" checked onchange="rebuildFaces()"> Single flips</label>
-        <label class="d-toggle"><input type="checkbox" id="tog-double" onchange="rebuildFaces()"> Double flips</label>
-        <label class="d-toggle"><input type="checkbox" id="tog-combo" onchange="rebuildFaces()"> Combo / line</label>
-        <label class="d-toggle"><input type="checkbox" id="tog-wild" checked onchange="rebuildFaces()"> Wildcard variation</label>
+        <label class="d-toggle"><input type="checkbox" id="tog-stance" checked onchange="rebuildFaces()"> Stance die</label>
+        <label class="d-toggle"><input type="checkbox" id="tog-spin" onchange="rebuildFaces()"> Spins (180 / 360)</label>
+        <label class="d-toggle"><input type="checkbox" id="tog-combo" onchange="rebuildFaces()"> Combo (link a 2nd trick)</label>
+        <label class="d-toggle"><input type="checkbox" id="tog-wild" checked onchange="rebuildFaces()"> Wildcard variations</label>
       </div>
-      <div class="dice-filter-note">Flip-count filters affect flip tricks only. Non-flip tricks stay in the pool.</div>
       <div class="dice-row" id="dice-row">
         <div class="die-wrap" id="wrap-stance">
           <div class="die-label" id="die1-label">STANCE</div>
           <div class="die" id="die1"><div class="die-value" id="val1">—</div></div>
           <div class="faces" id="faces1"></div>
-        </div>
-        <div class="die-wrap" id="wrap-direction">
-          <div class="die-label" id="die-dir-label">DIRECTION</div>
-          <div class="die" id="dieDir"><div class="die-value" id="valDir">—</div></div>
-          <div class="faces" id="facesDir"></div>
         </div>
         <div class="die-wrap" id="wrap-trick">
           <div class="die-label" id="die2-label">TRICK</div>
@@ -592,314 +583,107 @@
     document.body.appendChild(s);
   })();
 
-  /* ===== skate dice: compatibility-aware trick generator ===== */
+  /* ===== skate dice with categories, difficulty tiers, toggles, and combos ===== */
   (function(){
-    /*
-      DATA MODEL
-      ---------
-      terrain: flat / grind / manual / transition
-      tier: 1 chill, 2 normal, 3 gnarly
-      flip: 0 non-flip, 1 single flip, 2 double flip
-      stance: whether Regular / Fakie / Nollie / Switch can sensibly prefix the trick
-      direction: none / fsbs / spin / transition
-      fixed: trick already contains its own directional/rotation language, so don't bolt another spin onto it
-    */
+    var stances=["Regular","Fakie","Switch","Nollie"];
+    // stance difficulty: Regular/Fakie easy, Nollie medium, Switch hard
+    var stanceByDiff={
+      chill:["Regular","Regular","Fakie"],
+      normal:["Regular","Fakie","Nollie","Switch"],
+      gnarly:["Regular","Fakie","Nollie","Switch","Switch"]
+    };
+    // spins by difficulty
+    var spinByDiff={
+      chill:["FS 180","BS 180"],
+      normal:["FS 180","BS 180","FS 360","BS 360"],
+      gnarly:["FS 180","BS 180","FS 360","BS 360","FS 540","BS 540"]
+    };
 
-    var STANCES = ["Regular","Fakie","Nollie","Switch"];
+    // GENERAL flatground/flip tricks, tiered
+    var generalByDiff={
+      chill:["Ollie","Nollie","Shuvit","FS Shuvit","BS Shuvit","Pop Shuvit","Frontside 180","Backside 180","Boneless","No Comply"],
+      normal:["Kickflip","Heelflip","Varial Kickflip","Varial Heelflip","360 Shuvit","Bigspin","FS Bigspin","Half Cab","Body Varial","Kickflip Body Varial"],
+      gnarly:["360 Flip (Tre Flip)","Hardflip","Inward Heelflip","Laser Flip","Double Kickflip","Bigflip","Impossible","Full Cab (360)","Gazelle Flip","Dolphin Flip"]
+    };
+    // GRINDS & SLIDES, tiered (stance = approach)
+    var grindApproach=["FS","BS"];
+    var grindByDiff={
+      chill:["50-50","Boardslide","Noseslide","5-0"],
+      normal:["Nosegrind","Crooked Grind","Smith Grind","Feeble Grind","Tailslide","Lipslide","Salad Grind"],
+      gnarly:["Overcrook","Bluntslide","Nose Bluntslide","Darkslide","Hurricane","Suski Grind","Willy Grind"]
+    };
+    // MANUALS, tiered
+    var manualByDiff={
+      chill:["Manual","Nose Manual"],
+      normal:["Switch Manual","Switch Nose Manual","Manual to Nose Manual","One-Wheel Manual"],
+      gnarly:["Casper Slide","Primo Slide","Rail Stand (Primo)","Truckstand"]
+    };
+    // VERT / TRANSITION, tiered
+    var vertByDiff={
+      chill:["Rock to Fakie","Rock n Roll","Axle Stall (50-50)","5-0 Stall","Pivot to Fakie","Fakie Ollie","Tail Stall","Nose Stall"],
+      normal:["Disaster","Blunt Stall","Feeble Stall","Smith Stall","FS Air","BS Air","Indy Grab","Melon Grab","Mute Grab","Boneless","Ollie North"],
+      gnarly:["Method Grab","Stalefish","Judo Air","Andrecht","Invert / Handplant","McTwist","Alley-Oop","Nosegrab","Tailgrab"]
+    };
 
-    var FLAT = [
-      {n:"Ollie",tier:1,flip:0,stance:true,dir:"none"},
-      {n:"Shuvit",tier:1,flip:0,stance:true,dir:"fsbs"},
-      {n:"Pop Shuvit",tier:1,flip:0,stance:true,dir:"fsbs"},
-      {n:"180",tier:1,flip:0,stance:true,dir:"fsbs",spin:true},
-      {n:"Boneless",tier:1,flip:0,stance:false,dir:"fsbs"},
-      {n:"No Comply",tier:1,flip:0,stance:false,dir:"fsbs"},
-      {n:"Kickflip",tier:1,flip:1,stance:true,dir:"none"},
-      {n:"Heelflip",tier:1,flip:1,stance:true,dir:"none"},
+    // build a difficulty-scoped list: chill = chill only; normal = chill+normal; gnarly = all
+    function scoped(byDiff, diff){
+      if(diff==='chill') return byDiff.chill.slice();
+      if(diff==='normal') return byDiff.chill.concat(byDiff.normal);
+      return byDiff.chill.concat(byDiff.normal, byDiff.gnarly);
+    }
 
-      {n:"360 Shuvit",tier:2,flip:0,stance:true,dir:"fsbs",fixed:true},
-      {n:"Bigspin",tier:2,flip:0,stance:true,dir:"fsbs",fixed:true},
-      {n:"Kickflip",tier:2,flip:1,stance:true,dir:"spin",spin:true},
-      {n:"Heelflip",tier:2,flip:1,stance:true,dir:"spin",spin:true},
-      {n:"Varial Kickflip",tier:2,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Varial Heelflip",tier:2,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Hardflip",tier:2,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Inward Heelflip",tier:2,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Pressure Flip",tier:2,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Hospital Flip",tier:2,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Casper Flip",tier:2,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Late Kickflip",tier:2,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Late Heelflip",tier:2,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Body Varial",tier:2,flip:0,stance:true,dir:"none",fixed:true},
-      {n:"Kickflip Body Varial",tier:2,flip:1,stance:true,dir:"none",fixed:true},
-
-      {n:"360 Flip (Tre Flip)",tier:3,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Laser Flip",tier:3,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Bigflip",tier:3,flip:1,stance:true,dir:"fsbs",fixed:true},
-      {n:"Bigger Spin",tier:3,flip:0,stance:true,dir:"fsbs",fixed:true},
-      {n:"Gazelle Spin",tier:3,flip:0,stance:true,dir:"fsbs",fixed:true},
-      {n:"Gazelle Flip",tier:3,flip:1,stance:true,dir:"fsbs",fixed:true},
-      {n:"Impossible",tier:3,flip:0,stance:true,dir:"none",fixed:true},
-      {n:"Dolphin Flip",tier:3,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Forward Flip",tier:3,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Nightmare Flip",tier:3,flip:2,stance:true,dir:"none",fixed:true},
-      {n:"Double Kickflip",tier:3,flip:2,stance:true,dir:"none",fixed:true},
-      {n:"Double Heelflip",tier:3,flip:2,stance:true,dir:"none",fixed:true},
-      {n:"Double Varial Kickflip",tier:3,flip:2,stance:true,dir:"none",fixed:true},
-      {n:"Double Varial Heelflip",tier:3,flip:2,stance:true,dir:"none",fixed:true},
-      {n:"Double Hardflip",tier:3,flip:2,stance:true,dir:"none",fixed:true},
-      {n:"Double Inward Heelflip",tier:3,flip:2,stance:true,dir:"none",fixed:true},
-      {n:"360 Double Kickflip",tier:3,flip:2,stance:true,dir:"none",fixed:true},
-      {n:"360 Double Heelflip",tier:3,flip:2,stance:true,dir:"none",fixed:true}
-    ];
-
-    var GRIND = [
-      {n:"50-50 Grind",tier:1,flip:0,stance:true,dir:"fsbs"},
-      {n:"Boardslide",tier:1,flip:0,stance:true,dir:"fsbs"},
-      {n:"Noseslide",tier:1,flip:0,stance:true,dir:"fsbs"},
-      {n:"5-0 Grind",tier:1,flip:0,stance:true,dir:"fsbs"},
-
-      {n:"Nosegrind",tier:2,flip:0,stance:true,dir:"fsbs"},
-      {n:"Crooked Grind",tier:2,flip:0,stance:true,dir:"fsbs"},
-      {n:"Smith Grind",tier:2,flip:0,stance:true,dir:"fsbs"},
-      {n:"Feeble Grind",tier:2,flip:0,stance:true,dir:"fsbs"},
-      {n:"Tailslide",tier:2,flip:0,stance:true,dir:"fsbs"},
-      {n:"Lipslide",tier:2,flip:0,stance:true,dir:"fsbs"},
-      {n:"Salad Grind",tier:2,flip:0,stance:true,dir:"fsbs"},
-      {n:"Willy Grind",tier:2,flip:0,stance:true,dir:"fsbs"},
-      {n:"Overcrook",tier:2,flip:0,stance:true,dir:"fsbs"},
-
-      {n:"Bluntslide",tier:3,flip:0,stance:true,dir:"fsbs"},
-      {n:"Nose Bluntslide",tier:3,flip:0,stance:true,dir:"fsbs"},
-      {n:"Hurricane Grind",tier:3,flip:0,stance:true,dir:"fsbs"},
-      {n:"Sugarcane Grind",tier:3,flip:0,stance:true,dir:"fsbs"},
-      {n:"Suski Grind",tier:3,flip:0,stance:true,dir:"fsbs"},
-      {n:"Loski Grind",tier:3,flip:0,stance:true,dir:"fsbs"},
-      {n:"Darkslide",tier:3,flip:1,stance:true,dir:"fsbs",fixed:true}
-    ];
-
-    var MANUAL = [
-      {n:"Manual",tier:1,flip:0,stance:true,dir:"none"},
-      {n:"Nose Manual",tier:1,flip:0,stance:true,dir:"none"},
-      {n:"Manual Revert",tier:2,flip:0,stance:true,dir:"fsbs"},
-      {n:"Nose Manual Revert",tier:2,flip:0,stance:true,dir:"fsbs"},
-      {n:"One-Wheel Manual",tier:2,flip:0,stance:true,dir:"none"},
-      {n:"One-Wheel Nose Manual",tier:2,flip:0,stance:true,dir:"none"},
-      {n:"Manual to Nose Manual",tier:2,flip:0,stance:true,dir:"none",fixed:true},
-      {n:"Nose Manual to Manual",tier:2,flip:0,stance:true,dir:"none",fixed:true},
-      {n:"Kickflip Manual",tier:2,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Kickflip Nose Manual",tier:3,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Heelflip Manual",tier:3,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"Heelflip Nose Manual",tier:3,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"360 Flip Manual",tier:3,flip:1,stance:true,dir:"none",fixed:true},
-      {n:"360 Flip Nose Manual",tier:3,flip:1,stance:true,dir:"none",fixed:true}
-    ];
-
-    var TRANSITION = [
-      {n:"Kickturn",tier:1,flip:0,stance:false,dir:"fsbs"},
-      {n:"Rock to Fakie",tier:1,flip:0,stance:false,dir:"none",fixed:true},
-      {n:"Rock n Roll",tier:1,flip:0,stance:false,dir:"fsbs"},
-      {n:"Tail Stall",tier:1,flip:0,stance:false,dir:"none"},
-      {n:"Nose Stall",tier:1,flip:0,stance:false,dir:"none"},
-      {n:"Axle Stall (50-50 Stall)",tier:1,flip:0,stance:false,dir:"fsbs"},
-      {n:"5-0 Stall",tier:1,flip:0,stance:false,dir:"fsbs"},
-      {n:"Fakie Tail Stall",tier:1,flip:0,stance:false,dir:"none",fixed:true},
-
-      {n:"Disaster",tier:2,flip:0,stance:false,dir:"fsbs"},
-      {n:"Fakie Disaster",tier:2,flip:0,stance:false,dir:"none",fixed:true},
-      {n:"Smith Stall",tier:2,flip:0,stance:false,dir:"fsbs"},
-      {n:"Feeble Stall",tier:2,flip:0,stance:false,dir:"fsbs"},
-      {n:"Blunt Stall",tier:2,flip:0,stance:false,dir:"none"},
-      {n:"Blunt to Fakie",tier:2,flip:0,stance:false,dir:"none",fixed:true},
-      {n:"Blunt to Rock",tier:2,flip:0,stance:false,dir:"none",fixed:true},
-      {n:"Pivot Stall",tier:2,flip:0,stance:false,dir:"fsbs"},
-      {n:"Pivot to Fakie",tier:2,flip:0,stance:false,dir:"fsbs"},
-      {n:"Fakie Smith Stall",tier:2,flip:0,stance:false,dir:"fsbs",fixed:true},
-      {n:"Fakie Feeble Stall",tier:2,flip:0,stance:false,dir:"fsbs",fixed:true},
-      {n:"Half Cab Rock to Fakie",tier:2,flip:0,stance:false,dir:"fsbs",fixed:true},
-      {n:"Half Cab Rock n Roll",tier:2,flip:0,stance:false,dir:"fsbs",fixed:true},
-      {n:"Tail Stall Revert",tier:2,flip:0,stance:false,dir:"fsbs"},
-      {n:"Nose Stall Revert",tier:2,flip:0,stance:false,dir:"fsbs"},
-      {n:"Frontside Air",tier:2,flip:0,stance:false,dir:"none",fixed:true},
-      {n:"Backside Air",tier:2,flip:0,stance:false,dir:"none",fixed:true},
-      {n:"Indy Grab",tier:2,flip:0,stance:false,dir:"none"},
-      {n:"Melon Grab",tier:2,flip:0,stance:false,dir:"none"},
-      {n:"Mute Grab",tier:2,flip:0,stance:false,dir:"none"},
-      {n:"Nose Grab",tier:2,flip:0,stance:false,dir:"none"},
-      {n:"Tail Grab",tier:2,flip:0,stance:false,dir:"none"},
-      {n:"Lien Air",tier:2,flip:0,stance:false,dir:"none"},
-
-      {n:"Nose Blunt Stall",tier:3,flip:0,stance:false,dir:"none"},
-      {n:"Blunt Revert",tier:3,flip:0,stance:false,dir:"fsbs"},
-      {n:"Nose Blunt Revert",tier:3,flip:0,stance:false,dir:"fsbs"},
-      {n:"Hurricane Stall",tier:3,flip:0,stance:false,dir:"fsbs"},
-      {n:"Sugarcane Stall",tier:3,flip:0,stance:false,dir:"fsbs"},
-      {n:"Layback Grind",tier:3,flip:0,stance:false,dir:"fsbs"},
-      {n:"Craíl Grab",tier:3,flip:0,stance:false,dir:"none"},
-      {n:"Stalefish",tier:3,flip:0,stance:false,dir:"none"},
-      {n:"Method Air",tier:3,flip:0,stance:false,dir:"none"},
-      {n:"Judo Air",tier:3,flip:0,stance:false,dir:"none"},
-      {n:"Madonna",tier:3,flip:0,stance:false,dir:"none"},
-      {n:"Benihana",tier:3,flip:0,stance:false,dir:"none"},
-      {n:"Andrecht Handplant",tier:3,flip:0,stance:false,dir:"none"},
-      {n:"Invert / Handplant",tier:3,flip:0,stance:false,dir:"none"},
-      {n:"Eggplant",tier:3,flip:0,stance:false,dir:"none"},
-      {n:"Frontside Invert",tier:3,flip:0,stance:false,dir:"none"},
-      {n:"McTwist",tier:3,flip:0,stance:false,dir:"none",fixed:true},
-      {n:"540",tier:3,flip:0,stance:false,dir:"fsbs",fixed:true},
-      {n:"720",tier:3,flip:0,stance:false,dir:"fsbs",fixed:true},
-      {n:"Alley-Oop Air",tier:3,flip:0,stance:false,dir:"fsbs",fixed:true}
-    ];
-
-    var CATS = {
-      general:{items:FLAT,label:"TRICK",stance:true,directions:["FS","BS"],spinDirections:["FS 180","BS 180","FS 360","BS 360"]},
-      grinds:{items:GRIND,label:"GRIND / SLIDE",stance:true,directions:["FS","BS"],spinDirections:["FS","BS"]},
-      manuals:{items:MANUAL,label:"MANUAL",stance:true,directions:["FS","BS"],spinDirections:["FS","BS"]},
-      vert:{items:TRANSITION,label:"TRANSITION",stance:false,directions:["FS","BS"],spinDirections:["FS","BS"]}
+    var CATS={
+      general:{ byDiff:generalByDiff, l2:"TRICK", stanceKind:'stance', comboFrom:grindByDiff, comboApproach:grindApproach },
+      grinds:{ byDiff:grindByDiff, l2:"GRIND / SLIDE", stanceKind:'approach', comboFrom:grindByDiff, comboApproach:grindApproach },
+      manuals:{ byDiff:manualByDiff, l2:"MANUAL", stanceKind:'stance', comboFrom:grindByDiff, comboApproach:grindApproach },
+      vert:{ byDiff:vertByDiff, l2:"TRICK", stanceKind:'stance', comboFrom:vertByDiff, comboApproach:[] }
     };
 
     var cat="general";
     var diff="normal";
-    var history=[];
-    var histVisible=false;
+    var history=[]; var histVisible=false;
+
+    // wildcard marker
     var WILD="\u25AC";
     var BOARD_SVG='<svg viewBox="0 0 40 16" width="42" height="17" style="vertical-align:middle" fill="none" stroke="#39ff64" stroke-width="1.6"><rect x="3" y="4" width="34" height="6" rx="3"/><circle cx="12" cy="12.5" r="2.2"/><circle cx="28" cy="12.5" r="2.2"/></svg>';
     var BOARD_INLINE='<svg viewBox="0 0 40 16" width="34" height="14" style="vertical-align:middle" fill="none" stroke="#39ff64" stroke-width="1.6"><rect x="3" y="4" width="34" height="6" rx="3"/><circle cx="12" cy="12.5" r="2.2"/><circle cx="28" cy="12.5" r="2.2"/></svg>';
 
-    function stanceOn(){return document.getElementById('tog-stance').checked;}
-    function spinOn(){return document.getElementById('tog-spin').checked;}
-    function singleOn(){return document.getElementById('tog-single').checked;}
-    function doubleOn(){return document.getElementById('tog-double').checked;}
-    function comboOn(){return document.getElementById('tog-combo').checked;}
-    function wildOn(){return document.getElementById('tog-wild').checked;}
+    function stanceOn(){ return document.getElementById('tog-stance').checked; }
+    function comboOn(){ return document.getElementById('tog-combo').checked; }
+    function spinOn(){ return document.getElementById('tog-spin').checked; }
+    function wildOn(){ return document.getElementById('tog-wild').checked; }
 
-    function maxTier(){return diff==="chill"?1:(diff==="normal"?2:3);}
-    function pool(){
-      return CATS[cat].items.filter(function(t){
-        if(t.tier>maxTier()) return false;
-        if(t.flip===1 && !singleOn()) return false;
-        if(t.flip===2 && !doubleOn()) return false;
-        return true;
-      });
-    }
-
-    function weightedStances(){
-      if(diff==="chill") return ["Regular","Regular","Regular","Fakie"];
-      if(diff==="normal") return ["Regular","Regular","Fakie","Nollie","Switch"];
-      return ["Regular","Fakie","Nollie","Switch","Switch"];
-    }
-
-    function pick(a){return a[Math.floor(Math.random()*a.length)];}
-    function wildChance(){return diff==="chill"?.06:(diff==="normal"?.09:.12);}
-    function maybeWild(v){return (wildOn() && Math.random()<wildChance())?WILD:v;}
-    function isWild(v){return v===WILD;}
-    function part(v){return isWild(v)?BOARD_INLINE:v;}
-
-    function faceText(t){
-      return typeof t==="string"?t:t.n;
-    }
+    // current scoped lists
+    function tricks(){ return scoped(CATS[cat].byDiff, diff); }
+    function stanceList(){ return CATS[cat].stanceKind==='approach' ? grindApproach.slice() : (stanceByDiff[diff]||stances).slice(); }
+    function spinList(){ return spinByDiff[diff].slice(); }
+    function comboList(){ return scoped(CATS[cat].comboFrom, diff); }
 
     function faces(id,list,active){
       var el=document.getElementById(id);
-      if(!el) return;
-      var names=list.map(faceText);
-      var show=names.slice(0,10);
-      el.innerHTML=show.map(function(f,i){
-        return '<span class="face-chip'+(f===active?' active':'')+'">'+f+(i<show.length-1?' ·':'')+'</span>';
-      }).join('')+(names.length>10?' <span class="face-chip">+'+(names.length-10)+'</span>':'');
-    }
-
-    function setDie(el,val){
-      if(!el) return;
-      if(isWild(val)) el.innerHTML=BOARD_SVG;
-      else el.textContent=val||"—";
-    }
-
-    function validDirectionList(trick){
-      if(!spinOn() || !trick) return [];
-      if(trick.fixed || trick.dir==="none") return [];
-      if(trick.dir==="spin"){
-        var spins = diff==="chill"?["FS 180","BS 180"]:
-                    diff==="normal"?["FS 180","BS 180","FS 360","BS 360"]:
-                    ["FS 180","BS 180","FS 360","BS 360","FS 540","BS 540"];
-        return spins;
-      }
-      if(trick.dir==="fsbs") return ["FS","BS"];
-      return [];
-    }
-
-    function compose(trick,stance,direction){
-      var parts=[];
-      // Skate-name cleanup: a nollie ollie is simply called a Nollie.
-      if(trick.n==="Ollie" && stance==="Nollie") return direction ? ("Nollie "+direction) : "Nollie";
-      if(trick.stance && stance && stance!=="Regular") parts.push(stance);
-      if(direction) parts.push(direction);
-      parts.push(trick.n);
-      return parts.join(" ");
-    }
-
-    function generateOne(allowWild){
-      var p=pool();
-      if(!p.length){
-        return {text:"No tricks match these filters",stance:"",direction:"",trick:null,wild:false};
-      }
-      var trick=pick(p);
-      var stance=(stanceOn() && trick.stance)?pick(weightedStances()):"";
-      var dirs=validDirectionList(trick);
-      var direction=dirs.length?pick(dirs):"";
-      var text=compose(trick,stance,direction);
-      var wild=allowWild && wildOn() && Math.random()<wildChance();
-      return {text:wild?WILD:text,plain:text,stance:stance,direction:direction,trick:trick,wild:wild};
-    }
-
-    function comboTarget(first){
-      var p=pool().filter(function(t){
-        if(!first || !first.trick) return true;
-        if(cat==="vert"){
-          // Transition combos should stay in the same terrain and avoid duplicate exact tricks.
-          return t.n!==first.trick.n;
-        }
-        if(cat==="grinds"){
-          // A second ledge/rail trick makes sense as a line, not as "50-50 to 50-50" every time.
-          return t.n!==first.trick.n;
-        }
-        return true;
-      });
-      if(!p.length) p=pool();
-      var trick=pick(p);
-      var stance=(stanceOn() && trick.stance)?pick(weightedStances()):"";
-      var dirs=validDirectionList(trick);
-      var direction=dirs.length?pick(dirs):"";
-      var text=compose(trick,stance,direction);
-      var wild=wildOn() && Math.random()<wildChance();
-      return {text:wild?WILD:text,plain:text,stance:stance,direction:direction,trick:trick,wild:wild};
+      var show=list.slice(0,10);
+      el.innerHTML=show.map(function(f,i){return '<span class="face-chip'+(f===active?' active':'')+'">'+f+(i<show.length-1?' ·':'')+'</span>';}).join('')+(list.length>10?' <span class="face-chip">+'+(list.length-10)+'</span>':'');
     }
 
     window.rebuildFaces=function(){
       var c=CATS[cat];
-      var p=pool();
-
-      document.getElementById('wrap-stance').style.display=(stanceOn() && c.stance)?'':'none';
-      document.getElementById('wrap-direction').style.display=spinOn()?'':'none';
-      document.getElementById('wrap-combo').style.display=comboOn()?'':'none';
-
-      document.getElementById('die1-label').textContent='STANCE';
-      document.getElementById('die-dir-label').textContent=(cat==="grinds"||cat==="vert")?'APPROACH':'DIRECTION / SPIN';
-      document.getElementById('die2-label').textContent=c.label;
-      document.getElementById('die3-label').textContent=(cat==="vert"||cat==="grinds")?'NEXT':'INTO';
-
-      faces('faces1',c.stance?weightedStances():[],null);
-      var dirPreview=cat==="general"?["FS","BS","FS 180","BS 180","FS 360","BS 360"]:["FS","BS"];
-      faces('facesDir',spinOn()?dirPreview:[],null);
-      faces('faces2',p,null);
-      faces('faces3',comboOn()?p:[],null);
-
+      // stance die visibility
+      document.getElementById('wrap-stance').style.display = stanceOn() ? '' : 'none';
+      // combo die visibility
+      document.getElementById('wrap-combo').style.display = comboOn() ? '' : 'none';
+      // labels
+      document.getElementById('die1-label').textContent = (cat==='grinds') ? 'APPROACH' : 'STANCE';
+      document.getElementById('die2-label').textContent = (spinOn()?'SPIN + ':'')+c.l2;
+      document.getElementById('die3-label').textContent = 'INTO';
+      // face chips (difficulty-scoped)
+      faces('faces1', stanceList(), null);
+      faces('faces2', tricks(), null);
+      faces('faces3', comboList(), null);
+      // wildcard legend under trick die
       var leg=document.getElementById('wild-legend');
-      if(leg) leg.style.display=wildOn()?'flex':'none';
-
-      ['val1','valDir','val2','val3'].forEach(function(id){
-        var el=document.getElementById(id); if(el) el.textContent='—';
-      });
+      if(leg) leg.style.display = wildOn() ? 'block' : 'none';
+      // reset values
+      ['val1','val2','val3'].forEach(function(id){document.getElementById(id).textContent='—';});
       document.getElementById('resultIdle').style.display='block';
       document.getElementById('resultRolling').style.display='none';
       document.getElementById('resultTrick').style.display='none';
@@ -909,6 +693,7 @@
       diff=d;
       document.querySelectorAll('.diff-tab').forEach(function(t){t.classList.remove('active');});
       btn.classList.add('active');
+      // gnarly-only: auto-suggest spins available; keep user toggles as-is
       rebuildFaces();
     };
 
@@ -919,103 +704,98 @@
       rebuildFaces();
     };
 
+    function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+    // wildcard chance scales slightly with difficulty (more freestyle when gnarly)
+    function wildChance(){ return diff==='chill'?0.10:(diff==='gnarly'?0.16:0.13); }
+    function pickWild(arr){
+      if(wildOn() && Math.random()<wildChance()){ return WILD; }
+      return pick(arr);
+    }
+    // render a value into a die, swapping in the board SVG for wildcards
+    function setDie(el,val){
+      if(val===WILD){ el.innerHTML=BOARD_SVG; }
+      else { el.textContent=val; }
+    }
+    function part(val){ return val===WILD ? BOARD_INLINE : val; }
+    function isWild(v){ return v===WILD; }
+
     rebuildFaces();
 
     window.rollDice=function(){
-      var btn=document.getElementById('rollBtn');
-      if(!pool().length){
-        document.getElementById('resultIdle').style.display='none';
-        document.getElementById('resultRolling').style.display='none';
-        document.getElementById('resultTrick').style.display='block';
-        document.getElementById('trickName').textContent='No tricks match these filters';
-        return;
-      }
-
-      btn.disabled=true;
+      var c=CATS[cat];
+      var useStance=stanceOn(), useCombo=comboOn(), useSpin=spinOn();
+      var ST=stanceList(), TR=tricks(), SP=spinList(), CO=comboList();
+      var btn=document.getElementById('rollBtn'); btn.disabled=true;
       document.getElementById('resultIdle').style.display='none';
       document.getElementById('resultTrick').style.display='none';
       document.getElementById('resultRolling').style.display='block';
 
-      var v1=document.getElementById('val1');
-      var vd=document.getElementById('valDir');
-      var v2=document.getElementById('val2');
-      var v3=document.getElementById('val3');
-      var dice=[
-        document.getElementById('die1'),
-        document.getElementById('dieDir'),
-        document.getElementById('die2'),
-        document.getElementById('die3')
-      ];
-
-      [v1,vd,v2,v3].forEach(function(v){if(v)v.classList.add('rolling');});
-      dice.forEach(function(d){if(d)d.classList.add('rolling');});
+      var v1=document.getElementById('val1'),v2=document.getElementById('val2'),v3=document.getElementById('val3');
+      var dice=[document.getElementById('die1'),document.getElementById('die2'),document.getElementById('die3')];
+      [v1,v2,v3].forEach(function(v){v.classList.add('rolling');});
+      dice.forEach(function(d){d.classList.add('rolling');});
 
       var interval=setInterval(function(){
-        var g=generateOne(false);
-        if(CATS[cat].stance && stanceOn()) setDie(v1,g.stance||"Regular");
-        setDie(vd,g.direction||"—");
-        setDie(v2,g.trick?g.trick.n:"—");
-        if(comboOn()){
-          var c=comboTarget(g);
-          setDie(v3,c.wild?WILD:c.plain);
+        if(useStance) setDie(v1, pickWild(ST));
+        setDie(v2, pickWild(TR));
+        if(useCombo){
+          var cw=pickWild(CO);
+          if(cw===WILD){ setDie(v3, WILD); }
+          else { var ca=c.comboApproach.length?pick(c.comboApproach)+' ':''; v3.textContent=ca+cw; }
         }
       },80);
 
       setTimeout(function(){
         clearInterval(interval);
-
-        var first=generateOne(true);
-        var second=comboOn()?comboTarget(first):null;
-
-        if(CATS[cat].stance && stanceOn()) setDie(v1,first.stance||"Regular");
-        setDie(vd,first.direction||"—");
-        setDie(v2,first.wild?WILD:(first.trick?first.trick.n:"—"));
-        if(comboOn()) setDie(v3,second.wild?WILD:second.plain);
-
-        [v1,vd,v2,v3].forEach(function(v){if(v)v.classList.remove('rolling');});
-        dice.forEach(function(d){if(d)d.classList.remove('rolling');});
-
-        faces('faces1',CATS[cat].stance?weightedStances():[],first.stance||"Regular");
-        var dprev=cat==="general"?["FS","BS","FS 180","BS 180","FS 360","BS 360"]:["FS","BS"];
-        faces('facesDir',spinOn()?dprev:[],first.direction||null);
-        faces('faces2',pool(),first.trick?first.trick.n:null);
-        faces('faces3',comboOn()?pool():[],second&&second.trick?second.trick.n:null);
+        // each die rolls, each can be a wildcard
+        var r1=useStance?pickWild(ST):'';
+        var spin=useSpin?pickWild(SP):'';
+        var r2=pickWild(TR);
+        var r3='';
+        var r3wild=false;
+        if(useCombo){
+          var cw=pickWild(CO);
+          if(cw===WILD){ r3=WILD; r3wild=true; }
+          else { var ca=c.comboApproach.length?pick(c.comboApproach)+' ':''; r3=ca+cw; }
+        }
+        if(useStance) setDie(v1, r1);
+        setDie(v2, r2);
+        if(useCombo) setDie(v3, r3wild?WILD:r3);
+        [v1,v2,v3].forEach(function(v){v.classList.remove('rolling');});
+        dice.forEach(function(d){d.classList.remove('rolling');});
+        faces('faces1',ST,isWild(r1)?null:r1);faces('faces2',TR,isWild(r2)?null:r2);faces('faces3',CO,r3wild?null:r3.replace(/^(FS|BS) /,''));
 
         document.getElementById('resultRolling').style.display='none';
-        var trickEl=document.getElementById('resultTrick');
-        trickEl.style.display='block';
-        trickEl.style.animation='none'; trickEl.offsetHeight; trickEl.style.animation='';
+        var trickEl=document.getElementById('resultTrick'); trickEl.style.display='block';
+        trickEl.style.animation='none';trickEl.offsetHeight;trickEl.style.animation='';
 
-        var html=first.wild?part(WILD):first.plain;
-        var plain=first.wild?'[your own variation]':first.plain;
-        if(second){
-          html+=' <span style="opacity:.7">to</span> '+(second.wild?part(WILD):second.plain);
-          plain+=' to '+(second.wild?'[your own variation]':second.plain);
+        // build result: each part renders as text or a board icon if wild
+        var htmlParts=[], textParts=[];
+        if(useStance && r1 && !(r1==='Regular')){ htmlParts.push(part(r1)); textParts.push(isWild(r1)?'[variation]':r1); }
+        if(useSpin && spin){ htmlParts.push(part(spin)); textParts.push(isWild(spin)?'[variation]':spin); }
+        htmlParts.push(part(r2)); textParts.push(isWild(r2)?'[variation]':r2);
+        var mainHtml=htmlParts.join(' ');
+        var mainText=textParts.join(' ');
+        if(useCombo){ mainHtml += ' <span style="opacity:.7">to</span> '+part(r3); mainText += ' to '+(r3wild?'[variation]':r3); }
+
+        var anyWild = isWild(r1)||isWild(spin)||isWild(r2)||r3wild;
+        if(anyWild){
+          document.getElementById('trickName').innerHTML=mainHtml;
+        } else {
+          document.getElementById('trickName').textContent=mainText;
         }
 
-        var name=document.getElementById('trickName');
-        if(first.wild || (second&&second.wild)) name.innerHTML=html;
-        else name.textContent=plain;
-
-        history.unshift(plain);
-        if(history.length>10) history.pop();
-        updateHistory();
+        history.unshift(mainText); if(history.length>10)history.pop(); updateHistory();
         btn.disabled=false;
       },900);
     };
 
     function updateHistory(){
-      var toggle=document.getElementById('histToggle');
-      toggle.style.display='block';
+      var toggle=document.getElementById('histToggle'); toggle.style.display='block';
       toggle.textContent=(histVisible?'HIDE':'SHOW')+' HISTORY ('+history.length+')';
       var list=document.getElementById('historyList');
-      list.innerHTML=history.map(function(t,i){
-        return '<div class="history-item" style="color:'+
-          (i===0?'var(--neon)':'rgba(244,246,244,'+(Math.max(.12,.4-i*.03))+')')+
-          '">'+(i===0?'▶ ':(i+1)+'. ')+t+'</div>';
-      }).join('');
+      list.innerHTML=history.map(function(t,i){return '<div class="history-item" style="color:'+(i===0?'var(--neon)':'rgba(244,246,244,'+(Math.max(0.12,0.4-i*0.03))+')')+'">'+(i===0?'▶ ':(i+1)+'. ')+t+'</div>';}).join('');
     }
-
     window.toggleHistory=function(){
       histVisible=!histVisible;
       document.getElementById('historyList').style.display=histVisible?'flex':'none';
@@ -1023,7 +803,7 @@
     };
   })();
 </script>
-<script src="site.js?v=5"></script>
+<script src="site.js?v=6"></script>
 
 </body>
 </html>
