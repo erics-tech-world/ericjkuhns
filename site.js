@@ -54,7 +54,7 @@
             '<div class="social-menu">'+
               '<a href="https://youtube.com/@ericstechworld" target="_blank" rel="noopener">@ericstechworld</a>'+
               '<a href="https://youtube.com/@ericskateboards" target="_blank" rel="noopener">@ericskateboards</a>'+
-              '<a href="https://youtube.com/@ericssidequests" target="_blank" rel="noopener">@ericssidequests</a>'+
+              '<a href="https://youtube.com/@ericsbackrooms" target="_blank" rel="noopener">@ericsbackrooms</a>'+
             '</div>'+
           '</div>'+
           '<div class="social-drop">'+
