@@ -126,6 +126,7 @@
   let totalPosts = null;    // filled from feed
   let allLoaded = [];       // every post we've fetched so far
   let fetching = false;
+  let renderedOnce = false;   // true after the first batch renders
 
   const postsEl = document.getElementById('posts');
   const moreBtn = document.getElementById('more');
@@ -153,7 +154,7 @@
   }
 
   function renderAppend(entries){
-    if(startIndex === 1 + entries.length || postsEl.querySelector('.empty')){ postsEl.innerHTML=''; }
+    if(!renderedOnce || postsEl.querySelector('.empty')){ postsEl.innerHTML=''; renderedOnce = true; }
     entries.forEach(function(e){ postsEl.insertAdjacentHTML('beforeend', cardHTML(e)); });
     applyFilter();
   }
