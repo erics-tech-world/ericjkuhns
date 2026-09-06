@@ -164,7 +164,7 @@
     countEl.textContent = totalPosts !== null ? (allLoaded.length + ' of ' + totalPosts + ' posts') : '';
   }
 
-  function loadNext(){
+  function loadNext(after){
     if(fetching) return;
     fetching = true;
     moreBtn.classList.add('loading');
@@ -183,6 +183,7 @@
       startIndex += entries.length;
       updateMore();
       try{ delete window[CB]; }catch(e){}
+      if(typeof after === 'function') after();
     };
     const s = document.createElement('script');
     const labelPath = (typeof BLOG_FILTER !== 'undefined' && BLOG_FILTER) ? ('/-/' + encodeURIComponent(BLOG_FILTER)) : '';
@@ -194,6 +195,8 @@
     document.body.appendChild(s);
   }
 
+  function allPostsLoaded(){ return totalPosts !== null && allLoaded.length >= totalPosts; }
+
   function applyFilter(){
     const q = document.getElementById('search').value.trim().toLowerCase();
     let shown = 0;
@@ -202,7 +205,42 @@
       card.style.display = hit ? '' : 'none';
       if(hit) shown++;
     });
-    // when searching, hide load-more confusion note is fine; keep button to fetch more matches
+
+    // remove any previous "searching deeper" note
+    var note = document.getElementById('search-note');
+    if(note) note.remove();
+
+    if(q){
+      // hide the manual load-more button while a search is active
+      moreBtn.style.display = 'none';
+      if(!allPostsLoaded()){
+        // keep pulling more posts from the archive until we find matches or run out
+        var hint = document.createElement('div');
+        hint.id = 'search-note';
+        hint.className = 'empty mono';
+        hint.style.opacity = '.7';
+        hint.textContent = shown ? 'Searching earlier posts…' : 'Searching the archive for "'+q+'"…';
+        postsEl.parentNode.insertBefore(hint, moreBtn.closest('.more-wrap') || null);
+        if(!fetching){
+          loadNext(function(){
+            // only continue if the query hasn't changed since we started
+            if(document.getElementById('search').value.trim().toLowerCase() === q){ applyFilter(); }
+          });
+        }
+      } else {
+        // fully loaded: if nothing matched, say so
+        if(!shown){
+          var none = document.createElement('div');
+          none.id = 'search-note';
+          none.className = 'empty mono';
+          none.textContent = 'No posts found for "'+q+'".';
+          postsEl.appendChild(none);
+        }
+      }
+    } else {
+      // cleared search: restore the load-more button if there's more to load
+      if(!allPostsLoaded()) moreBtn.style.display = 'inline-block';
+    }
   }
 
   (function(){
