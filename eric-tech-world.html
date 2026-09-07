@@ -109,6 +109,46 @@
   @media(max-width:820px){
     .shop{grid-template-columns:1fr;gap:24px}
   }
+
+  /* ===== ROBOT FINDER ===== */
+  .rf-intro{color:var(--muted);max-width:680px;margin-bottom:28px;font-size:15px}
+  .rf-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:28px;padding:22px;background:var(--panel2);border:1px solid var(--line);border-radius:6px}
+  .rf-fg{display:flex;flex-direction:column}
+  .rf-fg label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon);letter-spacing:.5px;margin-bottom:7px;text-transform:uppercase}
+  .rf-fg select,.rf-fg input[type=range]{padding:9px 11px;border:1px solid var(--line);border-radius:3px;background:#070a07;color:var(--ink);font-size:13px;font-family:inherit;outline:none;transition:border-color .2s}
+  .rf-fg select:focus{border-color:var(--neon-dim)}
+  .rf-fg input[type=range]{padding:0;accent-color:var(--neon);height:6px}
+  .rf-price-val{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:6px}
+  .rf-sortinfo{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:20px}
+  .rf-sortinfo b{color:var(--neon)}
+  .rf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+  .rf-card{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;transition:all .22s;display:flex;flex-direction:column;position:relative}
+  .rf-card::before{content:"";position:absolute;top:0;left:0;width:0;height:2px;background:var(--neon);transition:width .3s;z-index:2}
+  .rf-card:hover{border-color:var(--neon-dim);transform:translateY(-3px)}
+  .rf-card:hover::before{width:100%}
+  .rf-img{width:100%;height:220px;object-fit:contain;background:#0d110d;padding:12px;display:block;border-bottom:1px solid var(--line)}
+  .rf-content{padding:18px;display:flex;flex-direction:column;flex:1}
+  .rf-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:14px}
+  .rf-name{font-size:17px;font-weight:700;line-height:1.2}
+  .rf-rank{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#04160a;background:var(--neon);padding:4px 10px;border-radius:20px;white-space:nowrap}
+  .rf-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+  .rf-stat{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:7px 10px;background:var(--panel2);border:1px solid var(--line);border-radius:4px;font-size:12px}
+  .rf-stat .k{font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:10px;letter-spacing:.3px}
+  .rf-stat .v{font-weight:700;color:var(--ink)}
+  .rf-stat .v.price{color:var(--neon)}
+  .rf-actions{display:flex;gap:9px;margin-top:auto}
+  .rf-btn{flex:1;padding:10px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-align:center;transition:all .2s;cursor:pointer;letter-spacing:.3px;border:1px solid transparent}
+  .rf-buy{background:var(--neon);color:#04160a}
+  .rf-buy:hover{box-shadow:0 0 18px rgba(57,255,100,.4)}
+  .rf-buy.na{background:var(--panel2);color:var(--muted);border-color:var(--line);cursor:not-allowed}
+  .rf-buy.na:hover{box-shadow:none}
+  .rf-review{background:transparent;color:var(--ink);border-color:var(--line)}
+  .rf-review:hover{border-color:var(--neon);color:var(--neon)}
+  .rf-more{display:block;margin:30px auto 0;padding:14px 34px;background:var(--panel);color:var(--neon);border:1px solid var(--neon-dim);border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.5px}
+  .rf-more:hover{box-shadow:0 0 20px rgba(57,255,100,.25);transform:translateY(-1px)}
+  .rf-more.hidden{display:none}
+  @media(max-width:560px){.rf-grid{grid-template-columns:1fr}.rf-stats{grid-template-columns:1fr}.rf-actions{flex-direction:column}}
+
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <link rel="stylesheet" href="site.css?v=6">
@@ -161,6 +201,81 @@
     </div>
   </div>
 </section>
+
+
+<section class="blk" id="robot-finder">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag mono">03</span>
+      <h2>AI Robot Finder</h2>
+      <div class="line"></div>
+    </div>
+    <p class="rf-intro">Every AI companion robot I've reviewed, ranked and filterable. Sort by price, battery, conversation quality and more to find the right one for you. Buy links help support the channel.</p>
+
+    <div class="rf-filters">
+      <div class="rf-fg">
+        <label for="rfSort">Sort By</label>
+        <select id="rfSort">
+          <option value="overall">Overall Rating</option>
+          <option value="price">Price (Low to High)</option>
+          <option value="priceDesc">Price (High to Low)</option>
+          <option value="battery">Battery Life</option>
+          <option value="conversation">Conversation</option>
+          <option value="appExperience">App Experience</option>
+          <option value="games">Games</option>
+          <option value="subscription">Subscription (No first)</option>
+        </select>
+      </div>
+      <div class="rf-fg">
+        <label for="rfPrice">Max Price</label>
+        <input type="range" id="rfPrice" min="0" max="1000" value="1000" step="10">
+        <span class="rf-price-val" id="rfPriceVal">$1000+</span>
+      </div>
+      <div class="rf-fg">
+        <label for="rfConv">Min Conversation</label>
+        <select id="rfConv">
+          <option value="0">Any Level</option>
+          <option value="1">Bad or Better</option>
+          <option value="2">Mediocre or Better</option>
+          <option value="3">Good</option>
+        </select>
+      </div>
+      <div class="rf-fg">
+        <label for="rfApp">App Experience</label>
+        <select id="rfApp">
+          <option value="all">Any</option>
+          <option value="3">Good</option>
+          <option value="2">Mediocre or Better</option>
+          <option value="1">Bad or Better</option>
+          <option value="0">No App</option>
+        </select>
+      </div>
+      <div class="rf-fg">
+        <label for="rfGames">Games</label>
+        <select id="rfGames">
+          <option value="all">Any</option>
+          <option value="3">Good</option>
+          <option value="2">Mediocre or Better</option>
+          <option value="1">Bad or Better</option>
+          <option value="0">No Games</option>
+        </select>
+      </div>
+      <div class="rf-fg">
+        <label for="rfSub">Subscription</label>
+        <select id="rfSub">
+          <option value="all">Any</option>
+          <option value="no">No Subscription</option>
+          <option value="yes">Has Subscription</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="rf-sortinfo" id="rfSortInfo">Showing all robots sorted by Overall Rating</div>
+    <div class="rf-grid" id="rfGrid"></div>
+    <button id="rfMore" class="rf-more">Show More Robots ▾</button>
+  </div>
+</section>
+
 
 <div id="site-footer"></div>
 
@@ -353,6 +468,101 @@
     s.onerror = function(){ if(artTrack) artTrack.innerHTML='<div class="art-loading mono">Couldn\'t load articles right now.</div>'; };
     document.body.appendChild(s);
   });
+</script>
+
+<script src="robot-data.js?v=1"></script>
+<script>
+(function(){
+  var RF_PER_PAGE = 9;
+  var robots = window.ROBOT_DATA || [];
+  var filtered = robots.slice();
+  var shown = RF_PER_PAGE;
+  var sortLabels = {overall:'Overall Rating',price:'Price (Low to High)',priceDesc:'Price (High to Low)',battery:'Battery Life',conversation:'Conversation',appExperience:'App Experience',games:'Games',subscription:'Subscription'};
+
+  function el(id){ return document.getElementById(id); }
+  function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function render(){
+    var grid = el('rfGrid'); grid.innerHTML='';
+    filtered.slice(0,shown).forEach(function(r,i){
+      var card = document.createElement('div'); card.className='rf-card';
+      var buyClass = r.buyLink ? 'rf-btn rf-buy' : 'rf-btn rf-buy na';
+      var buyText = r.buyLink ? 'Buy Now' : 'Unavailable';
+      var buyTag = r.buyLink
+        ? '<a href="'+esc(r.buyLink)+'" class="'+buyClass+'" target="_blank" rel="noopener">'+buyText+'</a>'
+        : '<span class="'+buyClass+'">'+buyText+'</span>';
+      var reviewTag = r.reviewLink ? '<a href="'+esc(r.reviewLink)+'" class="rf-btn rf-review" target="_blank" rel="noopener">Watch Review</a>' : '';
+      card.innerHTML =
+        '<img src="'+esc(r.image)+'" alt="'+esc(r.name)+'" class="rf-img" loading="lazy" onerror="this.style.display=\'none\'">'+
+        '<div class="rf-content">'+
+          '<div class="rf-head"><div class="rf-name">'+esc(r.name)+'</div><div class="rf-rank">#'+(i+1)+'</div></div>'+
+          '<div class="rf-stats">'+
+            '<div class="rf-stat"><span class="k">PRICE</span><span class="v price">'+(r.price>0?'$'+r.price:'N/A')+'</span></div>'+
+            '<div class="rf-stat"><span class="k">BATTERY</span><span class="v">'+esc(r.battery)+'</span></div>'+
+            '<div class="rf-stat"><span class="k">CONVO</span><span class="v">'+esc(r.conversation)+'</span></div>'+
+            '<div class="rf-stat"><span class="k">APP</span><span class="v">'+esc(r.appExperience)+'</span></div>'+
+            '<div class="rf-stat"><span class="k">GAMES</span><span class="v">'+esc(r.games)+'</span></div>'+
+            '<div class="rf-stat"><span class="k">SUB</span><span class="v">'+esc(r.subscription)+'</span></div>'+
+          '</div>'+
+          '<div class="rf-actions">'+buyTag+reviewTag+'</div>'+
+        '</div>';
+      grid.appendChild(card);
+    });
+    el('rfMore').classList.toggle('hidden', shown >= filtered.length);
+  }
+
+  function updateInfo(){
+    var sortBy = el('rfSort').value;
+    el('rfSortInfo').innerHTML = 'Showing <b>'+Math.min(shown,filtered.length)+'</b> of <b>'+filtered.length+'</b> robots sorted by <b>'+sortLabels[sortBy]+'</b>';
+  }
+
+  function applyFilters(){
+    var sortBy = el('rfSort').value;
+    var maxPrice = parseInt(el('rfPrice').value,10);
+    var minConv = parseInt(el('rfConv').value,10);
+    var appF = el('rfApp').value;
+    var gamesF = el('rfGames').value;
+    var subF = el('rfSub').value;
+
+    filtered = robots.filter(function(r){
+      if(r.price===0) return true;
+      if(r.price>maxPrice) return false;
+      if(r.conversationNum<minConv) return false;
+      if(appF!=='all' && r.appNum<parseInt(appF,10)) return false;
+      if(gamesF!=='all' && r.gamesNum<parseInt(gamesF,10)) return false;
+      if(subF==='no' && r.subscription==='Yes') return false;
+      if(subF==='yes' && r.subscription==='No') return false;
+      return true;
+    });
+
+    filtered.sort(function(a,b){
+      switch(sortBy){
+        case 'price': if(a.price===0)return 1; if(b.price===0)return -1; return a.price-b.price;
+        case 'priceDesc': if(a.price===0)return 1; if(b.price===0)return -1; return b.price-a.price;
+        case 'battery': return b.batteryHours-a.batteryHours;
+        case 'conversation': return b.conversationNum-a.conversationNum;
+        case 'appExperience': return b.appNum-a.appNum;
+        case 'games': return b.gamesNum-a.gamesNum;
+        case 'subscription':
+          if(a.subscription==='No'&&b.subscription==='Yes')return -1;
+          if(a.subscription==='Yes'&&b.subscription==='No')return 1;
+          return 0;
+        default: return b.overall-a.overall;
+      }
+    });
+    shown = RF_PER_PAGE;
+    updateInfo(); render();
+  }
+
+  el('rfMore').addEventListener('click', function(){ shown += RF_PER_PAGE; updateInfo(); render(); });
+  el('rfSort').addEventListener('change', applyFilters);
+  el('rfPrice').addEventListener('input', function(){ el('rfPriceVal').textContent = this.value>=1000?'$1000+':'$'+this.value; applyFilters(); });
+  el('rfConv').addEventListener('change', applyFilters);
+  el('rfApp').addEventListener('change', applyFilters);
+  el('rfGames').addEventListener('change', applyFilters);
+  el('rfSub').addEventListener('change', applyFilters);
+  applyFilters();
+})();
 </script>
 
 <script src="site.js?v=6"></script>
