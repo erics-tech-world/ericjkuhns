@@ -1,104 +1,556 @@
-<script>
-  // typewriter effect for the blog title
-  (function(){
-    const target = document.getElementById('typed-title');
-    if(!target) return;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    const text = "Eric J. Kuhns Blog";
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+
+<title>Blog | Eric Kuhns</title>
+
+<meta
+  name="description"
+  content="Writing from Eric Kuhns on tech, skating, sci-fi, and building things."
+>
+
+<style>
+  :root{
+    --bg:#0a0c0a;
+    --panel:#101410;
+    --ink:#f4f6f4;
+    --muted:#8a938c;
+    --line:#1e241e;
+    --neon:#39ff64;
+    --neon-dim:#1f8a37;
+  }
+
+  *{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+  }
+
+  html{
+    scroll-behavior:smooth;
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  .mono{
+    font-family:'JetBrains Mono','SF Mono',ui-monospace,'Courier New',monospace;
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9999;
+    background:repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0) 0,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,.14) 3px,
+      rgba(0,0,0,0) 4px
+    );
+    mix-blend-mode:overlay;
+    opacity:.5;
+  }
+
+  a{
+    color:inherit;
+    text-decoration:none;
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  .head{
+    padding:72px 0 40px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .head .prompt{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--neon-dim);
+    letter-spacing:1px;
+    margin-bottom:18px;
+  }
+
+  .head .prompt .path{
+    color:var(--muted);
+  }
+
+  .head h1{
+    font-size:clamp(34px,6vw,60px);
+    font-weight:800;
+    letter-spacing:-2px;
+    min-height:1.1em;
+  }
+
+  .head h1 .type-caret{
+    color:var(--neon);
+    animation:blink 1.05s steps(1) infinite;
+    font-weight:400;
+  }
+
+  .head p{
+    color:var(--muted);
+    margin-top:14px;
+    max-width:560px;
+  }
+
+  /* search + filter bar */
+  .tools{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    align-items:center;
+    padding:28px 0 0;
+  }
+
+  .search{
+    flex:1;
+    min-width:220px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:3px;
+    color:var(--ink);
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;
+    padding:11px 14px;
+  }
+
+  .search:focus{
+    outline:none;
+    border-color:var(--neon-dim);
+  }
+
+  .count{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .list{
+    padding:32px 0 60px;
+  }
+
+  .posts{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+
+  .post{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:3px;
+    overflow:hidden;
+    transition:all .2s;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .post:hover{
+    border-color:var(--neon-dim);
+    transform:translateY(-3px);
+  }
+
+  .post:hover h3{
+    color:var(--neon);
+  }
+
+  .post-thumb{
+    aspect-ratio:4/3;
+    background:linear-gradient(135deg,#0d130d,#060806);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-bottom:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--neon-dim);
+    letter-spacing:1px;
+    background-size:cover;
+    background-position:center;
+  }
+
+  .post-body{
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+  }
+
+  .post .date{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--muted);
+  }
+
+  .post h3{
+    font-size:17px;
+    font-weight:700;
+    margin:8px 0;
+    transition:color .2s;
+    line-height:1.3;
+  }
+
+  .post .excerpt{
+    font-size:14px;
+    color:var(--muted);
+    flex:1;
+  }
+
+  .post .cats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:14px;
+  }
+
+  .post .cat{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    color:var(--neon);
+    border:1px solid var(--line);
+    padding:3px 9px;
+    border-radius:2px;
+    display:inline-block;
+  }
+
+  .empty{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--muted);
+    padding:40px 0;
+    grid-column:1/-1;
+  }
+
+  .empty a{
+    color:var(--neon);
+  }
+
+  .more-wrap{
+    display:flex;
+    justify-content:center;
+    padding:36px 0 0;
+  }
+
+  .more{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    letter-spacing:.5px;
+    padding:13px 28px;
+    border:1px solid var(--line);
+    border-radius:3px;
+    background:var(--panel);
+    color:var(--ink);
+    cursor:pointer;
+    transition:all .2s;
+  }
+
+  .more:hover{
+    border-color:var(--neon);
+    color:var(--neon);
+    box-shadow:0 0 18px rgba(57,255,100,.2);
+  }
+
+  .more.loading{
+    opacity:.5;
+    pointer-events:none;
+  }
+
+  .more.done{
+    display:none;
+  }
+
+  @media(max-width:820px){
+    .posts{
+      grid-template-columns:1fr 1fr;
+    }
+  }
+
+  @media(max-width:560px){
+    .posts{
+      grid-template-columns:1fr;
+    }
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{
+      animation:none!important;
+      transition:none!important;
+    }
+  }
+</style>
+
+<link rel="stylesheet" href="../site.css?v=6">
+</head>
+
+<body>
+
+<script>
+  window.SITE={
+    active:"blog",
+    base:"../"
+  };
+</script>
+
+<div id="site-nav"></div>
+
+<header class="head">
+  <div class="wrap">
+
+    <h1 class="typed">
+      <span id="typed-title"></span>
+      <span class="type-caret">_</span>
+    </h1>
+
+    <p>
+      Welcome to my blog where I cover tech, adventure/travel,
+      skateboarding, pop culture, nostalgia, and anything else
+      that pops into my head.
+    </p>
+
+    <div class="tools">
+      <input
+        class="search"
+        id="search"
+        placeholder="search posts…"
+        oninput="applyFilter()"
+      >
+
+      <span
+        class="count mono"
+        id="count"
+      ></span>
+    </div>
+
+  </div>
+</header>
+
+<section class="list">
+  <div class="wrap">
+
+    <div
+      class="posts"
+      id="posts"
+    >
+      <div class="empty mono">
+        Loading posts…
+      </div>
+    </div>
+
+    <div class="more-wrap">
+      <button
+        class="more mono"
+        id="more"
+        style="display:none"
+        onclick="loadNext()"
+      >
+        Load more posts
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="blog-config.js"></script>
+
+<script>
+  /*
+   * Typewriter effect
+   */
+  (function(){
+
+    const target =
+      document.getElementById('typed-title');
+
+    if(!target){
+      return;
+    }
+
+    const text =
+      "Eric J. Kuhns Blog";
+
     const reduce =
       window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window
+        .matchMedia(
+          '(prefers-reduced-motion: reduce)'
+        )
+        .matches;
 
     if(reduce){
-      target.textContent = text;
+
+      target.textContent =
+        text;
+
       return;
     }
 
     let i = 0;
 
     (function tick(){
+
       if(i <= text.length){
-        target.textContent = text.slice(0,i);
+
+        target.textContent =
+          text.slice(0,i);
+
         i++;
-        setTimeout(tick, 65);
+
+        setTimeout(
+          tick,
+          65
+        );
       }
+
     })();
+
   })();
 
 
-  document.addEventListener('click', function(e){
-    if(!e.target.closest('.nav-drop')){
-      document
-        .querySelectorAll('.nav-drop.open')
-        .forEach(function(d){
-          d.classList.remove('open');
-        });
+
+  /*
+   * Close nav dropdowns
+   */
+  document.addEventListener(
+    'click',
+    function(e){
+
+      if(!e.target.closest('.nav-drop')){
+
+        document
+          .querySelectorAll('.nav-drop.open')
+          .forEach(function(d){
+
+            d.classList.remove('open');
+
+          });
+
+      }
+
     }
-  });
+  );
 
 
+
+  /*
+   * Safely escape text inserted into HTML
+   * and HTML attributes.
+   */
   function esc(s){
+
     return (s || "")
       .replace(/&/g,"&amp;")
       .replace(/</g,"&lt;")
       .replace(/>/g,"&gt;")
       .replace(/"/g,"&quot;")
       .replace(/'/g,"&#39;");
+
   }
+
 
 
   function fmtDate(iso){
+
     try{
-      return new Date(iso).toLocaleDateString(
-        'en-US',
-        {
-          year:'numeric',
-          month:'short',
-          day:'numeric'
-        }
-      );
+
+      return new Date(iso)
+        .toLocaleDateString(
+          'en-US',
+          {
+            year:'numeric',
+            month:'short',
+            day:'numeric'
+          }
+        );
+
     }catch(e){
+
       return '';
+
     }
+
   }
+
 
 
   function firstImage(html){
-    const m =
-      (html || '').match(
-        /<img[^>]+src=["']([^"']+)["']/i
-      );
 
-    return m ? m[1] : '';
+    const m =
+      (html || '')
+        .match(
+          /<img[^>]+src=["']([^"']+)["']/i
+        );
+
+    return m
+      ? m[1]
+      : '';
+
   }
 
 
-  function toText(html){
-    const d = document.createElement('div');
 
-    d.innerHTML = html || '';
+  function toText(html){
+
+    const d =
+      document.createElement('div');
+
+    d.innerHTML =
+      html || '';
 
     return (d.textContent || '')
       .replace(/\s+/g,' ')
       .trim();
+
   }
 
 
+
+  /*
+   * Get the same YYYY/MM/post-slug path
+   * used by the individual post page.
+   */
   function postSlug(entry){
+
     const alt =
-      (entry.link || []).find(function(l){
-        return l.rel === 'alternate';
-      });
+      (entry.link || [])
+        .find(function(l){
+
+          return l.rel === 'alternate';
+
+        });
+
 
     const href =
       alt
         ? alt.href
         : '';
 
+
     const m =
       href.match(
         /\/(\d{4})\/(\d{2})\/([^\/]+)\.html/
       );
+
 
     return m
       ? (
@@ -107,70 +559,78 @@
           m[3]
         )
       : encodeURIComponent(
-          entry.id && entry.id.$t
+          entry.id &&
+          entry.id.$t
             ? entry.id.$t
             : href
         );
+
   }
 
 
+
   /*
-   * Stable unique ID for duplicate protection.
-   *
-   * Blogger's entry.id is preferred.
-   * If for some reason it is missing,
-   * fall back to the post slug.
+   * Stable unique identifier used to
+   * prevent the same Blogger entry from
+   * appearing more than once.
    */
   function postKey(entry){
+
     if(
       entry &&
       entry.id &&
       entry.id.$t
     ){
+
       return entry.id.$t;
+
     }
 
     return postSlug(entry);
+
   }
 
 
 
+  /*
+   * Blogger pagination
+   */
   const PAGE = 30;
 
   /*
-   * Blogger uses 1-based indexing.
+   * Blogger uses 1-based indexes.
    */
   let startIndex = 1;
 
   /*
-   * Blogger's reported total.
+   * Blogger's reported number of posts.
    */
   let totalPosts = null;
 
   /*
-   * Unique posts we have successfully loaded.
+   * Every unique post we've loaded.
    */
   let allLoaded = [];
 
   /*
-   * Keys already seen.
-   * This prevents duplicate cards even if
-   * Blogger returns overlapping batches.
+   * Keys used for duplicate protection.
    */
-  let loadedKeys = new Set();
+  let loadedKeys =
+    new Set();
 
-  let fetching = false;
+  let fetching =
+    false;
 
-  let renderedOnce = false;
+  let renderedOnce =
+    false;
 
   /*
-   * True once Blogger returns fewer than PAGE
-   * results or no results.
-   *
-   * This is more reliable than using only
-   * allLoaded.length >= totalPosts.
+   * Becomes true when Blogger returns
+   * fewer than PAGE entries.
    */
-  let archiveExhausted = false;
+  let archiveExhausted =
+    false;
+
 
 
   const postsEl =
@@ -184,6 +644,9 @@
 
 
 
+  /*
+   * Create one blog card.
+   */
   function cardHTML(e){
 
     const title =
@@ -215,9 +678,12 @@
 
 
     const cats =
-      (e.category || []).map(function(c){
-        return c.term;
-      });
+      (e.category || [])
+        .map(function(c){
+
+          return c.term;
+
+        });
 
 
     const slug =
@@ -225,12 +691,18 @@
 
 
     /*
-     * Keep the visible excerpt short...
+     * Full article text.
+     *
+     * IMPORTANT:
+     * This is used by search.
      */
     const fullText =
       toText(content);
 
 
+    /*
+     * Only the visible preview gets shortened.
+     */
     const excerpt =
       fullText.length > 120
         ? fullText.slice(0,120) + '…'
@@ -238,11 +710,11 @@
 
 
     /*
-     * ...but search the ENTIRE article body.
+     * Search indexes:
      *
-     * This fixes articles that contain the
-     * search word later than the first
-     * 120 characters.
+     * - full post title
+     * - full article body
+     * - Blogger labels
      */
     const searchText =
       (
@@ -253,12 +725,16 @@
       .toLowerCase();
 
 
+    /*
+     * Use JSON.stringify to safely generate
+     * a CSS URL string inside the style attr.
+     */
     const thumbStyle =
       img
         ? (
-            ' style="background-image:url(\'' +
-            esc(img) +
-            '\')"'
+            ' style="background-image:url(' +
+            JSON.stringify(img) +
+            ')"'
           )
         : '';
 
@@ -275,18 +751,25 @@
 
     return (
       '<a class="post"' +
+
         ' href="post.html?p=' +
         encodeURIComponent(slug) +
         '"' +
+
         ' data-search="' +
         esc(searchText) +
-        '">' +
+        '"' +
+
+      '>' +
 
         '<div class="post-thumb"' +
           thumbStyle +
         '>' +
+
           thumbText +
+
         '</div>' +
+
 
         '<div class="post-body">' +
 
@@ -294,13 +777,16 @@
             fmtDate(date) +
           '</span>' +
 
+
           '<h3>' +
             esc(title) +
           '</h3>' +
 
+
           '<div class="excerpt">' +
             esc(excerpt) +
           '</div>' +
+
 
           (
             cats.length
@@ -309,11 +795,13 @@
 
                     cats
                       .map(function(c){
+
                         return (
                           '<span class="cat mono">' +
-                          esc(c) +
+                            esc(c) +
                           '</span>'
                         );
+
                       })
                       .join('') +
 
@@ -326,18 +814,27 @@
 
       '</a>'
     );
+
   }
 
 
 
+  /*
+   * Add newly loaded posts to the page.
+   */
   function renderAppend(entries){
 
     if(
       !renderedOnce ||
       postsEl.querySelector('.empty')
     ){
-      postsEl.innerHTML = '';
-      renderedOnce = true;
+
+      postsEl.innerHTML =
+        '';
+
+      renderedOnce =
+        true;
+
     }
 
 
@@ -351,36 +848,57 @@
     });
 
 
+    /*
+     * Re-run the active search after new
+     * archive entries have been added.
+     */
     applyFilter();
+
   }
 
 
 
+  /*
+   * Determine whether every Blogger page
+   * has been checked.
+   */
   function allPostsLoaded(){
 
     if(archiveExhausted){
+
       return true;
+
     }
+
 
     if(
       totalPosts !== null &&
       startIndex > totalPosts
     ){
+
       return true;
+
     }
 
+
     return false;
+
   }
 
 
 
+  /*
+   * Update Load More button + normal
+   * post counter.
+   */
   function updateMore(){
 
     if(allPostsLoaded()){
 
       moreBtn.classList.add('done');
 
-      moreBtn.style.display = 'none';
+      moreBtn.style.display =
+        'none';
 
     }else{
 
@@ -388,19 +906,25 @@
 
       moreBtn.classList.remove('loading');
 
+
       const q =
         document.getElementById('search');
 
+
       /*
-       * Only show Load More if we are not
-       * currently searching.
+       * Only show the button if no search
+       * is currently active.
        */
       if(
         !q ||
         !q.value.trim()
       ){
-        moreBtn.style.display = 'inline-block';
+
+        moreBtn.style.display =
+          'inline-block';
+
       }
+
     }
 
 
@@ -409,13 +933,15 @@
 
 
     /*
-     * Search manages its own counter.
+     * Search has its own result counter.
      */
     if(
       q &&
       q.value.trim()
     ){
+
       return;
+
     }
 
 
@@ -427,6 +953,7 @@
           : '';
 
       return;
+
     }
 
 
@@ -449,184 +976,248 @@
       ' of ' +
       total +
       ' posts';
+
   }
 
 
 
+  /*
+   * Fetch the next Blogger archive batch.
+   */
   function loadNext(after){
 
+    /*
+     * Never start overlapping requests.
+     */
     if(
       fetching ||
       archiveExhausted
     ){
+
       return;
+
     }
 
 
-    fetching = true;
+    fetching =
+      true;
 
-    moreBtn.classList.add('loading');
+
+    moreBtn.classList.add(
+      'loading'
+    );
 
 
     /*
-     * IMPORTANT:
+     * VERY IMPORTANT FIX:
      *
-     * Capture the index this request is using.
-     * Then immediately reserve the NEXT page.
+     * Capture the index being used by this
+     * request and immediately reserve the
+     * next page.
      *
-     * This prevents applyFilter() from
-     * accidentally requesting the same
-     * Blogger batch again.
+     * The old code didn't advance the index
+     * until AFTER renderAppend().
+     *
+     * Since renderAppend() runs applyFilter(),
+     * searching could trigger another
+     * loadNext() with the SAME index.
+     *
+     * That was one source of duplicate posts.
      */
     const requestStart =
       startIndex;
 
 
-    startIndex += PAGE;
+    startIndex +=
+      PAGE;
 
 
     const CB =
       'bloggerPage_' +
       Date.now() +
       '_' +
-      Math.floor(Math.random() * 1e9);
+      Math.floor(
+        Math.random() * 1e9
+      );
 
 
-    window[CB] = function(json){
+    const s =
+      document.createElement('script');
 
-      fetching = false;
+
+    /*
+     * Blogger JSONP callback.
+     */
+    window[CB] =
+      function(json){
+
+        fetching =
+          false;
 
 
-      if(
-        json.feed &&
-        json.feed.openSearch$totalResults
-      ){
+        /*
+         * Blogger's total result count.
+         */
+        if(
+          json.feed &&
+          json.feed.openSearch$totalResults
+        ){
 
-        totalPosts =
-          parseInt(
-            json.feed.openSearch$totalResults.$t,
-            10
+          totalPosts =
+            parseInt(
+              json.feed
+                .openSearch$totalResults
+                .$t,
+              10
+            );
+
+        }
+
+
+        const entries =
+          (
+            json.feed &&
+            json.feed.entry
+          )
+            ? json.feed.entry
+            : [];
+
+
+        /*
+         * Fewer than PAGE means there is
+         * no next Blogger page.
+         */
+        if(entries.length < PAGE){
+
+          archiveExhausted =
+            true;
+
+        }
+
+
+        /*
+         * Blog genuinely has zero posts.
+         */
+        if(
+          !entries.length &&
+          allLoaded.length === 0
+        ){
+
+          postsEl.innerHTML =
+            '<div class="empty mono">' +
+              'No posts yet. Check back soon.' +
+            '</div>';
+
+
+          moreBtn.classList.add(
+            'done'
           );
 
-      }
+
+          moreBtn.style.display =
+            'none';
 
 
-      const entries =
-        (
-          json.feed &&
-          json.feed.entry
-        )
-          ? json.feed.entry
-          : [];
+          cleanupCallback();
+
+          return;
+
+        }
 
 
-      /*
-       * If Blogger returned fewer than PAGE,
-       * we reached the end.
-       */
-      if(entries.length < PAGE){
-        archiveExhausted = true;
-      }
+        /*
+         * Duplicate protection.
+         *
+         * Even if Blogger returns an overlapping
+         * page for any reason, we only render
+         * entries that have never been seen.
+         */
+        const uniqueEntries =
+          [];
 
 
-      /*
-       * No posts at all.
-       */
-      if(
-        !entries.length &&
-        allLoaded.length === 0
-      ){
+        entries.forEach(function(entry){
 
-        postsEl.innerHTML =
-          '<div class="empty mono">' +
-          'No posts yet. Check back soon.' +
-          '</div>';
+          const key =
+            postKey(entry);
 
 
-        moreBtn.classList.add('done');
+          if(
+            loadedKeys.has(key)
+          ){
 
-        moreBtn.style.display = 'none';
+            return;
+
+          }
+
+
+          loadedKeys.add(key);
+
+          allLoaded.push(entry);
+
+          uniqueEntries.push(entry);
+
+        });
+
+
+        if(uniqueEntries.length){
+
+          renderAppend(
+            uniqueEntries
+          );
+
+        }else{
+
+          /*
+           * Keep the current search state updated
+           * even if Blogger returned no new cards.
+           */
+          applyFilter();
+
+        }
+
+
+        updateMore();
 
 
         cleanupCallback();
 
 
-        return;
-      }
-
-
-      /*
-       * Remove duplicates before rendering.
-       */
-      const uniqueEntries = [];
-
-
-      entries.forEach(function(entry){
-
-        const key =
-          postKey(entry);
-
-
-        if(loadedKeys.has(key)){
-          return;
-        }
-
-
-        loadedKeys.add(key);
-
-        allLoaded.push(entry);
-
-        uniqueEntries.push(entry);
-
-      });
-
-
-      /*
-       * Render only new posts.
-       */
-      if(uniqueEntries.length){
-
-        renderAppend(uniqueEntries);
-
-      }else{
-
         /*
-         * Even if this Blogger batch contained
-         * nothing new, re-run the current filter.
+         * Used by archive search to continue
+         * loading older batches.
          */
-        applyFilter();
-
-      }
-
-
-      updateMore();
-
-      cleanupCallback();
-
-
-      if(typeof after === 'function'){
-        after();
-      }
-
-
-      function cleanupCallback(){
-
-        try{
-          delete window[CB];
-        }catch(e){}
-
         if(
-          s &&
-          s.parentNode
+          typeof after === 'function'
         ){
-          s.parentNode.removeChild(s);
+
+          after();
+
         }
-      }
-    };
 
 
-    const s =
-      document.createElement('script');
+
+        function cleanupCallback(){
+
+          try{
+
+            delete window[CB];
+
+          }catch(e){}
+
+
+          if(
+            s &&
+            s.parentNode
+          ){
+
+            s.parentNode.removeChild(s);
+
+          }
+
+        }
+
+      };
 
 
     const labelPath =
@@ -636,7 +1227,9 @@
       )
         ? (
             '/-/' +
-            encodeURIComponent(BLOG_FILTER)
+            encodeURIComponent(
+              BLOG_FILTER
+            )
           )
         : '';
 
@@ -644,7 +1237,9 @@
     s.src =
       'https://' +
       BLOG_ID +
+
       '/feeds/posts/default' +
+
       labelPath +
 
       '?alt=json-in-script' +
@@ -659,42 +1254,75 @@
       CB;
 
 
-    s.onerror = function(){
+    /*
+     * Restore this page number if the
+     * request itself fails.
+     */
+    s.onerror =
+      function(){
 
-      fetching = false;
-
-      /*
-       * Put the page index back because this
-       * request failed and can be retried.
-       */
-      startIndex = requestStart;
-
-
-      moreBtn.classList.remove('loading');
+        fetching =
+          false;
 
 
-      if(allLoaded.length === 0){
-
-        postsEl.innerHTML =
-          '<div class="empty mono">' +
-          'Couldn\'t load posts right now.' +
-          '</div>';
-
-      }
+        startIndex =
+          requestStart;
 
 
-      try{
-        delete window[CB];
-      }catch(e){}
-
-    };
+        moreBtn.classList.remove(
+          'loading'
+        );
 
 
-    document.body.appendChild(s);
+        if(
+          allLoaded.length === 0
+        ){
+
+          postsEl.innerHTML =
+            '<div class="empty mono">' +
+              'Couldn\'t load posts right now.' +
+            '</div>';
+
+        }
+
+
+        try{
+
+          delete window[CB];
+
+        }catch(e){}
+
+
+        if(
+          s &&
+          s.parentNode
+        ){
+
+          s.parentNode.removeChild(s);
+
+        }
+
+      };
+
+
+    document.body.appendChild(
+      s
+    );
+
   }
 
 
 
+  /*
+   * Search the blog.
+   *
+   * Search checks every currently loaded
+   * post immediately.
+   *
+   * If older Blogger pages have not yet
+   * been fetched, it continues loading the
+   * archive until every post has been checked.
+   */
   function applyFilter(){
 
     const search =
@@ -707,7 +1335,8 @@
         .toLowerCase();
 
 
-    let shown = 0;
+    let shown =
+      0;
 
 
     postsEl
@@ -715,7 +1344,9 @@
       .forEach(function(card){
 
         const haystack =
-          card.getAttribute('data-search') || '';
+          card.getAttribute(
+            'data-search'
+          ) || '';
 
 
         const hit =
@@ -730,30 +1361,40 @@
 
 
         if(hit){
+
           shown++;
+
         }
 
       });
 
 
+
     /*
-     * Remove old search-status message.
+     * Remove previous temporary search message.
      */
     const oldNote =
-      document.getElementById('search-note');
+      document.getElementById(
+        'search-note'
+      );
 
 
     if(oldNote){
+
       oldNote.remove();
+
     }
+
 
 
     if(q){
 
       /*
-       * Hide manual pagination during search.
+       * Don't make the visitor manually press
+       * Load More while searching.
        */
-      moreBtn.style.display = 'none';
+      moreBtn.style.display =
+        'none';
 
 
       countEl.textContent =
@@ -768,15 +1409,20 @@
         '"';
 
 
+
       /*
-       * Keep searching backward through
-       * the Blogger archive until the
-       * entire archive has been checked.
+       * There are still older posts that have
+       * not been downloaded.
+       *
+       * Keep going until the full archive has
+       * been searched.
        */
       if(!allPostsLoaded()){
 
         const hint =
-          document.createElement('div');
+          document.createElement(
+            'div'
+          );
 
 
         hint.id =
@@ -807,40 +1453,52 @@
         );
 
 
+        /*
+         * Only one Blogger request can exist
+         * at a time.
+         */
         if(!fetching){
 
-          loadNext(function(){
+          loadNext(
+            function(){
 
-            /*
-             * Only continue searching if
-             * the visitor is still searching
-             * for the same thing.
-             */
-            const current =
-              document
-                .getElementById('search')
-                .value
-                .trim()
-                .toLowerCase();
+              /*
+               * The visitor may have changed the
+               * search while the request was loading.
+               *
+               * Only continue the old search if the
+               * search text is still the same.
+               */
+              const current =
+                document
+                  .getElementById('search')
+                  .value
+                  .trim()
+                  .toLowerCase();
 
 
-            if(current === q){
-              applyFilter();
+              if(current === q){
+
+                applyFilter();
+
+              }
+
             }
-
-          });
+          );
 
         }
 
       }else{
 
         /*
-         * Entire Blogger archive searched.
+         * Every post has now been checked.
          */
         if(!shown){
 
           const none =
-            document.createElement('div');
+            document.createElement(
+              'div'
+            );
 
 
           none.id =
@@ -866,15 +1524,21 @@
 
       }
 
+
     }else{
 
       /*
-       * Search cleared.
+       * Search was cleared.
+       *
+       * Restore every loaded card.
        */
       postsEl
         .querySelectorAll('.post')
         .forEach(function(card){
-          card.style.display = '';
+
+          card.style.display =
+            '';
+
         });
 
 
@@ -889,12 +1553,13 @@
       updateMore();
 
     }
+
   }
 
 
 
   /*
-   * Start.
+   * Initial blog load.
    */
   (function(){
 
@@ -905,14 +1570,21 @@
 
       postsEl.innerHTML =
         '<div class="empty mono">' +
-        'Blog not configured yet.' +
+          'Blog not configured yet.' +
         '</div>';
 
       return;
+
     }
 
 
     loadNext();
 
   })();
+
 </script>
+
+<script src="../site.js?v=6"></script>
+
+</body>
+</html>
