@@ -113,7 +113,6 @@
     max-width:560px;
   }
 
-  /* search + filter bar */
   .tools{
     display:flex;
     gap:12px;
@@ -346,10 +345,7 @@
 <section class="list">
   <div class="wrap">
 
-    <div
-      class="posts"
-      id="posts"
-    >
+    <div class="posts" id="posts">
       <div class="empty mono">
         Loading posts…
       </div>
@@ -375,7 +371,7 @@
 
 <script>
   /*
-   * Typewriter effect
+   * Blog title typewriter
    */
   (function(){
 
@@ -420,6 +416,7 @@
           tick,
           65
         );
+
       }
 
     })();
@@ -429,7 +426,7 @@
 
 
   /*
-   * Close nav dropdowns
+   * Close navigation dropdowns.
    */
   document.addEventListener(
     'click',
@@ -453,17 +450,16 @@
 
 
   /*
-   * Safely escape text inserted into HTML
-   * and HTML attributes.
+   * Escape strings being inserted into HTML.
    */
   function esc(s){
 
-    return (s || "")
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;")
-      .replace(/"/g,"&quot;")
-      .replace(/'/g,"&#39;");
+    return String(s || '')
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#39;');
 
   }
 
@@ -493,31 +489,18 @@
 
 
 
-  function firstImage(html){
-
-    const m =
-      (html || '')
-        .match(
-          /<img[^>]+src=["']([^"']+)["']/i
-        );
-
-    return m
-      ? m[1]
-      : '';
-
-  }
-
-
-
+  /*
+   * Convert Blogger post HTML into plain text.
+   */
   function toText(html){
 
-    const d =
+    const temp =
       document.createElement('div');
 
-    d.innerHTML =
+    temp.innerHTML =
       html || '';
 
-    return (d.textContent || '')
+    return (temp.textContent || '')
       .replace(/\s+/g,' ')
       .trim();
 
@@ -526,8 +509,61 @@
 
 
   /*
-   * Get the same YYYY/MM/post-slug path
-   * used by the individual post page.
+   * Get the first usable image from the Blogger
+   * post body.
+   *
+   * Blogger can put image URLs in several
+   * different attributes, so checking only src
+   * is not always enough.
+   */
+  function firstImage(html){
+
+    if(!html){
+      return '';
+    }
+
+    const temp =
+      document.createElement('div');
+
+    temp.innerHTML =
+      html;
+
+    const img =
+      temp.querySelector('img');
+
+    if(!img){
+      return '';
+    }
+
+    let src =
+      img.getAttribute('data-original-src') ||
+      img.getAttribute('data-src') ||
+      img.getAttribute('src') ||
+      '';
+
+
+    /*
+     * Some Blogger images may use // instead
+     * of https://.
+     */
+    if(
+      src.indexOf('//') === 0
+    ){
+
+      src =
+        'https:' + src;
+
+    }
+
+
+    return src;
+
+  }
+
+
+
+  /*
+   * Get the YYYY/MM/slug Blogger URL.
    */
   function postSlug(entry){
 
@@ -548,7 +584,7 @@
 
     const m =
       href.match(
-        /\/(\d{4})\/(\d{2})\/([^\/]+)\.html/
+        /\/(\d{4})\/(\d{2})\/([^\/?#]+)\.html/i
       );
 
 
@@ -570,9 +606,9 @@
 
 
   /*
-   * Stable unique identifier used to
-   * prevent the same Blogger entry from
-   * appearing more than once.
+   * Stable unique identifier for a Blogger post.
+   *
+   * This prevents accidental duplicate cards.
    */
   function postKey(entry){
 
@@ -592,41 +628,43 @@
 
 
 
-  /*
-   * Blogger pagination
-   */
-  const PAGE = 30;
+  const PAGE =
+    30;
+
 
   /*
-   * Blogger uses 1-based indexes.
+   * Blogger pagination starts at 1.
    */
-  let startIndex = 1;
+  let startIndex =
+    1;
+
+
+  let totalPosts =
+    null;
+
+
+  let allLoaded =
+    [];
+
 
   /*
-   * Blogger's reported number of posts.
-   */
-  let totalPosts = null;
-
-  /*
-   * Every unique post we've loaded.
-   */
-  let allLoaded = [];
-
-  /*
-   * Keys used for duplicate protection.
+   * Set of Blogger IDs already loaded.
    */
   let loadedKeys =
     new Set();
 
+
   let fetching =
     false;
+
 
   let renderedOnce =
     false;
 
+
   /*
-   * Becomes true when Blogger returns
-   * fewer than PAGE entries.
+   * True when the Blogger archive has no
+   * additional pages.
    */
   let archiveExhausted =
     false;
@@ -636,8 +674,10 @@
   const postsEl =
     document.getElementById('posts');
 
+
   const moreBtn =
     document.getElementById('more');
+
 
   const countEl =
     document.getElementById('count');
@@ -645,7 +685,7 @@
 
 
   /*
-   * Create one blog card.
+   * Create one preview card.
    */
   function cardHTML(e){
 
@@ -691,17 +731,16 @@
 
 
     /*
-     * Full article text.
-     *
-     * IMPORTANT:
-     * This is used by search.
+     * Search uses the entire post,
+     * not only the preview excerpt.
      */
     const fullText =
       toText(content);
 
 
     /*
-     * Only the visible preview gets shortened.
+     * The card itself still shows only
+     * a short excerpt.
      */
     const excerpt =
       fullText.length > 120
@@ -710,11 +749,8 @@
 
 
     /*
-     * Search indexes:
-     *
-     * - full post title
-     * - full article body
-     * - Blogger labels
+     * Search title + complete article +
+     * Blogger labels/categories.
      */
     const searchText =
       (
@@ -726,15 +762,18 @@
 
 
     /*
-     * Use JSON.stringify to safely generate
-     * a CSS URL string inside the style attr.
+     * FIXED THUMBNAIL CODE
+     *
+     * HTML entities are used around the URL
+     * so the style attribute doesn't get broken
+     * by nested quotation marks.
      */
     const thumbStyle =
       img
         ? (
-            ' style="background-image:url(' +
-            JSON.stringify(img) +
-            ')"'
+            ' style="background-image:url(&quot;' +
+            esc(img) +
+            '&quot;)"'
           )
         : '';
 
@@ -820,7 +859,7 @@
 
 
   /*
-   * Add newly loaded posts to the page.
+   * Add new cards.
    */
   function renderAppend(entries){
 
@@ -849,8 +888,8 @@
 
 
     /*
-     * Re-run the active search after new
-     * archive entries have been added.
+     * Reapply current search after new posts
+     * are loaded.
      */
     applyFilter();
 
@@ -859,8 +898,7 @@
 
 
   /*
-   * Determine whether every Blogger page
-   * has been checked.
+   * Have we reached the end of Blogger?
    */
   function allPostsLoaded(){
 
@@ -888,33 +926,34 @@
 
 
   /*
-   * Update Load More button + normal
-   * post counter.
+   * Load More button and post counter.
    */
   function updateMore(){
 
     if(allPostsLoaded()){
 
-      moreBtn.classList.add('done');
+      moreBtn.classList.add(
+        'done'
+      );
 
       moreBtn.style.display =
         'none';
 
     }else{
 
-      moreBtn.classList.remove('done');
+      moreBtn.classList.remove(
+        'done'
+      );
 
-      moreBtn.classList.remove('loading');
+      moreBtn.classList.remove(
+        'loading'
+      );
 
 
       const q =
         document.getElementById('search');
 
 
-      /*
-       * Only show the button if no search
-       * is currently active.
-       */
       if(
         !q ||
         !q.value.trim()
@@ -933,7 +972,7 @@
 
 
     /*
-     * Search has its own result counter.
+     * Search mode manages its own counter.
      */
     if(
       q &&
@@ -982,12 +1021,12 @@
 
 
   /*
-   * Fetch the next Blogger archive batch.
+   * Load another page from Blogger.
    */
   function loadNext(after){
 
     /*
-     * Never start overlapping requests.
+     * Prevent overlapping requests.
      */
     if(
       fetching ||
@@ -1009,20 +1048,15 @@
 
 
     /*
-     * VERY IMPORTANT FIX:
+     * IMPORTANT PAGINATION FIX
      *
-     * Capture the index being used by this
-     * request and immediately reserve the
-     * next page.
+     * Reserve the next page BEFORE rendering
+     * this one.
      *
-     * The old code didn't advance the index
-     * until AFTER renderAppend().
-     *
-     * Since renderAppend() runs applyFilter(),
-     * searching could trigger another
-     * loadNext() with the SAME index.
-     *
-     * That was one source of duplicate posts.
+     * The previous version advanced the index
+     * too late, which allowed active searches
+     * to accidentally request the same batch
+     * again.
      */
     const requestStart =
       startIndex;
@@ -1037,7 +1071,7 @@
       Date.now() +
       '_' +
       Math.floor(
-        Math.random() * 1e9
+        Math.random() * 1000000000
       );
 
 
@@ -1045,9 +1079,7 @@
       document.createElement('script');
 
 
-    /*
-     * Blogger JSONP callback.
-     */
+
     window[CB] =
       function(json){
 
@@ -1056,7 +1088,7 @@
 
 
         /*
-         * Blogger's total result count.
+         * Get Blogger's reported archive size.
          */
         if(
           json.feed &&
@@ -1084,8 +1116,8 @@
 
 
         /*
-         * Fewer than PAGE means there is
-         * no next Blogger page.
+         * Blogger returned a partial page,
+         * so there can't be another batch.
          */
         if(entries.length < PAGE){
 
@@ -1096,7 +1128,7 @@
 
 
         /*
-         * Blog genuinely has zero posts.
+         * No posts exist.
          */
         if(
           !entries.length &&
@@ -1126,11 +1158,8 @@
 
 
         /*
-         * Duplicate protection.
-         *
-         * Even if Blogger returns an overlapping
-         * page for any reason, we only render
-         * entries that have never been seen.
+         * Filter duplicates BEFORE anything
+         * reaches the page.
          */
         const uniqueEntries =
           [];
@@ -1160,6 +1189,7 @@
         });
 
 
+
         if(uniqueEntries.length){
 
           renderAppend(
@@ -1169,8 +1199,9 @@
         }else{
 
           /*
-           * Keep the current search state updated
-           * even if Blogger returned no new cards.
+           * Keep an active search moving even if
+           * Blogger happened to return only
+           * already-seen entries.
            */
           applyFilter();
 
@@ -1183,10 +1214,6 @@
         cleanupCallback();
 
 
-        /*
-         * Used by archive search to continue
-         * loading older batches.
-         */
         if(
           typeof after === 'function'
         ){
@@ -1220,6 +1247,7 @@
       };
 
 
+
     const labelPath =
       (
         typeof BLOG_FILTER !== 'undefined' &&
@@ -1232,6 +1260,7 @@
             )
           )
         : '';
+
 
 
     s.src =
@@ -1254,10 +1283,7 @@
       CB;
 
 
-    /*
-     * Restore this page number if the
-     * request itself fails.
-     */
+
     s.onerror =
       function(){
 
@@ -1265,6 +1291,10 @@
           false;
 
 
+        /*
+         * Restore the page number so the failed
+         * request can be attempted again.
+         */
         startIndex =
           requestStart;
 
@@ -1314,14 +1344,12 @@
 
 
   /*
-   * Search the blog.
+   * Search.
    *
-   * Search checks every currently loaded
-   * post immediately.
-   *
-   * If older Blogger pages have not yet
-   * been fetched, it continues loading the
-   * archive until every post has been checked.
+   * Search checks currently loaded posts,
+   * then automatically moves farther back
+   * through the Blogger archive until every
+   * article has been checked.
    */
   function applyFilter(){
 
@@ -1371,7 +1399,7 @@
 
 
     /*
-     * Remove previous temporary search message.
+     * Remove any previous search status text.
      */
     const oldNote =
       document.getElementById(
@@ -1390,8 +1418,8 @@
     if(q){
 
       /*
-       * Don't make the visitor manually press
-       * Load More while searching.
+       * Search automatically handles archive
+       * pagination, so hide Load More.
        */
       moreBtn.style.display =
         'none';
@@ -1411,11 +1439,8 @@
 
 
       /*
-       * There are still older posts that have
-       * not been downloaded.
-       *
-       * Keep going until the full archive has
-       * been searched.
+       * If older posts still exist,
+       * search them too.
        */
       if(!allPostsLoaded()){
 
@@ -1453,21 +1478,14 @@
         );
 
 
-        /*
-         * Only one Blogger request can exist
-         * at a time.
-         */
         if(!fetching){
 
           loadNext(
             function(){
 
               /*
-               * The visitor may have changed the
-               * search while the request was loading.
-               *
-               * Only continue the old search if the
-               * search text is still the same.
+               * Search may have changed while the
+               * Blogger request was loading.
                */
               const current =
                 document
@@ -1491,7 +1509,7 @@
       }else{
 
         /*
-         * Every post has now been checked.
+         * Full archive has been checked.
          */
         if(!shown){
 
@@ -1528,9 +1546,7 @@
     }else{
 
       /*
-       * Search was cleared.
-       *
-       * Restore every loaded card.
+       * Search cleared.
        */
       postsEl
         .querySelectorAll('.post')
@@ -1559,7 +1575,7 @@
 
 
   /*
-   * Initial blog load.
+   * Initial load.
    */
   (function(){
 
