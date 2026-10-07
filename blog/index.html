@@ -162,7 +162,14 @@
   function updateMore(){
     if(totalPosts !== null && allLoaded.length >= totalPosts){ moreBtn.classList.add('done'); }
     else { moreBtn.style.display='inline-block'; moreBtn.classList.remove('loading'); }
-    countEl.textContent = totalPosts !== null ? (allLoaded.length + ' of ' + totalPosts + ' posts') : '';
+    // if a search is active, the count is managed by applyFilter(); don't overwrite it
+    var q = document.getElementById('search');
+    if(q && q.value.trim()) return;
+    if(totalPosts === null){ countEl.textContent = ''; return; }
+    // never show more loaded than the reported total (Blogger's total can lag pagination)
+    var total = Math.max(totalPosts, allLoaded.length);
+    var loaded = Math.min(allLoaded.length, total);
+    countEl.textContent = loaded + ' of ' + total + ' posts';
   }
 
   function loadNext(after){
@@ -214,6 +221,8 @@
     if(q){
       // hide the manual load-more button while a search is active
       moreBtn.style.display = 'none';
+      // counter reflects how many loaded posts match the search
+      countEl.textContent = shown + (shown === 1 ? ' match' : ' matches') + ' for "' + q + '"';
       if(!allPostsLoaded()){
         // keep pulling more posts from the archive until we find matches or run out
         var hint = document.createElement('div');
@@ -241,6 +250,7 @@
     } else {
       // cleared search: restore the load-more button if there's more to load
       if(!allPostsLoaded()) moreBtn.style.display = 'inline-block';
+      updateMore(); // restore the normal "X of Y posts" count
     }
   }
 
