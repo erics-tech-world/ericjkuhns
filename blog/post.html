@@ -10,6 +10,26 @@
 
 <title>Loading… | Eric Kuhns</title>
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VC2DP6JN4S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag(){
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag(
+    'config',
+    'G-VC2DP6JN4S',
+    {
+      send_page_view:false
+    }
+  );
+</script>
+
 <style>
   :root{
     --bg:#0a0c0a;
@@ -50,6 +70,7 @@
     inset:0;
     pointer-events:none;
     z-index:9999;
+
     background:repeating-linear-gradient(
       0deg,
       rgba(0,0,0,0) 0,
@@ -57,6 +78,7 @@
       rgba(0,0,0,.14) 3px,
       rgba(0,0,0,0) 4px
     );
+
     mix-blend-mode:overlay;
     opacity:.5;
   }
@@ -324,8 +346,13 @@
   }
 
   @keyframes lbfade{
-    from{opacity:0}
-    to{opacity:1}
+    from{
+      opacity:0;
+    }
+
+    to{
+      opacity:1;
+    }
   }
 
   .img-lightbox img{
@@ -374,20 +401,24 @@
 <body>
 
 <script>
-  window.SITE={
-    active:"blog",
-    base:"../"
-  };
+window.SITE={
+  active:"blog",
+  base:"../"
+};
 </script>
 
 <div id="site-nav"></div>
 
 <div class="wrap">
-  <a href="index.html" class="back">← back to all posts</a>
+  <a href="index.html" class="back">
+    ← back to all posts
+  </a>
 </div>
 
 <article class="wrap" id="article">
-  <div class="loading mono">Loading post…</div>
+  <div class="loading mono">
+    Loading post…
+  </div>
 </article>
 
 <div id="site-footer"></div>
@@ -395,29 +426,56 @@
 <script src="blog-config.js"></script>
 
 <script>
-  document.addEventListener('click',function(e){
+document.addEventListener(
+  'click',
+  function(e){
+
     if(!e.target.closest('.nav-drop')){
-      document.querySelectorAll('.nav-drop.open').forEach(function(d){
-        d.classList.remove('open');
-      });
+
+      document
+        .querySelectorAll('.nav-drop.open')
+        .forEach(function(d){
+          d.classList.remove('open');
+        });
+
     }
-  });
 
-  function getParam(name){
-    const m=new RegExp('[?&]'+name+'=([^&]+)').exec(location.search);
-    return m ? decodeURIComponent(m[1]) : null;
   }
+);
 
-  function esc(s){
-    return (s||"")
-      .replace(/&/g,"&amp;")
-      .replace(/</g,"&lt;")
-      .replace(/>/g,"&gt;");
-  }
+function getParam(name){
 
-  function fmtDate(iso){
-    try{
-      return new Date(iso).toLocaleDateString(
+  const m=
+    new RegExp(
+      '[?&]'+
+      name+
+      '=([^&]+)'
+    )
+    .exec(
+      location.search
+    );
+
+  return m
+    ? decodeURIComponent(m[1])
+    : null;
+
+}
+
+function esc(s){
+
+  return (s||"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+
+}
+
+function fmtDate(iso){
+
+  try{
+
+    return new Date(iso)
+      .toLocaleDateString(
         'en-US',
         {
           year:'numeric',
@@ -425,141 +483,252 @@
           day:'numeric'
         }
       );
-    }catch(e){
-      return '';
-    }
+
+  }catch(e){
+
+    return '';
+
   }
 
-  function cleanContent(html){
-    const tmp=document.createElement('div');
-    tmp.innerHTML=html||'';
+}
 
-    tmp.querySelectorAll('script,style,link').forEach(function(n){
+function cleanContent(html){
+
+  const tmp=
+    document.createElement('div');
+
+  tmp.innerHTML=
+    html||'';
+
+  tmp
+    .querySelectorAll(
+      'script,style,link'
+    )
+    .forEach(function(n){
       n.remove();
     });
 
-    tmp.querySelectorAll('[style]').forEach(function(n){
+  tmp
+    .querySelectorAll('[style]')
+    .forEach(function(n){
       n.removeAttribute('style');
     });
 
-    tmp.querySelectorAll('[bgcolor]').forEach(function(n){
+  tmp
+    .querySelectorAll('[bgcolor]')
+    .forEach(function(n){
       n.removeAttribute('bgcolor');
     });
 
-    /*
-     * Turn YouTube embeds into lightweight thumbnails.
-     * The actual YouTube player only loads after a click.
-     */
-    tmp.querySelectorAll('iframe').forEach(function(f){
+  tmp
+    .querySelectorAll('iframe')
+    .forEach(function(f){
 
-      const src=f.getAttribute('src')||'';
+      const src=
+        f.getAttribute('src')||'';
 
-      const youtubeMatch=src.match(
-        /(?:youtube\.com\/embed\/|youtube-nocookie\.com\/embed\/)([A-Za-z0-9_-]{6,})/
-      );
+      const youtubeMatch=
+        src.match(
+          /(?:youtube\.com\/embed\/|youtube-nocookie\.com\/embed\/)([A-Za-z0-9_-]{6,})/
+        );
 
       if(youtubeMatch){
 
-        const videoId=youtubeMatch[1];
+        const videoId=
+          youtubeMatch[1];
 
-        const wrap=document.createElement('div');
-        wrap.className='yt-wrap';
+        const wrap=
+          document.createElement('div');
 
-        const button=document.createElement('button');
-        button.type='button';
-        button.className='yt-placeholder';
-        button.setAttribute('data-video-id',videoId);
-        button.setAttribute('aria-label','Play YouTube video');
+        wrap.className=
+          'yt-wrap';
 
-        const thumb=document.createElement('img');
-        thumb.src='https://i.ytimg.com/vi/'+videoId+'/hqdefault.jpg';
-        thumb.alt=f.getAttribute('title')||'YouTube video';
-        thumb.loading='lazy';
-        thumb.decoding='async';
-        thumb.setAttribute('data-youtube-thumb','true');
+        const button=
+          document.createElement('button');
 
-        button.appendChild(thumb);
-        wrap.appendChild(button);
+        button.type=
+          'button';
 
-        f.parentNode.replaceChild(wrap,f);
+        button.className=
+          'yt-placeholder';
+
+        button.setAttribute(
+          'data-video-id',
+          videoId
+        );
+
+        button.setAttribute(
+          'aria-label',
+          'Play YouTube video'
+        );
+
+        const thumb=
+          document.createElement('img');
+
+        thumb.src=
+          'https://i.ytimg.com/vi/'+
+          videoId+
+          '/hqdefault.jpg';
+
+        thumb.alt=
+          f.getAttribute('title')
+          ||
+          'YouTube video';
+
+        thumb.loading=
+          'lazy';
+
+        thumb.decoding=
+          'async';
+
+        thumb.setAttribute(
+          'data-youtube-thumb',
+          'true'
+        );
+
+        button.appendChild(
+          thumb
+        );
+
+        wrap.appendChild(
+          button
+        );
+
+        f.parentNode.replaceChild(
+          wrap,
+          f
+        );
 
       }else{
 
-        /*
-         * Keep non-YouTube embeds,
-         * but lazy-load them.
-         */
-        const wrap=document.createElement('div');
-        wrap.className='yt-wrap';
+        const wrap=
+          document.createElement('div');
 
-        f.parentNode.insertBefore(wrap,f);
-        wrap.appendChild(f);
+        wrap.className=
+          'yt-wrap';
 
-        f.removeAttribute('width');
-        f.removeAttribute('height');
+        f.parentNode.insertBefore(
+          wrap,
+          f
+        );
 
-        f.setAttribute('loading','lazy');
+        wrap.appendChild(
+          f
+        );
+
+        f.removeAttribute(
+          'width'
+        );
+
+        f.removeAttribute(
+          'height'
+        );
+
+        f.setAttribute(
+          'loading',
+          'lazy'
+        );
+
       }
+
     });
 
-    /*
-     * Blogger often wraps uploaded images in links
-     * pointing to the full-size Blogger-hosted file.
-     * Remove those links and let our lightbox handle them.
-     */
-    tmp.querySelectorAll('a').forEach(function(a){
+  tmp
+    .querySelectorAll('a')
+    .forEach(function(a){
 
-      var img=a.querySelector('img');
+      var img=
+        a.querySelector('img');
 
       if(
         img &&
         (
-          /\.(jpe?g|png|gif|webp|bmp)(\?|$)/i.test(a.href) ||
-          /blogger\.googleusercontent|bp\.blogspot/i.test(a.href)
+          /\.(jpe?g|png|gif|webp|bmp)(\?|$)/i
+            .test(a.href)
+          ||
+          /blogger\.googleusercontent|bp\.blogspot/i
+            .test(a.href)
         )
       ){
+
         img.setAttribute(
           'data-full',
-          a.getAttribute('href') || img.src
+          a.getAttribute('href') ||
+          img.src
         );
 
-        a.parentNode.insertBefore(img,a);
+        a.parentNode.insertBefore(
+          img,
+          a
+        );
+
         a.remove();
+
       }
+
     });
 
-    /*
-     * Mark normal article images as zoomable.
-     * YouTube thumbnails are excluded.
-     */
-    tmp.querySelectorAll('img').forEach(function(img){
+  tmp
+    .querySelectorAll('img')
+    .forEach(function(img){
 
-      if(img.getAttribute('data-youtube-thumb')==='true'){
+      if(
+        img.getAttribute(
+          'data-youtube-thumb'
+        )==='true'
+      ){
         return;
       }
 
-      img.classList.add('zoomable');
+      img.classList.add(
+        'zoomable'
+      );
 
-      if(!img.getAttribute('data-full')){
-        img.setAttribute('data-full',img.src);
+      if(
+        !img.getAttribute(
+          'data-full'
+        )
+      ){
+
+        img.setAttribute(
+          'data-full',
+          img.src
+        );
+
       }
 
-      if(!img.getAttribute('loading')){
-        img.setAttribute('loading','lazy');
+      if(
+        !img.getAttribute(
+          'loading'
+        )
+      ){
+
+        img.setAttribute(
+          'loading',
+          'lazy'
+        );
+
       }
 
-      img.setAttribute('decoding','async');
+      img.setAttribute(
+        'decoding',
+        'async'
+      );
+
     });
 
-    return tmp.innerHTML;
-  }
+  return tmp.innerHTML;
 
-  /*
-   * Click-to-load YouTube player.
-   */
-  document.addEventListener('click',function(e){
+}
 
-    const button=e.target.closest('.yt-placeholder');
+document.addEventListener(
+  'click',
+  function(e){
+
+    const button=
+      e.target.closest(
+        '.yt-placeholder'
+      );
 
     if(!button){
       return;
@@ -567,158 +736,245 @@
 
     e.preventDefault();
 
-    const videoId=button.getAttribute('data-video-id');
+    const videoId=
+      button.getAttribute(
+        'data-video-id'
+      );
 
     if(!videoId){
       return;
     }
 
-    const iframe=document.createElement('iframe');
+    const iframe=
+      document.createElement(
+        'iframe'
+      );
 
     iframe.src=
       'https://www.youtube.com/embed/' +
-      encodeURIComponent(videoId) +
+      encodeURIComponent(
+        videoId
+      ) +
       '?autoplay=1';
 
-    const image=button.querySelector('img');
+    const image=
+      button.querySelector(
+        'img'
+      );
 
     iframe.title=
-      image && image.alt
+      image &&
+      image.alt
         ? image.alt
         : 'YouTube video';
 
     iframe.allow=
       'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
 
-    iframe.allowFullscreen=true;
+    iframe.allowFullscreen=
+      true;
 
-    button.replaceWith(iframe);
-  });
+    button.replaceWith(
+      iframe
+    );
 
-  function renderPost(post){
+  }
+);
 
-    const title=
-      post.title
-        ? post.title.$t
-        : 'Untitled';
+function renderPost(post){
 
-    const date=
-      post.published
-        ? post.published.$t
-        : '';
+  const title=
+    post.title
+      ? post.title.$t
+      : 'Untitled';
 
-    const cats=
-      (post.category||[]).map(function(c){
+  const date=
+    post.published
+      ? post.published.$t
+      : '';
+
+  const cats=
+    (post.category||[])
+      .map(function(c){
         return c.term;
       });
 
-    const content=
-      (post.content && post.content.$t)
-        || '';
+  const content=
+    (
+      post.content &&
+      post.content.$t
+    )
+    ||
+    '';
 
-    document.title=
-      title+' | Eric Kuhns';
+  document.title=
+    title+
+    ' | Eric Kuhns';
 
-    document.getElementById('article').innerHTML=
+  document
+    .getElementById('article')
+    .innerHTML=
+
       '<div class="post-head">'+
+
         '<div class="post-meta mono">'+
+
           fmtDate(date)+
+
           (
             cats.length
-              ? '<span class="sep">/</span>'+
-                cats.map(function(c){
-                  return '<span class="cat">'+esc(c)+'</span>';
-                }).join('')
+              ? (
+                  '<span class="sep">/</span>'+
+                  cats
+                    .map(function(c){
+
+                      return (
+                        '<span class="cat">'+
+                        esc(c)+
+                        '</span>'
+                      );
+
+                    })
+                    .join('')
+                )
               : ''
           )+
+
         '</div>'+
-        '<h1 class="title">'+esc(title)+'</h1>'+
+
+        '<h1 class="title">'+
+        esc(title)+
+        '</h1>'+
+
       '</div>'+
+
       '<div class="content">'+
         cleanContent(content)+
       '</div>';
-  }
 
-  function fail(){
-    document.getElementById('article').innerHTML=
-      '<div class="err mono">'+
-      'Couldn\'t load this post. '+
-      '<a href="index.html">Back to all posts →</a>'+
-      '</div>';
-  }
-
-  const slug=getParam('p');
-
-  const article=
-    document.getElementById('article');
-
+  /*
+   * Send the GA4 page view only after
+   * the Blogger post has loaded.
+   */
   if(
-    typeof BLOG_ID==='undefined' ||
-    !BLOG_ID
+    typeof gtag==='function'
   ){
 
-    article.innerHTML=
+    gtag(
+      'event',
+      'page_view',
+      {
+        page_title:
+          document.title,
+
+        page_location:
+          window.location.href,
+
+        page_path:
+          window.location.pathname+
+          window.location.search
+      }
+    );
+
+  }
+
+}
+
+function fail(){
+
+  document
+    .getElementById('article')
+    .innerHTML=
+
       '<div class="err mono">'+
-      'Blog not configured yet.'+
+
+      'Couldn\'t load this post. '+
+
+      '<a href="index.html">'+
+      'Back to all posts →'+
+      '</a>'+
+
       '</div>';
 
-  }else if(!slug){
+}
 
-    article.innerHTML=
-      '<div class="err mono">'+
-      'No post specified. '+
-      '<a href="index.html">Back to all posts →</a>'+
-      '</div>';
+const slug=
+  getParam('p');
 
-  }else{
+const article=
+  document
+    .getElementById('article');
 
-    function slugOf(e){
+if(
+  typeof BLOG_ID==='undefined' ||
+  !BLOG_ID
+){
 
-      const alt=
-        (e.link||[]).find(function(l){
+  article.innerHTML=
+    '<div class="err mono">'+
+    'Blog not configured yet.'+
+    '</div>';
+
+}else if(!slug){
+
+  article.innerHTML=
+    '<div class="err mono">'+
+    'No post specified. '+
+    '<a href="index.html">'+
+    'Back to all posts →'+
+    '</a>'+
+    '</div>';
+
+}else{
+
+  function slugOf(e){
+
+    const alt=
+      (e.link||[])
+        .find(function(l){
           return l.rel==='alternate';
         });
 
-      const href=
-        alt
-          ? alt.href
-          : '';
+    const href=
+      alt
+        ? alt.href
+        : '';
 
-      const m=
-        href.match(
-          /\/(\d{4})\/(\d{2})\/([^\/]+)\.html/
+    const m=
+      href.match(
+        /\/(\d{4})\/(\d{2})\/([^\/]+)\.html/
+      );
+
+    return m
+      ? (
+          m[1]+'/'+
+          m[2]+'/'+
+          m[3]
+        )
+      : encodeURIComponent(
+          e.id.$t
         );
 
-      return m
-        ? (
-            m[1]+'/'+
-            m[2]+'/'+
-            m[3]
-          )
-        : encodeURIComponent(e.id.$t);
-    }
+  }
 
-    /*
-     * Page through Blogger feed until
-     * matching post is found.
-     */
-    let start=1;
+  let start=1;
 
-    const BATCH=500;
+  const BATCH=500;
 
-    let attempts=0;
+  let attempts=0;
 
-    function fetchBatch(){
+  function fetchBatch(){
 
-      attempts++;
+    attempts++;
 
-      const CB=
-        'bloggerFind_' +
-        Math.floor(
-          Math.random()*1e9
-        );
+    const CB=
+      'bloggerFind_' +
+      Math.floor(
+        Math.random()*1e9
+      );
 
-      window[CB]=function(json){
+    window[CB]=
+      function(json){
 
         const entries=
           (
@@ -729,19 +985,24 @@
             : [];
 
         const match=
-          entries.find(function(e){
-            return slugOf(e)===slug;
-          });
+          entries.find(
+            function(e){
+              return slugOf(e)===slug;
+            }
+          );
 
         if(match){
 
-          renderPost(match);
+          renderPost(
+            match
+          );
 
           try{
             delete window[CB];
           }catch(e){}
 
           return;
+
         }
 
         if(
@@ -760,128 +1021,172 @@
         }else{
 
           fail();
+
         }
+
       };
 
-      const s=
-        document.createElement('script');
+    const s=
+      document.createElement(
+        'script'
+      );
 
-      s.src=
-        'https://'+
-        BLOG_ID+
-        '/feeds/posts/default'+
-        '?alt=json-in-script'+
-        '&max-results='+BATCH+
-        '&start-index='+start+
-        '&callback='+CB;
+    s.src=
+      'https://'+
+      BLOG_ID+
+      '/feeds/posts/default'+
+      '?alt=json-in-script'+
+      '&max-results='+
+      BATCH+
+      '&start-index='+
+      start+
+      '&callback='+
+      CB;
 
-      s.onerror=fail;
+    s.onerror=
+      fail;
 
-      document.body.appendChild(s);
-    }
+    document.body.appendChild(
+      s
+    );
 
-    fetchBatch();
   }
+
+  fetchBatch();
+
+}
 </script>
 
-<div class="img-lightbox" id="imgLightbox">
+<div
+  class="img-lightbox"
+  id="imgLightbox"
+>
+
   <button
     class="lb-close"
     type="button"
     aria-label="Close image"
     onclick="closeImgLightbox()"
-  >×</button>
+  >
+    ×
+  </button>
 
   <img
     id="imgLightboxImg"
     src=""
     alt=""
   >
+
 </div>
 
 <script>
-  (function(){
+(function(){
 
-    var lb=
-      document.getElementById('imgLightbox');
+  var lb=
+    document
+      .getElementById(
+        'imgLightbox'
+      );
 
-    var lbImg=
-      document.getElementById('imgLightboxImg');
+  var lbImg=
+    document
+      .getElementById(
+        'imgLightboxImg'
+      );
 
-    if(!lb || !lbImg){
-      return;
+  if(
+    !lb ||
+    !lbImg
+  ){
+    return;
+  }
+
+  document.addEventListener(
+    'click',
+    function(e){
+
+      var img=
+        e.target;
+
+      if(
+        img &&
+        img.tagName==='IMG' &&
+        img.classList.contains(
+          'zoomable'
+        )
+      ){
+
+        e.preventDefault();
+
+        lbImg.src=
+          img.getAttribute(
+            'data-full'
+          )
+          ||
+          img.src;
+
+        lbImg.alt=
+          img.alt
+          ||
+          '';
+
+        lb.classList.add(
+          'open'
+        );
+
+        document.body.style.overflow=
+          'hidden';
+
+      }
+
     }
+  );
 
-    /*
-     * Any normal article image opens lightbox.
-     */
-    document.addEventListener(
-      'click',
-      function(e){
+  lb.addEventListener(
+    'click',
+    function(e){
 
-        var img=e.target;
+      if(e.target===lb){
 
-        if(
-          img &&
-          img.tagName==='IMG' &&
-          img.classList.contains('zoomable')
-        ){
+        closeImgLightbox();
 
-          e.preventDefault();
-
-          lbImg.src=
-            img.getAttribute('data-full') ||
-            img.src;
-
-          lbImg.alt=
-            img.alt ||
-            '';
-
-          lb.classList.add('open');
-
-          document.body.style.overflow=
-            'hidden';
-        }
       }
-    );
 
-    /*
-     * Clicking backdrop closes lightbox.
-     */
-    lb.addEventListener(
-      'click',
-      function(e){
+    }
+  );
 
-        if(e.target===lb){
-          closeImgLightbox();
-        }
+  window.closeImgLightbox=
+    function(){
+
+      lb.classList.remove(
+        'open'
+      );
+
+      lbImg.src='';
+
+      document.body.style.overflow='';
+
+    };
+
+  document.addEventListener(
+    'keydown',
+    function(e){
+
+      if(
+        e.key==='Escape' &&
+        lb.classList.contains(
+          'open'
+        )
+      ){
+
+        closeImgLightbox();
+
       }
-    );
 
-    window.closeImgLightbox=
-      function(){
+    }
+  );
 
-        lb.classList.remove('open');
-
-        lbImg.src='';
-
-        document.body.style.overflow='';
-      };
-
-    document.addEventListener(
-      'keydown',
-      function(e){
-
-        if(
-          e.key==='Escape' &&
-          lb.classList.contains('open')
-        ){
-          closeImgLightbox();
-        }
-      }
-    );
-
-  })();
+})();
 </script>
 
 <script src="../site.js?v=6"></script>
