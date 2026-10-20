@@ -8,6 +8,16 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <title>Skateboarding | Eric J. Kuhns</title>
 <meta name="description" content="Eric Kuhns skateboarding: latest Eric Skateboards videos, a map of skate spots, skate blog posts, and an interactive skate dice trick generator.">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VC2DP6JN4S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VC2DP6JN4S');
+</script>
+
 <style>
   :root{--bg:#0a0c0a;--panel:#101410;--panel2:#0d110d;--ink:#f4f6f4;--muted:#8a938c;--line:#1e241e;--neon:#39ff64;--neon-dim:#1f8a37;}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -18,7 +28,6 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
-  /* hero with animated grind-line canvas */
   .skate-hero{position:relative;border-bottom:1px solid var(--line);overflow:hidden;min-height:440px;display:flex;align-items:center}
   #skate-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;opacity:.7}
   .skate-hero .inner{position:relative;z-index:2;padding:96px 0 80px;width:100%}
@@ -41,7 +50,6 @@
   .sec-head h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-1px}
   .sec-head p{color:var(--muted);margin-top:12px;max-width:640px;text-wrap:balance}
 
-  /* videos (reuse homepage video styles, simplified) */
   .vid-loading,.vid-error{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);padding:40px 0;text-align:center}
   .vid-feature{margin-bottom:16px}
   .embed{position:relative;width:100%;aspect-ratio:16/9;background:#050705;border:1px solid var(--line);border-radius:3px;overflow:hidden}
@@ -73,12 +81,10 @@
   .car-arrow.disabled{opacity:.25;pointer-events:none}
   .vid-cap{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:14px}
 
-  /* map */
   .map-wrap{border:1px solid var(--neon-dim);border-radius:6px;overflow:hidden;box-shadow:0 0 40px rgba(57,255,100,.08);background:#050705}
   .map-wrap iframe{width:100%;height:520px;border:0;display:block;filter:invert(0)}
   .map-note{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:14px}
 
-  /* blog carousel */
   .art-carousel{display:flex;align-items:stretch;gap:10px;margin-top:20px}
   .art-viewport{flex:1;overflow:hidden;padding-top:6px;margin-top:-6px}
   .art-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
@@ -93,7 +99,6 @@
   .art-body .cat{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--neon);border:1px solid var(--line);padding:3px 9px;border-radius:2px;display:inline-block;align-self:flex-start;margin-top:auto}
   .art-loading{font-family:'JetBrains Mono',monospace;color:var(--muted);padding:20px 0}
 
-  /* SKATE DICE */
   .dice-section{background:linear-gradient(180deg,#0e130e,#0a0d0a)}
   .dice-app{max-width:660px;margin:0 auto;text-align:center;border:1px solid var(--neon-dim);border-radius:8px;padding:40px 24px;background:linear-gradient(180deg,#12181280,#0d110d);box-shadow:0 0 60px rgba(57,255,100,.06)}
   .dice-app .d-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:5px;color:var(--neon);margin-bottom:6px}
@@ -118,7 +123,7 @@
   .die-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
   .die-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--neon)}
   .die{width:140px;height:140px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:#1a221a;border:0;display:flex;align-items:center;justify-content:center;transition:background .1s}
-  .die.rolling{background:#164023 !important}
+  .die.rolling{background:#164023!important}
   .die-value{font-family:'JetBrains Mono',monospace;font-size:20px;letter-spacing:1px;color:var(--ink);text-align:center;padding:0 16px;line-height:1.2;transition:all .1s}
   .die-value.rolling{animation:diceBlink .15s linear infinite;color:var(--neon)}
   .faces{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;max-width:160px}
@@ -140,669 +145,3059 @@
   .history-toggle:hover{color:var(--muted)}
   .history-list{margin-top:12px;display:flex;flex-direction:column;gap:5px;text-align:center;animation:fadeUp .3s ease}
   .history-item{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:2px}
-  @keyframes diceBlink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.85)}}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+  @keyframes diceBlink{
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:.3;transform:scale(.85)}
+  }
+
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+  }
 
   @media(max-width:820px){
     .car-item{flex:0 0 calc((100% - 12px) / 2)}
     .art-card{flex:0 0 calc((100% - 16px) / 2)}
     .map-wrap iframe{height:400px}
   }
+
   @media(max-width:560px){
-    .car-item{flex:0 0 85%}.art-card{flex:0 0 86%}.car-arrow,.art-carousel .car-arrow{display:none}
-    .dice-row{gap:20px}.die{width:120px;height:120px}
+    .car-item{flex:0 0 85%}
+    .art-card{flex:0 0 86%}
+    .car-arrow,.art-carousel .car-arrow{display:none}
+    .dice-row{gap:20px}
+    .die{width:120px;height:120px}
   }
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
 </style>
+
 <link rel="stylesheet" href="site.css?v=6">
 </head>
+
 <body>
-<script>window.SITE={active:"",base:""};</script>
+
+<script>
+window.SITE={
+  active:"",
+  base:""
+};
+</script>
 
 <div id="site-nav"></div>
 
 <header class="skate-hero">
+
   <canvas id="skate-canvas"></canvas>
+
   <div class="wrap inner">
-    <div class="eyebrow mono">// 20+ years of skate projects</div>
-    <h1><span id="skate-typed"></span><span class="type-caret" id="skate-caret">_</span></h1>
-    <p class="sub">This page houses all of my skateboarding projects and videos from my last 20+ years of skating (and continues to evolve).</p>
-    <div class="cta-row">
-      <a href="#videos" class="btn btn-primary mono">▶ Watch latest</a>
-      <a href="#map" class="btn btn-ghost mono">Skate spot map</a>
-      <a href="#dice" class="btn btn-ghost mono">Roll skate dice ↓</a>
+
+    <div class="eyebrow mono">
+      // 20+ years of skate projects
     </div>
+
+    <h1>
+      <span id="skate-typed"></span>
+      <span class="type-caret" id="skate-caret">_</span>
+    </h1>
+
+    <p class="sub">
+      This page houses all of my skateboarding projects and videos from my last 20+ years of skating (and continues to evolve).
+    </p>
+
+    <div class="cta-row">
+
+      <a href="#videos" class="btn btn-primary mono">
+        ▶ Watch latest
+      </a>
+
+      <a href="#map" class="btn btn-ghost mono">
+        Skate spot map
+      </a>
+
+      <a href="#dice" class="btn btn-ghost mono">
+        Roll skate dice ↓
+      </a>
+
+    </div>
+
   </div>
+
 </header>
 
-<!-- VIDEOS -->
 <section class="blk" id="videos">
+
   <div class="wrap">
+
     <div class="sec-head">
       <h2>Latest skate videos</h2>
       <p>Fresh uploads from the Eric Skateboards channel.</p>
     </div>
-    <div id="skate-vids" data-playlist="PLC2mvj5J6lOrVJiPYsC9dm7GqwbpyfzKJ" data-label="Eric Skateboards">
-      <div class="vid-loading mono">Loading latest from Eric Skateboards…</div>
+
+    <div
+      id="skate-vids"
+      data-playlist="PLC2mvj5J6lOrVJiPYsC9dm7GqwbpyfzKJ"
+      data-label="Eric Skateboards"
+    >
+      <div class="vid-loading mono">
+        Loading latest from Eric Skateboards…
+      </div>
     </div>
+
   </div>
+
 </section>
 
-<!-- MAP -->
 <section class="blk" id="map">
+
   <div class="wrap">
+
     <div class="sec-head">
       <h2>My skate map</h2>
       <p>Spots I've skated, filmed, and explored. Zoom in and poke around.</p>
     </div>
+
     <div class="map-wrap">
-      <iframe src="https://www.google.com/maps/d/u/1/embed?mid=1XLGRnQlMQPnIOVj2CCW39DdoSRU4Xcp0&ehbc=2E312F" loading="lazy" title="Eric's skate spot map"></iframe>
+
+      <iframe
+        src="https://www.google.com/maps/d/u/1/embed?mid=1XLGRnQlMQPnIOVj2CCW39DdoSRU4Xcp0&ehbc=2E312F"
+        loading="lazy"
+        title="Eric's skate spot map"
+      ></iframe>
+
     </div>
-    <div class="map-note mono">▸ Tap a pin for spot details. Map updates as I add new spots.</div>
+
+    <div class="map-note mono">
+      ▸ Tap a pin for spot details. Map updates as I add new spots.
+    </div>
+
   </div>
+
 </section>
 
-<!-- BLOG -->
 <section class="blk" id="skate-blog">
+
   <div class="wrap">
+
     <div class="sec-head">
       <h2>Skate Blog</h2>
       <p>Articles and short stories on skating, skate spots, and more!</p>
     </div>
+
     <div class="art-carousel">
+
       <button class="car-arrow art-prev disabled" aria-label="Previous" onclick="artSlide(-1)">‹</button>
-      <div class="art-viewport"><div class="art-track" id="art-track"><div class="art-loading mono">Loading skate posts…</div></div></div>
+
+      <div class="art-viewport">
+
+        <div class="art-track" id="art-track">
+
+          <div class="art-loading mono">
+            Loading skate posts…
+          </div>
+
+        </div>
+
+      </div>
+
       <button class="car-arrow art-next" aria-label="More" onclick="artSlide(1)">›</button>
+
     </div>
+
     <div style="margin-top:24px">
-      <a href="blog/index.html" class="btn btn-ghost mono">Read all posts →</a>
+      <a href="blog/index.html" class="btn btn-ghost mono">
+        Read all posts →
+      </a>
     </div>
+
   </div>
+
 </section>
 
-<!-- SKATE PARTS -->
 <section class="blk" id="parts">
+
   <div class="wrap">
+
     <div class="sec-head">
       <h2>Skate parts</h2>
       <p>My full video parts, edits, and lines, all in one place.</p>
     </div>
-    <div id="skate-parts" data-playlist="PLC2mvj5J6lOqapafoxG_tW-UAijiyeJDx" data-label="Skate Parts">
-      <div class="vid-loading mono">Loading skate parts…</div>
+
+    <div
+      id="skate-parts"
+      data-playlist="PLC2mvj5J6lOqapafoxG_tW-UAijiyeJDx"
+      data-label="Skate Parts"
+    >
+      <div class="vid-loading mono">
+        Loading skate parts…
+      </div>
     </div>
+
   </div>
+
 </section>
 
-<!-- SKATE DICE -->
 <section class="blk dice-section" id="dice">
+
   <div class="wrap">
+
     <div class="sec-head" style="text-align:center">
       <h2 style="width:100%">Skate dice</h2>
     </div>
-    <p style="text-align:center;color:var(--muted);max-width:520px;margin:0 auto 30px">Stuck in a session? Roll the dice for a random trick. Berrics-style: stance plus trick.</p>
+
+    <p style="text-align:center;color:var(--muted);max-width:520px;margin:0 auto 30px">
+      Stuck in a session? Roll the dice for a random trick. Berrics-style: stance plus trick.
+    </p>
+
     <div class="dice-app">
-      <div class="d-label mono">TRICK GENERATOR</div>
-      <h3 class="mono">SKATE DICE</h3>
+
+      <div class="d-label mono">
+        TRICK GENERATOR
+      </div>
+
+      <h3 class="mono">
+        SKATE DICE
+      </h3>
+
       <div class="d-divider"></div>
+
       <div class="diff-row">
-        <span class="diff-title mono">DIFFICULTY</span>
+
+        <span class="diff-title mono">
+          DIFFICULTY
+        </span>
+
         <div class="diff-tabs">
-          <button class="diff-tab" onclick="setDiceDiff('chill',this)">Chill</button>
-          <button class="diff-tab active" onclick="setDiceDiff('normal',this)">Normal</button>
-          <button class="diff-tab" onclick="setDiceDiff('gnarly',this)">Gnarly</button>
+
+          <button class="diff-tab" onclick="setDiceDiff('chill',this)">
+            Chill
+          </button>
+
+          <button class="diff-tab active" onclick="setDiceDiff('normal',this)">
+            Normal
+          </button>
+
+          <button class="diff-tab" onclick="setDiceDiff('gnarly',this)">
+            Gnarly
+          </button>
+
         </div>
+
       </div>
+
       <div class="dice-tabs">
-        <button class="dice-tab active" onclick="setDiceCat('general',this)">General</button>
-        <button class="dice-tab" onclick="setDiceCat('grinds',this)">Grinds &amp; Slides</button>
-        <button class="dice-tab" onclick="setDiceCat('manuals',this)">Manuals</button>
-        <button class="dice-tab" onclick="setDiceCat('vert',this)">Vert &amp; Transition</button>
+
+        <button class="dice-tab active" onclick="setDiceCat('general',this)">
+          General
+        </button>
+
+        <button class="dice-tab" onclick="setDiceCat('grinds',this)">
+          Grinds &amp; Slides
+        </button>
+
+        <button class="dice-tab" onclick="setDiceCat('manuals',this)">
+          Manuals
+        </button>
+
+        <button class="dice-tab" onclick="setDiceCat('vert',this)">
+          Vert &amp; Transition
+        </button>
+
       </div>
+
       <div class="dice-toggles">
-        <label class="d-toggle"><input type="checkbox" id="tog-stance" checked onchange="rebuildFaces()"> Stance die</label>
-        <label class="d-toggle"><input type="checkbox" id="tog-spin" onchange="rebuildFaces()"> Spins (180 / 360)</label>
-        <label class="d-toggle"><input type="checkbox" id="tog-combo" onchange="rebuildFaces()"> Combo (link a 2nd trick)</label>
-        <label class="d-toggle"><input type="checkbox" id="tog-wild" checked onchange="rebuildFaces()"> Wildcard variations</label>
+
+        <label class="d-toggle">
+          <input type="checkbox" id="tog-stance" checked onchange="rebuildFaces()">
+          Stance die
+        </label>
+
+        <label class="d-toggle">
+          <input type="checkbox" id="tog-spin" onchange="rebuildFaces()">
+          Spins (180 / 360)
+        </label>
+
+        <label class="d-toggle">
+          <input type="checkbox" id="tog-combo" onchange="rebuildFaces()">
+          Combo (link a 2nd trick)
+        </label>
+
+        <label class="d-toggle">
+          <input type="checkbox" id="tog-wild" checked onchange="rebuildFaces()">
+          Wildcard variations
+        </label>
+
       </div>
+
       <div class="dice-row" id="dice-row">
+
         <div class="die-wrap" id="wrap-stance">
-          <div class="die-label" id="die1-label">STANCE</div>
-          <div class="die" id="die1"><div class="die-value" id="val1">—</div></div>
+
+          <div class="die-label" id="die1-label">
+            STANCE
+          </div>
+
+          <div class="die" id="die1">
+            <div class="die-value" id="val1">—</div>
+          </div>
+
           <div class="faces" id="faces1"></div>
+
         </div>
+
         <div class="die-wrap" id="wrap-trick">
-          <div class="die-label" id="die2-label">TRICK</div>
-          <div class="die" id="die2"><div class="die-value" id="val2">—</div></div>
+
+          <div class="die-label" id="die2-label">
+            TRICK
+          </div>
+
+          <div class="die" id="die2">
+            <div class="die-value" id="val2">—</div>
+          </div>
+
           <div class="faces" id="faces2"></div>
-          <div id="wild-legend" class="wild-legend mono"><svg viewBox="0 0 40 16" width="30" height="12" fill="none" stroke="#39ff64" stroke-width="1.8"><rect x="3" y="4" width="34" height="6" rx="3"/><circle cx="12" cy="12.5" r="2.2"/><circle cx="28" cy="12.5" r="2.2"/></svg> = your own variation</div>
+
+          <div id="wild-legend" class="wild-legend mono">
+
+            <svg
+              viewBox="0 0 40 16"
+              width="30"
+              height="12"
+              fill="none"
+              stroke="#39ff64"
+              stroke-width="1.8"
+            >
+              <rect x="3" y="4" width="34" height="6" rx="3"/>
+              <circle cx="12" cy="12.5" r="2.2"/>
+              <circle cx="28" cy="12.5" r="2.2"/>
+            </svg>
+
+            = your own variation
+
+          </div>
+
         </div>
+
         <div class="die-wrap" id="wrap-combo" style="display:none">
-          <div class="die-label" id="die3-label">INTO</div>
-          <div class="die" id="die3"><div class="die-value" id="val3">—</div></div>
+
+          <div class="die-label" id="die3-label">
+            INTO
+          </div>
+
+          <div class="die" id="die3">
+            <div class="die-value" id="val3">—</div>
+          </div>
+
           <div class="faces" id="faces3"></div>
+
         </div>
+
       </div>
+
       <div class="result-area">
-        <div id="resultIdle" class="idle-text">HIT ROLL TO GET A TRICK</div>
-        <div id="resultRolling" class="rolling-text" style="display:none">ROLLING...</div>
-        <div id="resultTrick" class="trick-box" style="display:none">
-          <div class="trick-sub">YOUR TRICK</div>
-          <div class="trick-name" id="trickName"></div>
+
+        <div id="resultIdle" class="idle-text">
+          HIT ROLL TO GET A TRICK
         </div>
+
+        <div id="resultRolling" class="rolling-text" style="display:none">
+          ROLLING...
+        </div>
+
+        <div id="resultTrick" class="trick-box" style="display:none">
+
+          <div class="trick-sub">
+            YOUR TRICK
+          </div>
+
+          <div class="trick-name" id="trickName"></div>
+
+        </div>
+
       </div>
-      <button id="rollBtn" onclick="rollDice()">ROLL DICE</button>
-      <button class="history-toggle" id="histToggle" onclick="toggleHistory()" style="display:none"></button>
-      <div class="history-list" id="historyList" style="display:none"></div>
+
+      <button id="rollBtn" onclick="rollDice()">
+        ROLL DICE
+      </button>
+
+      <button
+        class="history-toggle"
+        id="histToggle"
+        onclick="toggleHistory()"
+        style="display:none"
+      ></button>
+
+      <div
+        class="history-list"
+        id="historyList"
+        style="display:none"
+      ></div>
+
     </div>
+
   </div>
+
 </section>
 
 <div id="site-footer"></div>
 
 <script>
-  /* ===== skate hero canvas: ramps, loops, and skateboards that flip ===== */
-  (function(){
-    var canvas = document.getElementById('skate-canvas');
-    if(!canvas) return;
-    var ctx = canvas.getContext('2d');
-    if(!ctx) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var W,H,DPR,t=0,sparks=[],riders=[];
+(function(){
 
-    function resize(){
-      DPR=Math.min(window.devicePixelRatio||1,2);
-      var r=canvas.parentElement.getBoundingClientRect();
-      W=r.width;H=r.height;
-      canvas.width=W*DPR;canvas.height=H*DPR;
-      canvas.style.width=W+'px';canvas.style.height=H+'px';
-      ctx.setTransform(DPR,0,0,DPR,0,0);
-      buildScene();
-    }
+  var canvas=
+    document.getElementById(
+      'skate-canvas'
+    );
 
-    // The ground path: a wavy skatepark silhouette across the width.
-    // Returns {y, angle} at a given x. Built from ramps + a loop.
-    var groundBaseY;
-    var features=[];
-    function buildScene(){
-      groundBaseY = H*0.82;
-      features = [
-        {type:'quarter', x:W*0.12, w:150, h:90, dir:1},   // ramp up
-        {type:'flat',    x:W*0.30, w:120},
-        {type:'loop',    x:W*0.52, r:70},                  // vertical loop
-        {type:'quarter', x:W*0.74, w:160, h:100, dir:-1},  // ramp down
-        {type:'flat',    x:W*0.90, w:140}
-      ];
-    }
-    // ground height at x (a gentle rolling line with ramp bumps)
-    function groundY(x){
-      var y = groundBaseY;
-      // rolling hills
-      y += Math.sin(x*0.006 + 0.5)*10;
-      // ramp bumps
-      for(var i=0;i<features.length;i++){
-        var f=features[i];
-        if(f.type==='quarter'){
-          var d=(x-f.x)/f.w;
-          if(d>-1 && d<1){ y -= f.h * Math.max(0,1-Math.abs(d)) * Math.max(0,1-Math.abs(d)); }
-        }
-      }
-      return y;
-    }
-
-    function drawGround(){
-      ctx.strokeStyle='rgba(57,255,100,0.22)';
-      ctx.lineWidth=2;
-      ctx.beginPath();
-      for(var x=0;x<=W;x+=6){
-        var y=groundY(x);
-        if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-      }
-      ctx.stroke();
-      // faint fill under the ground
-      ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();
-      ctx.fillStyle='rgba(57,255,100,0.03)';ctx.fill();
-      // draw the loop(s)
-      features.forEach(function(f){
-        if(f.type==='loop'){
-          var cy=groundY(f.x)-f.r;
-          ctx.strokeStyle='rgba(57,255,100,0.16)';
-          ctx.lineWidth=2;
-          ctx.beginPath();ctx.arc(f.x,cy,f.r,0,Math.PI*2);ctx.stroke();
-        }
-      });
-    }
-
-    // a skateboard (deck + 2 wheels)
-    function drawBoard(x,y,scale,angle,alpha){
-      ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.globalAlpha=alpha;
-      var L=16*scale,Wd=4.5*scale;
-      ctx.fillStyle='rgba(57,255,100,0.95)';
-      ctx.beginPath();
-      if(ctx.roundRect){ctx.roundRect(-L/2,-Wd/2,L,Wd,Wd/2);}else{ctx.rect(-L/2,-Wd/2,L,Wd);}
-      ctx.fill();
-      ctx.fillStyle='rgba(160,255,190,0.98)';
-      var wy=Wd/2+1.5*scale,wr=1.7*scale;
-      [-L*0.28,L*0.28].forEach(function(wx){ctx.beginPath();ctx.arc(wx,wy,wr,0,Math.PI*2);ctx.fill();});
-      ctx.restore();
-    }
-
-    function spawnRider(){
-      riders.push({ x:-30, speed:1.3+Math.random()*0.7, scale:1.4+Math.random()*0.5,
-                    airborne:false, vy:0, y:0, flip:0, flipSpeed:0, jumpCooldown:0 });
-    }
-
-    function frame(){
-      t++;
-      ctx.clearRect(0,0,W,H);
-
-      // faint diagonal speed lines
-      ctx.strokeStyle='rgba(57,255,100,0.04)';ctx.lineWidth=1;
-      var spacing=80, off=(t*0.5)%spacing;
-      for(var gx=-H;gx<W+H;gx+=spacing){ ctx.beginPath();ctx.moveTo(gx+off,0);ctx.lineTo(gx+off+H,H);ctx.stroke(); }
-
-      drawGround();
-
-      // riders
-      for(var i=riders.length-1;i>=0;i--){
-        var r=riders[i];
-        r.x += r.speed;
-        var gY = groundY(r.x);
-
-        // detect ramp lips to trigger a jump+flip
-        var slopeAhead = groundY(r.x+10) - groundY(r.x-10);
-        if(!r.airborne){
-          r.y = gY;
-          // if going up a steep ramp and near its top, launch
-          if(slopeAhead < -6 && r.jumpCooldown<=0 && Math.random()<0.5){
-            r.airborne=true; r.vy = -(4.2+Math.random()*1.6); r.flipSpeed = (Math.random()<0.5?1:-1)*(0.18+Math.random()*0.12); r.jumpCooldown=60;
-          }
-        } else {
-          r.vy += 0.14;          // gravity
-          r.y += r.vy;
-          r.flip += r.flipSpeed;  // spin the board (kickflip look)
-          if(r.y >= gY){          // landed
-            r.y=gY; r.airborne=false; r.flip=0; r.vy=0;
-            // landing sparks
-            for(var s=0;s<6;s++){ sparks.push({x:r.x,y:gY,vx:-(Math.random()*2+0.5),vy:-(Math.random()*2),life:1}); }
-          }
-        }
-        if(r.jumpCooldown>0) r.jumpCooldown--;
-
-        // board angle follows the ground slope when riding, or flips when airborne
-        var angle = r.airborne ? r.flip : Math.atan2(groundY(r.x+8)-groundY(r.x-8),16);
-        drawBoard(r.x, r.y-4, r.scale, angle, 0.9);
-
-        if(r.x > W+40) riders.splice(i,1);
-      }
-      // keep a couple of riders going
-      if(riders.length<2 && t%90===0) spawnRider();
-
-      // sparks
-      for(var j=sparks.length-1;j>=0;j--){
-        var sp=sparks[j];
-        sp.x+=sp.vx;sp.y+=sp.vy;sp.vy+=0.12;sp.life-=0.04;
-        if(sp.life<=0){sparks.splice(j,1);continue;}
-        ctx.fillStyle='rgba(57,255,100,'+sp.life*0.7+')';
-        ctx.fillRect(sp.x,sp.y,2,2);
-      }
-      if(sparks.length>220) sparks.splice(0,sparks.length-220);
-
-      requestAnimationFrame(frame);
-    }
-
-    resize();
-    window.addEventListener('resize',resize);
-    if(!reduce){ spawnRider(); frame(); }
-    else {
-      drawGround();
-      drawBoard(W*0.3,groundY(W*0.3)-4,1.5,0,0.8);
-      drawBoard(W*0.7,groundY(W*0.7)-4,1.5,0,0.8);
-    }
-  })();
-
-  /* ===== typing title ===== */
-  (function(){
-    var el=document.getElementById('skate-typed');
-    if(!el) return;
-    var text="Skateboarding";
-    var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduce){ el.textContent=text; return; }
-    var i=0;
-    (function tick(){ if(i<=text.length){ el.textContent=text.slice(0,i); i++; setTimeout(tick,80); } })();
-  })();
-
-  /* ===== latest videos loader (Worker + fallback) - runs for any panel ===== */
-  function loadVideoPanel(panelId){
-    var PROXY="https://youtube-feed.silent-hall-684c.workers.dev/?url=";
-    var panel=document.getElementById(panelId);
-    if(!panel) return;
-    function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-    function thumb(id,q){return "https://i.ytimg.com/vi/"+id+"/"+(q||"hqdefault")+".jpg";}
-    function feedUrl(pl){return "https://www.youtube.com/feeds/videos.xml?playlist_id="+pl;}
-    function playFeature(el,id,title){el.innerHTML='<div class="embed"><iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1" title="'+esc(title)+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>';}
-    function fallback(){
-      var pl=panel.getAttribute('data-playlist');
-      panel.innerHTML='<div class="embed"><iframe src="https://www.youtube.com/embed/videoseries?list='+pl+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>'+
-        '<div class="vid-cap mono">▸ Newest upload plays first. <a href="https://www.youtube.com/playlist?list='+pl+'" target="_blank" rel="noopener" style="color:var(--neon)">See all on YouTube →</a></div>';
-    }
-    function render(videos){
-      var pl=panel.getAttribute('data-playlist'), label=panel.getAttribute('data-label');
-      var feat=videos[0], rest=videos.slice(1);
-      var wrap=document.createElement('div');
-      var f=document.createElement('div'); f.className='vid-feature';
-      var ft=document.createElement('div'); ft.className='vid-thumb';
-      ft.style.backgroundImage="url('"+thumb(feat.id,'maxresdefault')+"'),url('"+thumb(feat.id,'hqdefault')+"')";
-      ft.innerHTML='<div class="vid-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="vid-title">'+esc(feat.title)+'</div>';
-      ft.onclick=function(){ playFeature(f,feat.id,feat.title); };
-      f.appendChild(ft);
-      var sub=document.createElement('div'); sub.className='vid-sub mono'; sub.innerHTML='▸ Latest from <b>'+esc(label)+'</b>';
-      f.appendChild(sub); wrap.appendChild(f);
-      var car=document.createElement('div'); car.className='vid-carousel';
-      var prev=document.createElement('button'); prev.className='car-arrow car-prev'; prev.innerHTML='‹';
-      var next=document.createElement('button'); next.className='car-arrow car-next'; next.innerHTML='›';
-      var vp=document.createElement('div'); vp.className='car-viewport';
-      var track=document.createElement('div'); track.className='car-track';
-      rest.forEach(function(v){
-        var m=document.createElement('div'); m.className='vid-mini car-item';
-        m.innerHTML='<div class="m-thumb" style="background-image:url(\''+thumb(v.id,'mqdefault')+'\')"></div><div class="m-title">'+esc(v.title)+'</div>';
-        m.onclick=function(){ playFeature(f,v.id,v.title); window.scrollTo({top:f.getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'}); };
-        track.appendChild(m);
-      });
-      var all=document.createElement('a'); all.className='vid-mini car-item vid-all';
-      all.href="https://www.youtube.com/playlist?list="+pl; all.target="_blank"; all.rel="noopener";
-      all.innerHTML='<div class="m-thumb all-thumb"><span>▸</span></div><div class="m-title">See all videos on YouTube</div>';
-      track.appendChild(all);
-      vp.appendChild(track); car.appendChild(prev); car.appendChild(vp); car.appendChild(next); wrap.appendChild(car);
-      panel.innerHTML=''; panel.appendChild(wrap);
-      function step(){var fi=track.querySelector('.car-item');if(!fi)return 0;var gap=parseFloat(getComputedStyle(track).gap||12)||12;return fi.getBoundingClientRect().width+gap;}
-      function per(){return Math.max(1,Math.round(vp.getBoundingClientRect().width/step()));}
-      function upd(){var x=track.scrollLeft,ms=track.scrollWidth-vp.getBoundingClientRect().width;prev.classList.toggle('disabled',x<=2);next.classList.toggle('disabled',x>=ms-2);}
-      prev.onclick=function(){track.scrollBy({left:-step()*per(),behavior:'smooth'});};
-      next.onclick=function(){track.scrollBy({left:step()*per(),behavior:'smooth'});};
-      track.addEventListener('scroll',upd,{passive:true}); window.addEventListener('resize',upd); setTimeout(upd,60);
-    }
-    var done=false;
-    var controller=("AbortController" in window)?new AbortController():null;
-    var timer=setTimeout(function(){ if(done)return; done=true; if(controller)controller.abort(); fallback(); },6000);
-    try {
-      if(typeof fetch !== 'function') throw 0;
-      fetch(PROXY+encodeURIComponent(feedUrl(panel.getAttribute('data-playlist'))), controller?{signal:controller.signal}:{})
-        .then(function(r){ if(!r.ok) throw 0; return r.text(); })
-        .then(function(xml){
-          if(done)return;
-          var doc=new DOMParser().parseFromString(xml,"text/xml");
-          if(doc.getElementsByTagName('parsererror').length) throw 0;
-          var vids=Array.from(doc.getElementsByTagName('entry')).map(function(e){
-            var idEl=e.getElementsByTagName('yt:videoId')[0]||e.getElementsByTagName('videoId')[0];
-            var tEl=e.getElementsByTagName('title')[0];
-            return {id:idEl?idEl.textContent:null,title:tEl?tEl.textContent:''};
-          }).filter(function(v){return v.id;});
-          if(!vids.length) throw 0;
-          done=true; clearTimeout(timer); render(vids);
-        })
-        .catch(function(){ if(done)return; done=true; clearTimeout(timer); fallback(); });
-    } catch(err){ if(!done){ done=true; clearTimeout(timer); fallback(); } }
+  if(!canvas){
+    return;
   }
-  loadVideoPanel('skate-vids');
-  loadVideoPanel('skate-parts');
 
-  /* ===== skate blog carousel (Blogger label: skate) ===== */
-  (function(){
-    var BLOG_ID="ericjkuhns.blogspot.com";
-    var track=document.getElementById('art-track');
-    if(!track) return;
-    function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-    function firstImage(html){var m=(html||'').match(/<img[^>]+src=["']([^"']+)["']/i);return m?m[1]:'';}
-    function fmtDate(iso){try{return new Date(iso).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});}catch(e){return '';}}
-    function postSlug(entry){var alt=(entry.link||[]).find(function(l){return l.rel==='alternate';});var href=alt?alt.href:'';var m=href.match(/\/(\d{4})\/(\d{2})\/([^\/]+)\.html/);return m?(m[1]+'/'+m[2]+'/'+m[3]):encodeURIComponent(entry.id.$t);}
-    var CB='skateArticles_'+Math.floor(Math.random()*1e9);
-    window[CB]=function(json){
-      var entries=(json.feed&&json.feed.entry)?json.feed.entry:[];
-      if(!entries.length){ track.innerHTML='<div class="art-loading mono">No skate posts yet. Label Blogger posts "skate" to feature them here.</div>'; return; }
+  var ctx=
+    canvas.getContext('2d');
+
+  if(!ctx){
+    return;
+  }
+
+  var reduce=
+    window.matchMedia &&
+    window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+  var W;
+  var H;
+  var DPR;
+  var t=0;
+  var sparks=[];
+  var riders=[];
+
+  var groundBaseY;
+  var features=[];
+
+  function resize(){
+
+    DPR=
+      Math.min(
+        window.devicePixelRatio||1,
+        2
+      );
+
+    var r=
+      canvas
+        .parentElement
+        .getBoundingClientRect();
+
+    W=r.width;
+    H=r.height;
+
+    canvas.width=
+      W*DPR;
+
+    canvas.height=
+      H*DPR;
+
+    canvas.style.width=
+      W+'px';
+
+    canvas.style.height=
+      H+'px';
+
+    ctx.setTransform(
+      DPR,
+      0,
+      0,
+      DPR,
+      0,
+      0
+    );
+
+    buildScene();
+
+  }
+
+  function buildScene(){
+
+    groundBaseY=
+      H*.82;
+
+    features=[
+      {type:'quarter',x:W*.12,w:150,h:90,dir:1},
+      {type:'flat',x:W*.30,w:120},
+      {type:'loop',x:W*.52,r:70},
+      {type:'quarter',x:W*.74,w:160,h:100,dir:-1},
+      {type:'flat',x:W*.90,w:140}
+    ];
+
+  }
+
+  function groundY(x){
+
+    var y=
+      groundBaseY;
+
+    y+=
+      Math.sin(
+        x*.006+.5
+      )*
+      10;
+
+    for(
+      var i=0;
+      i<features.length;
+      i++
+    ){
+
+      var f=
+        features[i];
+
+      if(f.type==='quarter'){
+
+        var d=
+          (x-f.x)/
+          f.w;
+
+        if(
+          d>-1 &&
+          d<1
+        ){
+
+          y-=
+            f.h*
+            Math.max(
+              0,
+              1-Math.abs(d)
+            )*
+            Math.max(
+              0,
+              1-Math.abs(d)
+            );
+
+        }
+
+      }
+
+    }
+
+    return y;
+
+  }
+
+  function drawGround(){
+
+    ctx.strokeStyle=
+      'rgba(57,255,100,0.22)';
+
+    ctx.lineWidth=2;
+
+    ctx.beginPath();
+
+    for(
+      var x=0;
+      x<=W;
+      x+=6
+    ){
+
+      var y=
+        groundY(x);
+
+      if(x===0){
+        ctx.moveTo(x,y);
+      }else{
+        ctx.lineTo(x,y);
+      }
+
+    }
+
+    ctx.stroke();
+
+    ctx.lineTo(W,H);
+    ctx.lineTo(0,H);
+    ctx.closePath();
+
+    ctx.fillStyle=
+      'rgba(57,255,100,0.03)';
+
+    ctx.fill();
+
+    features.forEach(
+      function(f){
+
+        if(f.type==='loop'){
+
+          var cy=
+            groundY(f.x)-
+            f.r;
+
+          ctx.strokeStyle=
+            'rgba(57,255,100,0.16)';
+
+          ctx.lineWidth=2;
+
+          ctx.beginPath();
+
+          ctx.arc(
+            f.x,
+            cy,
+            f.r,
+            0,
+            Math.PI*2
+          );
+
+          ctx.stroke();
+
+        }
+
+      }
+    );
+
+  }
+
+  function drawBoard(
+    x,
+    y,
+    scale,
+    angle,
+    alpha
+  ){
+
+    ctx.save();
+
+    ctx.translate(x,y);
+    ctx.rotate(angle);
+    ctx.globalAlpha=alpha;
+
+    var L=
+      16*scale;
+
+    var Wd=
+      4.5*scale;
+
+    ctx.fillStyle=
+      'rgba(57,255,100,0.95)';
+
+    ctx.beginPath();
+
+    if(ctx.roundRect){
+
+      ctx.roundRect(
+        -L/2,
+        -Wd/2,
+        L,
+        Wd,
+        Wd/2
+      );
+
+    }else{
+
+      ctx.rect(
+        -L/2,
+        -Wd/2,
+        L,
+        Wd
+      );
+
+    }
+
+    ctx.fill();
+
+    ctx.fillStyle=
+      'rgba(160,255,190,0.98)';
+
+    var wy=
+      Wd/2+
+      1.5*scale;
+
+    var wr=
+      1.7*scale;
+
+    [
+      -L*.28,
+      L*.28
+    ].forEach(
+      function(wx){
+
+        ctx.beginPath();
+
+        ctx.arc(
+          wx,
+          wy,
+          wr,
+          0,
+          Math.PI*2
+        );
+
+        ctx.fill();
+
+      }
+    );
+
+    ctx.restore();
+
+  }
+
+  function spawnRider(){
+
+    riders.push({
+      x:-30,
+      speed:1.3+Math.random()*.7,
+      scale:1.4+Math.random()*.5,
+      airborne:false,
+      vy:0,
+      y:0,
+      flip:0,
+      flipSpeed:0,
+      jumpCooldown:0
+    });
+
+  }
+
+  function frame(){
+
+    t++;
+
+    ctx.clearRect(
+      0,
+      0,
+      W,
+      H
+    );
+
+    ctx.strokeStyle=
+      'rgba(57,255,100,0.04)';
+
+    ctx.lineWidth=1;
+
+    var spacing=80;
+
+    var off=
+      (t*.5)%spacing;
+
+    for(
+      var gx=-H;
+      gx<W+H;
+      gx+=spacing
+    ){
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        gx+off,
+        0
+      );
+
+      ctx.lineTo(
+        gx+off+H,
+        H
+      );
+
+      ctx.stroke();
+
+    }
+
+    drawGround();
+
+    for(
+      var i=
+        riders.length-1;
+      i>=0;
+      i--
+    ){
+
+      var r=
+        riders[i];
+
+      r.x+=r.speed;
+
+      var gY=
+        groundY(r.x);
+
+      var slopeAhead=
+        groundY(r.x+10)-
+        groundY(r.x-10);
+
+      if(!r.airborne){
+
+        r.y=gY;
+
+        if(
+          slopeAhead<-6 &&
+          r.jumpCooldown<=0 &&
+          Math.random()<.5
+        ){
+
+          r.airborne=true;
+
+          r.vy=
+            -(
+              4.2+
+              Math.random()*1.6
+            );
+
+          r.flipSpeed=
+            (
+              Math.random()<.5
+                ? 1
+                : -1
+            )*
+            (
+              .18+
+              Math.random()*.12
+            );
+
+          r.jumpCooldown=60;
+
+        }
+
+      }else{
+
+        r.vy+=.14;
+
+        r.y+=r.vy;
+
+        r.flip+=
+          r.flipSpeed;
+
+        if(r.y>=gY){
+
+          r.y=gY;
+          r.airborne=false;
+          r.flip=0;
+          r.vy=0;
+
+          for(
+            var s=0;
+            s<6;
+            s++
+          ){
+
+            sparks.push({
+              x:r.x,
+              y:gY,
+              vx:-(Math.random()*2+.5),
+              vy:-(Math.random()*2),
+              life:1
+            });
+
+          }
+
+        }
+
+      }
+
+      if(r.jumpCooldown>0){
+        r.jumpCooldown--;
+      }
+
+      var angle=
+        r.airborne
+          ? r.flip
+          : Math.atan2(
+              groundY(r.x+8)-
+              groundY(r.x-8),
+              16
+            );
+
+      drawBoard(
+        r.x,
+        r.y-4,
+        r.scale,
+        angle,
+        .9
+      );
+
+      if(r.x>W+40){
+        riders.splice(i,1);
+      }
+
+    }
+
+    if(
+      riders.length<2 &&
+      t%90===0
+    ){
+      spawnRider();
+    }
+
+    for(
+      var j=
+        sparks.length-1;
+      j>=0;
+      j--
+    ){
+
+      var sp=
+        sparks[j];
+
+      sp.x+=sp.vx;
+      sp.y+=sp.vy;
+      sp.vy+=.12;
+      sp.life-=.04;
+
+      if(sp.life<=0){
+
+        sparks.splice(j,1);
+        continue;
+
+      }
+
+      ctx.fillStyle=
+        'rgba(57,255,100,'+
+        sp.life*.7+
+        ')';
+
+      ctx.fillRect(
+        sp.x,
+        sp.y,
+        2,
+        2
+      );
+
+    }
+
+    if(sparks.length>220){
+
+      sparks.splice(
+        0,
+        sparks.length-220
+      );
+
+    }
+
+    requestAnimationFrame(frame);
+
+  }
+
+  resize();
+
+  window.addEventListener(
+    'resize',
+    resize
+  );
+
+  if(!reduce){
+
+    spawnRider();
+    frame();
+
+  }else{
+
+    drawGround();
+
+    drawBoard(
+      W*.3,
+      groundY(W*.3)-4,
+      1.5,
+      0,
+      .8
+    );
+
+    drawBoard(
+      W*.7,
+      groundY(W*.7)-4,
+      1.5,
+      0,
+      .8
+    );
+
+  }
+
+})();
+
+(function(){
+
+  var el=
+    document.getElementById(
+      'skate-typed'
+    );
+
+  if(!el){
+    return;
+  }
+
+  var text=
+    "Skateboarding";
+
+  var reduce=
+    window.matchMedia &&
+    window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+  if(reduce){
+
+    el.textContent=text;
+    return;
+
+  }
+
+  var i=0;
+
+  (function tick(){
+
+    if(i<=text.length){
+
+      el.textContent=
+        text.slice(0,i);
+
+      i++;
+
+      setTimeout(
+        tick,
+        80
+      );
+
+    }
+
+  })();
+
+})();
+
+function loadVideoPanel(panelId){
+
+  var PROXY=
+    "https://youtube-feed.silent-hall-684c.workers.dev/?url=";
+
+  var panel=
+    document.getElementById(
+      panelId
+    );
+
+  if(!panel){
+    return;
+  }
+
+  function esc(s){
+
+    return (s||"")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;");
+
+  }
+
+  function thumb(id,q){
+
+    return (
+      "https://i.ytimg.com/vi/"+
+      id+
+      "/"+
+      (q||"hqdefault")+
+      ".jpg"
+    );
+
+  }
+
+  function feedUrl(pl){
+
+    return (
+      "https://www.youtube.com/feeds/videos.xml?playlist_id="+
+      pl
+    );
+
+  }
+
+  function playFeature(
+    el,
+    id,
+    title
+  ){
+
+    el.innerHTML=
+      '<div class="embed">'+
+      '<iframe src="https://www.youtube.com/embed/'+
+      id+
+      '?autoplay=1" title="'+
+      esc(title)+
+      '" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>'+
+      '</div>';
+
+  }
+
+  function fallback(){
+
+    var pl=
+      panel.getAttribute(
+        'data-playlist'
+      );
+
+    panel.innerHTML=
+      '<div class="embed">'+
+        '<iframe src="https://www.youtube.com/embed/videoseries?list='+
+        pl+
+        '" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>'+
+      '</div>'+
+      '<div class="vid-cap mono">'+
+        '▸ Newest upload plays first. '+
+        '<a href="https://www.youtube.com/playlist?list='+
+        pl+
+        '" target="_blank" rel="noopener" style="color:var(--neon)">'+
+        'See all on YouTube →'+
+        '</a>'+
+      '</div>';
+
+  }
+
+  function render(videos){
+
+    var pl=
+      panel.getAttribute(
+        'data-playlist'
+      );
+
+    var label=
+      panel.getAttribute(
+        'data-label'
+      );
+
+    var feat=
+      videos[0];
+
+    var rest=
+      videos.slice(1);
+
+    var wrap=
+      document.createElement(
+        'div'
+      );
+
+    var f=
+      document.createElement(
+        'div'
+      );
+
+    f.className=
+      'vid-feature';
+
+    var ft=
+      document.createElement(
+        'div'
+      );
+
+    ft.className=
+      'vid-thumb';
+
+    ft.style.backgroundImage=
+      "url('"+
+      thumb(
+        feat.id,
+        'maxresdefault'
+      )+
+      "'),url('"+
+      thumb(
+        feat.id,
+        'hqdefault'
+      )+
+      "')";
+
+    ft.innerHTML=
+      '<div class="vid-play">'+
+      '<svg viewBox="0 0 24 24">'+
+      '<path d="M8 5v14l11-7z"/>'+
+      '</svg>'+
+      '</div>'+
+      '<div class="vid-title">'+
+      esc(feat.title)+
+      '</div>';
+
+    ft.onclick=
+      function(){
+
+        playFeature(
+          f,
+          feat.id,
+          feat.title
+        );
+
+      };
+
+    f.appendChild(ft);
+
+    var sub=
+      document.createElement(
+        'div'
+      );
+
+    sub.className=
+      'vid-sub mono';
+
+    sub.innerHTML=
+      '▸ Latest from <b>'+
+      esc(label)+
+      '</b>';
+
+    f.appendChild(sub);
+
+    wrap.appendChild(f);
+
+    var car=
+      document.createElement(
+        'div'
+      );
+
+    car.className=
+      'vid-carousel';
+
+    var prev=
+      document.createElement(
+        'button'
+      );
+
+    prev.className=
+      'car-arrow car-prev';
+
+    prev.innerHTML='‹';
+
+    var next=
+      document.createElement(
+        'button'
+      );
+
+    next.className=
+      'car-arrow car-next';
+
+    next.innerHTML='›';
+
+    var vp=
+      document.createElement(
+        'div'
+      );
+
+    vp.className=
+      'car-viewport';
+
+    var track=
+      document.createElement(
+        'div'
+      );
+
+    track.className=
+      'car-track';
+
+    rest.forEach(
+      function(v){
+
+        var m=
+          document.createElement(
+            'div'
+          );
+
+        m.className=
+          'vid-mini car-item';
+
+        m.innerHTML=
+          '<div class="m-thumb" style="background-image:url(\''+
+          thumb(
+            v.id,
+            'mqdefault'
+          )+
+          '\')"></div>'+
+          '<div class="m-title">'+
+          esc(v.title)+
+          '</div>';
+
+        m.onclick=
+          function(){
+
+            playFeature(
+              f,
+              v.id,
+              v.title
+            );
+
+            window.scrollTo({
+              top:
+                f
+                  .getBoundingClientRect()
+                  .top+
+                window.scrollY-
+                90,
+
+              behavior:'smooth'
+            });
+
+          };
+
+        track.appendChild(m);
+
+      }
+    );
+
+    var all=
+      document.createElement(
+        'a'
+      );
+
+    all.className=
+      'vid-mini car-item vid-all';
+
+    all.href=
+      "https://www.youtube.com/playlist?list="+
+      pl;
+
+    all.target=
+      "_blank";
+
+    all.rel=
+      "noopener";
+
+    all.innerHTML=
+      '<div class="m-thumb all-thumb">'+
+      '<span>▸</span>'+
+      '</div>'+
+      '<div class="m-title">'+
+      'See all videos on YouTube'+
+      '</div>';
+
+    track.appendChild(all);
+
+    vp.appendChild(track);
+
+    car.appendChild(prev);
+    car.appendChild(vp);
+    car.appendChild(next);
+
+    wrap.appendChild(car);
+
+    panel.innerHTML='';
+
+    panel.appendChild(wrap);
+
+    function step(){
+
+      var fi=
+        track.querySelector(
+          '.car-item'
+        );
+
+      if(!fi){
+        return 0;
+      }
+
+      var gap=
+        parseFloat(
+          getComputedStyle(track).gap ||
+          12
+        )
+        ||
+        12;
+
+      return (
+        fi
+          .getBoundingClientRect()
+          .width+
+        gap
+      );
+
+    }
+
+    function per(){
+
+      return Math.max(
+        1,
+        Math.round(
+          vp
+            .getBoundingClientRect()
+            .width/
+          step()
+        )
+      );
+
+    }
+
+    function upd(){
+
+      var x=
+        track.scrollLeft;
+
+      var ms=
+        track.scrollWidth-
+        vp
+          .getBoundingClientRect()
+          .width;
+
+      prev.classList.toggle(
+        'disabled',
+        x<=2
+      );
+
+      next.classList.toggle(
+        'disabled',
+        x>=ms-2
+      );
+
+    }
+
+    prev.onclick=
+      function(){
+
+        track.scrollBy({
+          left:
+            -step()*
+            per(),
+
+          behavior:'smooth'
+        });
+
+      };
+
+    next.onclick=
+      function(){
+
+        track.scrollBy({
+          left:
+            step()*
+            per(),
+
+          behavior:'smooth'
+        });
+
+      };
+
+    track.addEventListener(
+      'scroll',
+      upd,
+      {passive:true}
+    );
+
+    window.addEventListener(
+      'resize',
+      upd
+    );
+
+    setTimeout(
+      upd,
+      60
+    );
+
+  }
+
+  var done=false;
+
+  var controller=
+    ("AbortController" in window)
+      ? new AbortController()
+      : null;
+
+  var timer=
+    setTimeout(
+      function(){
+
+        if(done){
+          return;
+        }
+
+        done=true;
+
+        if(controller){
+          controller.abort();
+        }
+
+        fallback();
+
+      },
+      6000
+    );
+
+  try{
+
+    if(typeof fetch!=='function'){
+      throw 0;
+    }
+
+    fetch(
+      PROXY+
+      encodeURIComponent(
+        feedUrl(
+          panel.getAttribute(
+            'data-playlist'
+          )
+        )
+      ),
+
+      controller
+        ? {signal:controller.signal}
+        : {}
+    )
+
+    .then(
+      function(r){
+
+        if(!r.ok){
+          throw 0;
+        }
+
+        return r.text();
+
+      }
+    )
+
+    .then(
+      function(xml){
+
+        if(done){
+          return;
+        }
+
+        var doc=
+          new DOMParser()
+            .parseFromString(
+              xml,
+              "text/xml"
+            );
+
+        if(
+          doc
+            .getElementsByTagName(
+              'parsererror'
+            )
+            .length
+        ){
+          throw 0;
+        }
+
+        var vids=
+          Array.from(
+            doc
+              .getElementsByTagName(
+                'entry'
+              )
+          )
+          .map(
+            function(e){
+
+              var idEl=
+                e
+                  .getElementsByTagName(
+                    'yt:videoId'
+                  )[0]
+                ||
+                e
+                  .getElementsByTagName(
+                    'videoId'
+                  )[0];
+
+              var tEl=
+                e
+                  .getElementsByTagName(
+                    'title'
+                  )[0];
+
+              return {
+                id:
+                  idEl
+                    ? idEl.textContent
+                    : null,
+
+                title:
+                  tEl
+                    ? tEl.textContent
+                    : ''
+              };
+
+            }
+          )
+          .filter(
+            function(v){
+              return v.id;
+            }
+          );
+
+        if(!vids.length){
+          throw 0;
+        }
+
+        done=true;
+
+        clearTimeout(timer);
+
+        render(vids);
+
+      }
+    )
+
+    .catch(
+      function(){
+
+        if(done){
+          return;
+        }
+
+        done=true;
+
+        clearTimeout(timer);
+
+        fallback();
+
+      }
+    );
+
+  }catch(err){
+
+    if(!done){
+
+      done=true;
+
+      clearTimeout(timer);
+
+      fallback();
+
+    }
+
+  }
+
+}
+
+loadVideoPanel('skate-vids');
+loadVideoPanel('skate-parts');
+
+(function(){
+
+  var BLOG_ID=
+    "ericjkuhns.blogspot.com";
+
+  var track=
+    document.getElementById(
+      'art-track'
+    );
+
+  if(!track){
+    return;
+  }
+
+  function esc(s){
+
+    return (s||"")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;");
+
+  }
+
+  function firstImage(html){
+
+    var m=
+      (html||'')
+        .match(
+          /<img[^>]+src=["']([^"']+)["']/i
+        );
+
+    return m
+      ? m[1]
+      : '';
+
+  }
+
+  function fmtDate(iso){
+
+    try{
+
+      return new Date(iso)
+        .toLocaleDateString(
+          'en-US',
+          {
+            year:'numeric',
+            month:'short',
+            day:'numeric'
+          }
+        );
+
+    }catch(e){
+
+      return '';
+
+    }
+
+  }
+
+  function postSlug(entry){
+
+    var alt=
+      (entry.link||[])
+        .find(
+          function(l){
+            return l.rel==='alternate';
+          }
+        );
+
+    var href=
+      alt
+        ? alt.href
+        : '';
+
+    var m=
+      href.match(
+        /\/(\d{4})\/(\d{2})\/([^\/]+)\.html/
+      );
+
+    return m
+      ? (
+          m[1]+'/'+
+          m[2]+'/'+
+          m[3]
+        )
+      : encodeURIComponent(
+          entry.id.$t
+        );
+
+  }
+
+  var CB=
+    'skateArticles_'+
+    Math.floor(
+      Math.random()*1e9
+    );
+
+  window[CB]=
+    function(json){
+
+      var entries=
+        (
+          json.feed &&
+          json.feed.entry
+        )
+          ? json.feed.entry
+          : [];
+
+      if(!entries.length){
+
+        track.innerHTML=
+          '<div class="art-loading mono">'+
+          'No skate posts yet. Label Blogger posts "skate" to feature them here.'+
+          '</div>';
+
+        return;
+
+      }
+
       track.innerHTML='';
-      entries.forEach(function(e){
-        var title=e.title?e.title.$t:'Untitled';
-        var content=(e.content&&e.content.$t)||(e.summary&&e.summary.$t)||'';
-        var date=e.published?e.published.$t:'';
-        var img=firstImage(content);
-        var cats=(e.category||[]).map(function(c){return c.term;});
-        var slug=postSlug(e);
-        var a=document.createElement('a'); a.className='art-card'; a.href='blog/post.html?p='+encodeURIComponent(slug);
-        var ts=img?(' style="background-image:url(\''+img+'\')"'):''; var tt=img?'':'[ skate ]';
-        a.innerHTML='<div class="art-thumb"'+ts+'>'+tt+'</div><div class="art-body"><span class="date mono">'+fmtDate(date)+'</span><h3>'+esc(title)+'</h3>'+(cats.length?'<span class="cat mono">'+esc(cats[0])+'</span>':'')+'</div>';
-        track.appendChild(a);
-      });
+
+      entries.forEach(
+        function(e){
+
+          var title=
+            e.title
+              ? e.title.$t
+              : 'Untitled';
+
+          var content=
+            (
+              e.content &&
+              e.content.$t
+            )
+            ||
+            (
+              e.summary &&
+              e.summary.$t
+            )
+            ||
+            '';
+
+          var date=
+            e.published
+              ? e.published.$t
+              : '';
+
+          var img=
+            firstImage(content);
+
+          var cats=
+            (e.category||[])
+              .map(
+                function(c){
+                  return c.term;
+                }
+              );
+
+          var slug=
+            postSlug(e);
+
+          var a=
+            document.createElement(
+              'a'
+            );
+
+          a.className=
+            'art-card';
+
+          a.href=
+            'blog/post.html?p='+
+            encodeURIComponent(slug);
+
+          var ts=
+            img
+              ? (
+                  ' style="background-image:url(\''+
+                  img+
+                  '\')"'
+                )
+              : '';
+
+          var tt=
+            img
+              ? ''
+              : '[ skate ]';
+
+          a.innerHTML=
+            '<div class="art-thumb"'+
+            ts+
+            '>'+
+            tt+
+            '</div>'+
+            '<div class="art-body">'+
+              '<span class="date mono">'+
+                fmtDate(date)+
+              '</span>'+
+              '<h3>'+
+                esc(title)+
+              '</h3>'+
+              (
+                cats.length
+                  ? (
+                      '<span class="cat mono">'+
+                      esc(cats[0])+
+                      '</span>'
+                    )
+                  : ''
+              )+
+            '</div>';
+
+          track.appendChild(a);
+
+        }
+      );
+
       artUpd();
-    };
-    function artUpd(){var prev=document.querySelector('.art-prev'),next=document.querySelector('.art-next');if(!prev||!next)return;var x=track.scrollLeft,ms=track.scrollWidth-track.getBoundingClientRect().width;prev.classList.toggle('disabled',x<=2);next.classList.toggle('disabled',x>=ms-2);}
-    window.artSlide=function(dir){var f=track.querySelector('.art-card');if(!f)return;var gap=parseFloat(getComputedStyle(track).gap||16)||16;var step=f.getBoundingClientRect().width+gap;var per=Math.max(1,Math.round(track.getBoundingClientRect().width/step));track.scrollBy({left:dir*step*per,behavior:'smooth'});};
-    track.addEventListener('scroll',artUpd,{passive:true}); window.addEventListener('resize',artUpd);
-    var s=document.createElement('script');
-    s.src='https://'+BLOG_ID+'/feeds/posts/default/-/skate?alt=json-in-script&max-results=15&callback='+CB;
-    s.onerror=function(){ track.innerHTML='<div class="art-loading mono">Couldn\'t load skate posts right now.</div>'; };
-    document.body.appendChild(s);
-  })();
 
-  /* ===== skate dice with categories, difficulty tiers, toggles, and combos ===== */
-  (function(){
-    var stances=["Regular","Fakie","Switch","Nollie"];
-    // stance difficulty: Regular/Fakie easy, Nollie medium, Switch hard
-    var stanceByDiff={
-      chill:["Regular","Regular","Fakie"],
-      normal:["Regular","Fakie","Nollie","Switch"],
-      gnarly:["Regular","Fakie","Nollie","Switch","Switch"]
-    };
-    // spins by difficulty
-    var spinByDiff={
-      chill:["FS 180","BS 180"],
-      normal:["FS 180","BS 180","FS 360","BS 360"],
-      gnarly:["FS 180","BS 180","FS 360","BS 360","FS 540","BS 540"]
     };
 
-    // GENERAL flatground/flip tricks, tiered
-    var generalByDiff={
-      chill:["Ollie","Nollie","Shuvit","FS Shuvit","BS Shuvit","Pop Shuvit","Frontside 180","Backside 180","Boneless","No Comply"],
-      normal:["Kickflip","Heelflip","Varial Kickflip","Varial Heelflip","360 Shuvit","Bigspin","FS Bigspin","Half Cab","Body Varial","Kickflip Body Varial"],
-      gnarly:["360 Flip (Tre Flip)","Hardflip","Inward Heelflip","Laser Flip","Double Kickflip","Bigflip","Impossible","Full Cab (360)","Gazelle Flip","Dolphin Flip"]
-    };
-    // GRINDS & SLIDES, tiered (stance = approach)
-    var grindApproach=["FS","BS"];
-    var grindByDiff={
-      chill:["50-50","Boardslide","Noseslide","5-0"],
-      normal:["Nosegrind","Crooked Grind","Smith Grind","Feeble Grind","Tailslide","Lipslide","Salad Grind"],
-      gnarly:["Overcrook","Bluntslide","Nose Bluntslide","Darkslide","Hurricane","Suski Grind","Willy Grind"]
-    };
-    // MANUALS, tiered
-    var manualByDiff={
-      chill:["Manual","Nose Manual"],
-      normal:["Switch Manual","Switch Nose Manual","Manual to Nose Manual","One-Wheel Manual"],
-      gnarly:["Casper Slide","Primo Slide","Rail Stand (Primo)","Truckstand"]
-    };
-    // VERT / TRANSITION, tiered
-    var vertByDiff={
-      chill:["Rock to Fakie","Rock n Roll","Axle Stall (50-50)","5-0 Stall","Pivot to Fakie","Fakie Ollie","Tail Stall","Nose Stall"],
-      normal:["Disaster","Blunt Stall","Feeble Stall","Smith Stall","FS Air","BS Air","Indy Grab","Melon Grab","Mute Grab","Boneless","Ollie North"],
-      gnarly:["Method Grab","Stalefish","Judo Air","Andrecht","Invert / Handplant","McTwist","Alley-Oop","Nosegrab","Tailgrab"]
-    };
+  function artUpd(){
 
-    // build a difficulty-scoped list: chill = chill only; normal = chill+normal; gnarly = all
-    function scoped(byDiff, diff){
-      if(diff==='chill') return byDiff.chill.slice();
-      if(diff==='normal') return byDiff.chill.concat(byDiff.normal);
-      return byDiff.chill.concat(byDiff.normal, byDiff.gnarly);
+    var prev=
+      document.querySelector(
+        '.art-prev'
+      );
+
+    var next=
+      document.querySelector(
+        '.art-next'
+      );
+
+    if(!prev || !next){
+      return;
     }
 
-    var CATS={
-      general:{ byDiff:generalByDiff, l2:"TRICK", stanceKind:'stance', comboFrom:grindByDiff, comboApproach:grindApproach },
-      grinds:{ byDiff:grindByDiff, l2:"GRIND / SLIDE", stanceKind:'approach', comboFrom:grindByDiff, comboApproach:grindApproach },
-      manuals:{ byDiff:manualByDiff, l2:"MANUAL", stanceKind:'stance', comboFrom:grindByDiff, comboApproach:grindApproach },
-      vert:{ byDiff:vertByDiff, l2:"TRICK", stanceKind:'stance', comboFrom:vertByDiff, comboApproach:[] }
+    var x=
+      track.scrollLeft;
+
+    var ms=
+      track.scrollWidth-
+      track
+        .getBoundingClientRect()
+        .width;
+
+    prev.classList.toggle(
+      'disabled',
+      x<=2
+    );
+
+    next.classList.toggle(
+      'disabled',
+      x>=ms-2
+    );
+
+  }
+
+  window.artSlide=
+    function(dir){
+
+      var f=
+        track.querySelector(
+          '.art-card'
+        );
+
+      if(!f){
+        return;
+      }
+
+      var gap=
+        parseFloat(
+          getComputedStyle(track).gap ||
+          16
+        )
+        ||
+        16;
+
+      var step=
+        f
+          .getBoundingClientRect()
+          .width+
+        gap;
+
+      var per=
+        Math.max(
+          1,
+          Math.round(
+            track
+              .getBoundingClientRect()
+              .width/
+            step
+          )
+        );
+
+      track.scrollBy({
+        left:
+          dir*
+          step*
+          per,
+
+        behavior:'smooth'
+      });
+
     };
 
-    var cat="general";
-    var diff="normal";
-    var history=[]; var histVisible=false;
+  track.addEventListener(
+    'scroll',
+    artUpd,
+    {passive:true}
+  );
 
-    // wildcard marker
-    var WILD="\u25AC";
-    var BOARD_SVG='<svg viewBox="0 0 40 16" width="42" height="17" style="vertical-align:middle" fill="none" stroke="#39ff64" stroke-width="1.6"><rect x="3" y="4" width="34" height="6" rx="3"/><circle cx="12" cy="12.5" r="2.2"/><circle cx="28" cy="12.5" r="2.2"/></svg>';
-    var BOARD_INLINE='<svg viewBox="0 0 40 16" width="34" height="14" style="vertical-align:middle" fill="none" stroke="#39ff64" stroke-width="1.6"><rect x="3" y="4" width="34" height="6" rx="3"/><circle cx="12" cy="12.5" r="2.2"/><circle cx="28" cy="12.5" r="2.2"/></svg>';
+  window.addEventListener(
+    'resize',
+    artUpd
+  );
 
-    function stanceOn(){ return document.getElementById('tog-stance').checked; }
-    function comboOn(){ return document.getElementById('tog-combo').checked; }
-    function spinOn(){ return document.getElementById('tog-spin').checked; }
-    function wildOn(){ return document.getElementById('tog-wild').checked; }
+  var s=
+    document.createElement(
+      'script'
+    );
 
-    // current scoped lists
-    function tricks(){ return scoped(CATS[cat].byDiff, diff); }
-    function stanceList(){ return CATS[cat].stanceKind==='approach' ? grindApproach.slice() : (stanceByDiff[diff]||stances).slice(); }
-    function spinList(){ return spinByDiff[diff].slice(); }
-    function comboList(){ return scoped(CATS[cat].comboFrom, diff); }
+  s.src=
+    'https://'+
+    BLOG_ID+
+    '/feeds/posts/default/-/skate'+
+    '?alt=json-in-script'+
+    '&max-results=15'+
+    '&callback='+
+    CB;
 
-    function faces(id,list,active){
-      var el=document.getElementById(id);
-      var show=list.slice(0,10);
-      el.innerHTML=show.map(function(f,i){return '<span class="face-chip'+(f===active?' active':'')+'">'+f+(i<show.length-1?' ·':'')+'</span>';}).join('')+(list.length>10?' <span class="face-chip">+'+(list.length-10)+'</span>':'');
+  s.onerror=
+    function(){
+
+      track.innerHTML=
+        '<div class="art-loading mono">'+
+        'Couldn\'t load skate posts right now.'+
+        '</div>';
+
+    };
+
+  document.body.appendChild(s);
+
+})();
+
+(function(){
+
+  var stances=[
+    "Regular",
+    "Fakie",
+    "Switch",
+    "Nollie"
+  ];
+
+  var stanceByDiff={
+    chill:[
+      "Regular",
+      "Regular",
+      "Fakie"
+    ],
+
+    normal:[
+      "Regular",
+      "Fakie",
+      "Nollie",
+      "Switch"
+    ],
+
+    gnarly:[
+      "Regular",
+      "Fakie",
+      "Nollie",
+      "Switch",
+      "Switch"
+    ]
+  };
+
+  var spinByDiff={
+    chill:[
+      "FS 180",
+      "BS 180"
+    ],
+
+    normal:[
+      "FS 180",
+      "BS 180",
+      "FS 360",
+      "BS 360"
+    ],
+
+    gnarly:[
+      "FS 180",
+      "BS 180",
+      "FS 360",
+      "BS 360",
+      "FS 540",
+      "BS 540"
+    ]
+  };
+
+  var generalByDiff={
+    chill:[
+      "Ollie",
+      "Nollie",
+      "Shuvit",
+      "FS Shuvit",
+      "BS Shuvit",
+      "Pop Shuvit",
+      "Frontside 180",
+      "Backside 180",
+      "Boneless",
+      "No Comply"
+    ],
+
+    normal:[
+      "Kickflip",
+      "Heelflip",
+      "Varial Kickflip",
+      "Varial Heelflip",
+      "360 Shuvit",
+      "Bigspin",
+      "FS Bigspin",
+      "Half Cab",
+      "Body Varial",
+      "Kickflip Body Varial"
+    ],
+
+    gnarly:[
+      "360 Flip (Tre Flip)",
+      "Hardflip",
+      "Inward Heelflip",
+      "Laser Flip",
+      "Double Kickflip",
+      "Bigflip",
+      "Impossible",
+      "Full Cab (360)",
+      "Gazelle Flip",
+      "Dolphin Flip"
+    ]
+  };
+
+  var grindApproach=[
+    "FS",
+    "BS"
+  ];
+
+  var grindByDiff={
+    chill:[
+      "50-50",
+      "Boardslide",
+      "Noseslide",
+      "5-0"
+    ],
+
+    normal:[
+      "Nosegrind",
+      "Crooked Grind",
+      "Smith Grind",
+      "Feeble Grind",
+      "Tailslide",
+      "Lipslide",
+      "Salad Grind"
+    ],
+
+    gnarly:[
+      "Overcrook",
+      "Bluntslide",
+      "Nose Bluntslide",
+      "Darkslide",
+      "Hurricane",
+      "Suski Grind",
+      "Willy Grind"
+    ]
+  };
+
+  var manualByDiff={
+    chill:[
+      "Manual",
+      "Nose Manual"
+    ],
+
+    normal:[
+      "Switch Manual",
+      "Switch Nose Manual",
+      "Manual to Nose Manual",
+      "One-Wheel Manual"
+    ],
+
+    gnarly:[
+      "Casper Slide",
+      "Primo Slide",
+      "Rail Stand (Primo)",
+      "Truckstand"
+    ]
+  };
+
+  var vertByDiff={
+    chill:[
+      "Rock to Fakie",
+      "Rock n Roll",
+      "Axle Stall (50-50)",
+      "5-0 Stall",
+      "Pivot to Fakie",
+      "Fakie Ollie",
+      "Tail Stall",
+      "Nose Stall"
+    ],
+
+    normal:[
+      "Disaster",
+      "Blunt Stall",
+      "Feeble Stall",
+      "Smith Stall",
+      "FS Air",
+      "BS Air",
+      "Indy Grab",
+      "Melon Grab",
+      "Mute Grab",
+      "Boneless",
+      "Ollie North"
+    ],
+
+    gnarly:[
+      "Method Grab",
+      "Stalefish",
+      "Judo Air",
+      "Andrecht",
+      "Invert / Handplant",
+      "McTwist",
+      "Alley-Oop",
+      "Nosegrab",
+      "Tailgrab"
+    ]
+  };
+
+  function scoped(
+    byDiff,
+    diff
+  ){
+
+    if(diff==='chill'){
+
+      return byDiff
+        .chill
+        .slice();
+
     }
 
-    window.rebuildFaces=function(){
-      var c=CATS[cat];
-      // stance die visibility
-      document.getElementById('wrap-stance').style.display = stanceOn() ? '' : 'none';
-      // combo die visibility
-      document.getElementById('wrap-combo').style.display = comboOn() ? '' : 'none';
-      // labels
-      document.getElementById('die1-label').textContent = (cat==='grinds') ? 'APPROACH' : 'STANCE';
-      document.getElementById('die2-label').textContent = (spinOn()?'SPIN + ':'')+c.l2;
-      document.getElementById('die3-label').textContent = 'INTO';
-      // face chips (difficulty-scoped)
-      faces('faces1', stanceList(), null);
-      faces('faces2', tricks(), null);
-      faces('faces3', comboList(), null);
-      // wildcard legend under trick die
-      var leg=document.getElementById('wild-legend');
-      if(leg) leg.style.display = wildOn() ? 'block' : 'none';
-      // reset values
-      ['val1','val2','val3'].forEach(function(id){document.getElementById(id).textContent='—';});
-      document.getElementById('resultIdle').style.display='block';
-      document.getElementById('resultRolling').style.display='none';
-      document.getElementById('resultTrick').style.display='none';
+    if(diff==='normal'){
+
+      return byDiff
+        .chill
+        .concat(
+          byDiff.normal
+        );
+
+    }
+
+    return byDiff
+      .chill
+      .concat(
+        byDiff.normal,
+        byDiff.gnarly
+      );
+
+  }
+
+  var CATS={
+
+    general:{
+      byDiff:generalByDiff,
+      l2:"TRICK",
+      stanceKind:'stance',
+      comboFrom:grindByDiff,
+      comboApproach:grindApproach
+    },
+
+    grinds:{
+      byDiff:grindByDiff,
+      l2:"GRIND / SLIDE",
+      stanceKind:'approach',
+      comboFrom:grindByDiff,
+      comboApproach:grindApproach
+    },
+
+    manuals:{
+      byDiff:manualByDiff,
+      l2:"MANUAL",
+      stanceKind:'stance',
+      comboFrom:grindByDiff,
+      comboApproach:grindApproach
+    },
+
+    vert:{
+      byDiff:vertByDiff,
+      l2:"TRICK",
+      stanceKind:'stance',
+      comboFrom:vertByDiff,
+      comboApproach:[]
+    }
+
+  };
+
+  var cat="general";
+  var diff="normal";
+  var history=[];
+  var histVisible=false;
+
+  var WILD="\u25AC";
+
+  var BOARD_SVG=
+    '<svg viewBox="0 0 40 16" width="42" height="17" style="vertical-align:middle" fill="none" stroke="#39ff64" stroke-width="1.6">'+
+      '<rect x="3" y="4" width="34" height="6" rx="3"/>'+
+      '<circle cx="12" cy="12.5" r="2.2"/>'+
+      '<circle cx="28" cy="12.5" r="2.2"/>'+
+    '</svg>';
+
+  var BOARD_INLINE=
+    '<svg viewBox="0 0 40 16" width="34" height="14" style="vertical-align:middle" fill="none" stroke="#39ff64" stroke-width="1.6">'+
+      '<rect x="3" y="4" width="34" height="6" rx="3"/>'+
+      '<circle cx="12" cy="12.5" r="2.2"/>'+
+      '<circle cx="28" cy="12.5" r="2.2"/>'+
+    '</svg>';
+
+  function stanceOn(){
+    return document.getElementById('tog-stance').checked;
+  }
+
+  function comboOn(){
+    return document.getElementById('tog-combo').checked;
+  }
+
+  function spinOn(){
+    return document.getElementById('tog-spin').checked;
+  }
+
+  function wildOn(){
+    return document.getElementById('tog-wild').checked;
+  }
+
+  function tricks(){
+    return scoped(CATS[cat].byDiff,diff);
+  }
+
+  function stanceList(){
+
+    return CATS[cat].stanceKind==='approach'
+      ? grindApproach.slice()
+      : (stanceByDiff[diff]||stances).slice();
+
+  }
+
+  function spinList(){
+    return spinByDiff[diff].slice();
+  }
+
+  function comboList(){
+    return scoped(CATS[cat].comboFrom,diff);
+  }
+
+  function faces(
+    id,
+    list,
+    active
+  ){
+
+    var el=
+      document.getElementById(id);
+
+    var show=
+      list.slice(0,10);
+
+    el.innerHTML=
+      show
+        .map(
+          function(f,i){
+
+            return (
+              '<span class="face-chip'+
+              (
+                f===active
+                  ? ' active'
+                  : ''
+              )+
+              '">'+
+              f+
+              (
+                i<show.length-1
+                  ? ' ·'
+                  : ''
+              )+
+              '</span>'
+            );
+
+          }
+        )
+        .join('')
+      +
+      (
+        list.length>10
+          ? (
+              ' <span class="face-chip">+'+
+              (list.length-10)+
+              '</span>'
+            )
+          : ''
+      );
+
+  }
+
+  window.rebuildFaces=
+    function(){
+
+      var c=
+        CATS[cat];
+
+      document
+        .getElementById(
+          'wrap-stance'
+        )
+        .style
+        .display=
+        stanceOn()
+          ? ''
+          : 'none';
+
+      document
+        .getElementById(
+          'wrap-combo'
+        )
+        .style
+        .display=
+        comboOn()
+          ? ''
+          : 'none';
+
+      document
+        .getElementById(
+          'die1-label'
+        )
+        .textContent=
+        cat==='grinds'
+          ? 'APPROACH'
+          : 'STANCE';
+
+      document
+        .getElementById(
+          'die2-label'
+        )
+        .textContent=
+        (
+          spinOn()
+            ? 'SPIN + '
+            : ''
+        )+
+        c.l2;
+
+      document
+        .getElementById(
+          'die3-label'
+        )
+        .textContent=
+        'INTO';
+
+      faces(
+        'faces1',
+        stanceList(),
+        null
+      );
+
+      faces(
+        'faces2',
+        tricks(),
+        null
+      );
+
+      faces(
+        'faces3',
+        comboList(),
+        null
+      );
+
+      var leg=
+        document.getElementById(
+          'wild-legend'
+        );
+
+      if(leg){
+
+        leg.style.display=
+          wildOn()
+            ? 'block'
+            : 'none';
+
+      }
+
+      [
+        'val1',
+        'val2',
+        'val3'
+      ].forEach(
+        function(id){
+
+          document
+            .getElementById(id)
+            .textContent='—';
+
+        }
+      );
+
+      document
+        .getElementById(
+          'resultIdle'
+        )
+        .style
+        .display=
+        'block';
+
+      document
+        .getElementById(
+          'resultRolling'
+        )
+        .style
+        .display=
+        'none';
+
+      document
+        .getElementById(
+          'resultTrick'
+        )
+        .style
+        .display=
+        'none';
+
     };
 
-    window.setDiceDiff=function(d,btn){
+  window.setDiceDiff=
+    function(d,btn){
+
       diff=d;
-      document.querySelectorAll('.diff-tab').forEach(function(t){t.classList.remove('active');});
+
+      document
+        .querySelectorAll(
+          '.diff-tab'
+        )
+        .forEach(
+          function(t){
+            t.classList.remove('active');
+          }
+        );
+
       btn.classList.add('active');
-      // gnarly-only: auto-suggest spins available; keep user toggles as-is
+
       rebuildFaces();
+
     };
 
-    window.setDiceCat=function(c,btn){
+  window.setDiceCat=
+    function(c,btn){
+
       cat=c;
-      document.querySelectorAll('.dice-tab').forEach(function(t){t.classList.remove('active');});
+
+      document
+        .querySelectorAll(
+          '.dice-tab'
+        )
+        .forEach(
+          function(t){
+            t.classList.remove('active');
+          }
+        );
+
       btn.classList.add('active');
+
       rebuildFaces();
+
     };
 
-    function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
-    // wildcard chance scales slightly with difficulty (more freestyle when gnarly)
-    function wildChance(){ return diff==='chill'?0.10:(diff==='gnarly'?0.16:0.13); }
-    function pickWild(arr){
-      if(wildOn() && Math.random()<wildChance()){ return WILD; }
-      return pick(arr);
+  function pick(arr){
+
+    return arr[
+      Math.floor(
+        Math.random()*
+        arr.length
+      )
+    ];
+
+  }
+
+  function wildChance(){
+
+    return diff==='chill'
+      ? .10
+      : (
+          diff==='gnarly'
+            ? .16
+            : .13
+        );
+
+  }
+
+  function pickWild(arr){
+
+    if(
+      wildOn() &&
+      Math.random()<
+      wildChance()
+    ){
+      return WILD;
     }
-    // render a value into a die, swapping in the board SVG for wildcards
-    function setDie(el,val){
-      if(val===WILD){ el.innerHTML=BOARD_SVG; }
-      else { el.textContent=val; }
+
+    return pick(arr);
+
+  }
+
+  function setDie(
+    el,
+    val
+  ){
+
+    if(val===WILD){
+
+      el.innerHTML=
+        BOARD_SVG;
+
+    }else{
+
+      el.textContent=
+        val;
+
     }
-    function part(val){ return val===WILD ? BOARD_INLINE : val; }
-    function isWild(v){ return v===WILD; }
 
-    rebuildFaces();
+  }
 
-    window.rollDice=function(){
-      var c=CATS[cat];
-      var useStance=stanceOn(), useCombo=comboOn(), useSpin=spinOn();
-      var ST=stanceList(), TR=tricks(), SP=spinList(), CO=comboList();
-      var btn=document.getElementById('rollBtn'); btn.disabled=true;
-      document.getElementById('resultIdle').style.display='none';
-      document.getElementById('resultTrick').style.display='none';
-      document.getElementById('resultRolling').style.display='block';
+  function part(val){
 
-      var v1=document.getElementById('val1'),v2=document.getElementById('val2'),v3=document.getElementById('val3');
-      var dice=[document.getElementById('die1'),document.getElementById('die2'),document.getElementById('die3')];
-      [v1,v2,v3].forEach(function(v){v.classList.add('rolling');});
-      dice.forEach(function(d){d.classList.add('rolling');});
+    return val===WILD
+      ? BOARD_INLINE
+      : val;
 
-      var interval=setInterval(function(){
-        if(useStance) setDie(v1, pickWild(ST));
-        setDie(v2, pickWild(TR));
-        if(useCombo){
-          var cw=pickWild(CO);
-          if(cw===WILD){ setDie(v3, WILD); }
-          else { var ca=c.comboApproach.length?pick(c.comboApproach)+' ':''; v3.textContent=ca+cw; }
+  }
+
+  function isWild(v){
+    return v===WILD;
+  }
+
+  rebuildFaces();
+
+  window.rollDice=
+    function(){
+
+      var c=
+        CATS[cat];
+
+      var useStance=
+        stanceOn();
+
+      var useCombo=
+        comboOn();
+
+      var useSpin=
+        spinOn();
+
+      var ST=
+        stanceList();
+
+      var TR=
+        tricks();
+
+      var SP=
+        spinList();
+
+      var CO=
+        comboList();
+
+      var btn=
+        document.getElementById(
+          'rollBtn'
+        );
+
+      btn.disabled=true;
+
+      document
+        .getElementById(
+          'resultIdle'
+        )
+        .style
+        .display=
+        'none';
+
+      document
+        .getElementById(
+          'resultTrick'
+        )
+        .style
+        .display=
+        'none';
+
+      document
+        .getElementById(
+          'resultRolling'
+        )
+        .style
+        .display=
+        'block';
+
+      var v1=
+        document.getElementById(
+          'val1'
+        );
+
+      var v2=
+        document.getElementById(
+          'val2'
+        );
+
+      var v3=
+        document.getElementById(
+          'val3'
+        );
+
+      var dice=[
+        document.getElementById('die1'),
+        document.getElementById('die2'),
+        document.getElementById('die3')
+      ];
+
+      [
+        v1,
+        v2,
+        v3
+      ].forEach(
+        function(v){
+          v.classList.add('rolling');
         }
-      },80);
+      );
 
-      setTimeout(function(){
-        clearInterval(interval);
-        // each die rolls, each can be a wildcard
-        var r1=useStance?pickWild(ST):'';
-        var spin=useSpin?pickWild(SP):'';
-        var r2=pickWild(TR);
-        var r3='';
-        var r3wild=false;
-        if(useCombo){
-          var cw=pickWild(CO);
-          if(cw===WILD){ r3=WILD; r3wild=true; }
-          else { var ca=c.comboApproach.length?pick(c.comboApproach)+' ':''; r3=ca+cw; }
+      dice.forEach(
+        function(d){
+          d.classList.add('rolling');
         }
-        if(useStance) setDie(v1, r1);
-        setDie(v2, r2);
-        if(useCombo) setDie(v3, r3wild?WILD:r3);
-        [v1,v2,v3].forEach(function(v){v.classList.remove('rolling');});
-        dice.forEach(function(d){d.classList.remove('rolling');});
-        faces('faces1',ST,isWild(r1)?null:r1);faces('faces2',TR,isWild(r2)?null:r2);faces('faces3',CO,r3wild?null:r3.replace(/^(FS|BS) /,''));
+      );
 
-        document.getElementById('resultRolling').style.display='none';
-        var trickEl=document.getElementById('resultTrick'); trickEl.style.display='block';
-        trickEl.style.animation='none';trickEl.offsetHeight;trickEl.style.animation='';
+      var interval=
+        setInterval(
+          function(){
 
-        // build result: each part renders as text or a board icon if wild
-        var htmlParts=[], textParts=[];
-        if(useStance && r1 && !(r1==='Regular')){ htmlParts.push(part(r1)); textParts.push(isWild(r1)?'[variation]':r1); }
-        if(useSpin && spin){ htmlParts.push(part(spin)); textParts.push(isWild(spin)?'[variation]':spin); }
-        htmlParts.push(part(r2)); textParts.push(isWild(r2)?'[variation]':r2);
-        var mainHtml=htmlParts.join(' ');
-        var mainText=textParts.join(' ');
-        if(useCombo){ mainHtml += ' <span style="opacity:.7">to</span> '+part(r3); mainText += ' to '+(r3wild?'[variation]':r3); }
+            if(useStance){
 
-        var anyWild = isWild(r1)||isWild(spin)||isWild(r2)||r3wild;
-        if(anyWild){
-          document.getElementById('trickName').innerHTML=mainHtml;
-        } else {
-          document.getElementById('trickName').textContent=mainText;
-        }
+              setDie(
+                v1,
+                pickWild(ST)
+              );
 
-        history.unshift(mainText); if(history.length>10)history.pop(); updateHistory();
-        btn.disabled=false;
-      },900);
+            }
+
+            setDie(
+              v2,
+              pickWild(TR)
+            );
+
+            if(useCombo){
+
+              var cw=
+                pickWild(CO);
+
+              if(cw===WILD){
+
+                setDie(
+                  v3,
+                  WILD
+                );
+
+              }else{
+
+                var ca=
+                  c.comboApproach.length
+                    ? (
+                        pick(
+                          c.comboApproach
+                        )+
+                        ' '
+                      )
+                    : '';
+
+                v3.textContent=
+                  ca+
+                  cw;
+
+              }
+
+            }
+
+          },
+          80
+        );
+
+      setTimeout(
+        function(){
+
+          clearInterval(interval);
+
+          var r1=
+            useStance
+              ? pickWild(ST)
+              : '';
+
+          var spin=
+            useSpin
+              ? pickWild(SP)
+              : '';
+
+          var r2=
+            pickWild(TR);
+
+          var r3='';
+
+          var r3wild=false;
+
+          if(useCombo){
+
+            var cw=
+              pickWild(CO);
+
+            if(cw===WILD){
+
+              r3=WILD;
+              r3wild=true;
+
+            }else{
+
+              var ca=
+                c.comboApproach.length
+                  ? (
+                      pick(
+                        c.comboApproach
+                      )+
+                      ' '
+                    )
+                  : '';
+
+              r3=
+                ca+
+                cw;
+
+            }
+
+          }
+
+          if(useStance){
+            setDie(v1,r1);
+          }
+
+          setDie(v2,r2);
+
+          if(useCombo){
+            setDie(
+              v3,
+              r3wild
+                ? WILD
+                : r3
+            );
+          }
+
+          [
+            v1,
+            v2,
+            v3
+          ].forEach(
+            function(v){
+              v.classList.remove('rolling');
+            }
+          );
+
+          dice.forEach(
+            function(d){
+              d.classList.remove('rolling');
+            }
+          );
+
+          faces(
+            'faces1',
+            ST,
+            isWild(r1)
+              ? null
+              : r1
+          );
+
+          faces(
+            'faces2',
+            TR,
+            isWild(r2)
+              ? null
+              : r2
+          );
+
+          faces(
+            'faces3',
+            CO,
+            r3wild
+              ? null
+              : r3.replace(
+                  /^(FS|BS) /,
+                  ''
+                )
+          );
+
+          document
+            .getElementById(
+              'resultRolling'
+            )
+            .style
+            .display=
+            'none';
+
+          var trickEl=
+            document.getElementById(
+              'resultTrick'
+            );
+
+          trickEl.style.display=
+            'block';
+
+          trickEl.style.animation=
+            'none';
+
+          trickEl.offsetHeight;
+
+          trickEl.style.animation=
+            '';
+
+          var htmlParts=[];
+          var textParts=[];
+
+          if(
+            useStance &&
+            r1 &&
+            r1!=='Regular'
+          ){
+
+            htmlParts.push(
+              part(r1)
+            );
+
+            textParts.push(
+              isWild(r1)
+                ? '[variation]'
+                : r1
+            );
+
+          }
+
+          if(
+            useSpin &&
+            spin
+          ){
+
+            htmlParts.push(
+              part(spin)
+            );
+
+            textParts.push(
+              isWild(spin)
+                ? '[variation]'
+                : spin
+            );
+
+          }
+
+          htmlParts.push(
+            part(r2)
+          );
+
+          textParts.push(
+            isWild(r2)
+              ? '[variation]'
+              : r2
+          );
+
+          var mainHtml=
+            htmlParts.join(' ');
+
+          var mainText=
+            textParts.join(' ');
+
+          if(useCombo){
+
+            mainHtml+=
+              ' <span style="opacity:.7">to</span> '+
+              part(r3);
+
+            mainText+=
+              ' to '+
+              (
+                r3wild
+                  ? '[variation]'
+                  : r3
+              );
+
+          }
+
+          var anyWild=
+            isWild(r1) ||
+            isWild(spin) ||
+            isWild(r2) ||
+            r3wild;
+
+          if(anyWild){
+
+            document
+              .getElementById(
+                'trickName'
+              )
+              .innerHTML=
+              mainHtml;
+
+          }else{
+
+            document
+              .getElementById(
+                'trickName'
+              )
+              .textContent=
+              mainText;
+
+          }
+
+          history.unshift(
+            mainText
+          );
+
+          if(history.length>10){
+            history.pop();
+          }
+
+          updateHistory();
+
+          btn.disabled=false;
+
+        },
+        900
+      );
+
     };
 
-    function updateHistory(){
-      var toggle=document.getElementById('histToggle'); toggle.style.display='block';
-      toggle.textContent=(histVisible?'HIDE':'SHOW')+' HISTORY ('+history.length+')';
-      var list=document.getElementById('historyList');
-      list.innerHTML=history.map(function(t,i){return '<div class="history-item" style="color:'+(i===0?'var(--neon)':'rgba(244,246,244,'+(Math.max(0.12,0.4-i*0.03))+')')+'">'+(i===0?'▶ ':(i+1)+'. ')+t+'</div>';}).join('');
-    }
-    window.toggleHistory=function(){
-      histVisible=!histVisible;
-      document.getElementById('historyList').style.display=histVisible?'flex':'none';
-      document.getElementById('histToggle').textContent=(histVisible?'HIDE':'SHOW')+' HISTORY ('+history.length+')';
+  function updateHistory(){
+
+    var toggle=
+      document.getElementById(
+        'histToggle'
+      );
+
+    toggle.style.display=
+      'block';
+
+    toggle.textContent=
+      (
+        histVisible
+          ? 'HIDE'
+          : 'SHOW'
+      )+
+      ' HISTORY ('+
+      history.length+
+      ')';
+
+    var list=
+      document.getElementById(
+        'historyList'
+      );
+
+    list.innerHTML=
+      history
+        .map(
+          function(t,i){
+
+            return (
+              '<div class="history-item" style="color:'+
+              (
+                i===0
+                  ? 'var(--neon)'
+                  : (
+                      'rgba(244,246,244,'+
+                      Math.max(
+                        .12,
+                        .4-
+                        i*.03
+                      )+
+                      ')'
+                    )
+              )+
+              '">'+
+              (
+                i===0
+                  ? '▶ '
+                  : (
+                      (i+1)+
+                      '. '
+                    )
+              )+
+              t+
+              '</div>'
+            );
+
+          }
+        )
+        .join('');
+
+  }
+
+  window.toggleHistory=
+    function(){
+
+      histVisible=
+        !histVisible;
+
+      document
+        .getElementById(
+          'historyList'
+        )
+        .style
+        .display=
+        histVisible
+          ? 'flex'
+          : 'none';
+
+      document
+        .getElementById(
+          'histToggle'
+        )
+        .textContent=
+        (
+          histVisible
+            ? 'HIDE'
+            : 'SHOW'
+        )+
+        ' HISTORY ('+
+        history.length+
+        ')';
+
     };
-  })();
+
+})();
 </script>
+
 <script src="site.js?v=6"></script>
 
 </body>
