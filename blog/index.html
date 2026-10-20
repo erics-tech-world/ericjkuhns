@@ -6,286 +6,1167 @@
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+
 <title>Blog | Eric Kuhns</title>
 <meta name="description" content="Writing from Eric Kuhns on tech, skating, sci-fi, and building things.">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VC2DP6JN4S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VC2DP6JN4S');
+</script>
+
 <style>
   :root{
-    --bg:#0a0c0a;--panel:#101410;--ink:#f4f6f4;--muted:#8a938c;
-    --line:#1e241e;--neon:#39ff64;--neon-dim:#1f8a37;
+    --bg:#0a0c0a;
+    --panel:#101410;
+    --ink:#f4f6f4;
+    --muted:#8a938c;
+    --line:#1e241e;
+    --neon:#39ff64;
+    --neon-dim:#1f8a37;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  .mono{font-family:'JetBrains Mono','SF Mono',ui-monospace,'Courier New',monospace}
-  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0,rgba(0,0,0,0) 2px,rgba(0,0,0,.14) 3px,rgba(0,0,0,0) 4px);mix-blend-mode:overlay;opacity:.5}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
-  .head{padding:72px 0 40px;border-bottom:1px solid var(--line)}
-  .head .prompt{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--neon-dim);letter-spacing:1px;margin-bottom:18px}
-  .head .prompt .path{color:var(--muted)}
-  .head h1{font-size:clamp(34px,6vw,60px);font-weight:800;letter-spacing:-2px;min-height:1.1em}
-  .head h1 .type-caret{color:var(--neon);animation:blink 1.05s steps(1) infinite;font-weight:400}
-  .head p{color:var(--muted);margin-top:14px;max-width:560px}
+  *{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+  }
 
-  /* search + filter bar */
-  .tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:28px 0 0}
-  .search{flex:1;min-width:220px;background:var(--panel);border:1px solid var(--line);border-radius:3px;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:14px;padding:11px 14px}
-  .search:focus{outline:none;border-color:var(--neon-dim)}
-  .count{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
+  html{
+    scroll-behavior:smooth;
+  }
 
-  .list{padding:32px 0 60px}
-  .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .post{background:var(--panel);border:1px solid var(--line);border-radius:3px;overflow:hidden;transition:all .2s;display:flex;flex-direction:column}
-  .post:hover{border-color:var(--neon-dim);transform:translateY(-3px)}
-  .post:hover h3{color:var(--neon)}
-  .post-thumb{aspect-ratio:4/3;background:linear-gradient(135deg,#0d130d,#060806);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--neon-dim);letter-spacing:1px;background-size:cover;background-position:center}
-  .post-body{padding:20px;display:flex;flex-direction:column;flex:1}
-  .post .date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
-  .post h3{font-size:17px;font-weight:700;margin:8px 0;transition:color .2s;line-height:1.3}
-  .post .excerpt{font-size:14px;color:var(--muted);flex:1}
-  .post .cats{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-  .post .cat{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--neon);border:1px solid var(--line);padding:3px 9px;border-radius:2px;display:inline-block}
-  .empty{font-family:'JetBrains Mono',monospace;color:var(--muted);padding:40px 0;grid-column:1/-1}
-  .empty a{color:var(--neon)}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
 
-  .more-wrap{display:flex;justify-content:center;padding:36px 0 0}
-  .more{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.5px;padding:13px 28px;border:1px solid var(--line);border-radius:3px;background:var(--panel);color:var(--ink);cursor:pointer;transition:all .2s}
-  .more:hover{border-color:var(--neon);color:var(--neon);box-shadow:0 0 18px rgba(57,255,100,.2)}
-  .more.loading{opacity:.5;pointer-events:none}
-  .more.done{display:none}
+  .mono{
+    font-family:'JetBrains Mono','SF Mono',ui-monospace,'Courier New',monospace;
+  }
+
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9999;
+    background:repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0) 0,
+      rgba(0,0,0,0) 2px,
+      rgba(0,0,0,.14) 3px,
+      rgba(0,0,0,0) 4px
+    );
+    mix-blend-mode:overlay;
+    opacity:.5;
+  }
+
+  a{
+    color:inherit;
+    text-decoration:none;
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  .head{
+    padding:72px 0 40px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .head .prompt{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--neon-dim);
+    letter-spacing:1px;
+    margin-bottom:18px;
+  }
+
+  .head .prompt .path{
+    color:var(--muted);
+  }
+
+  .head h1{
+    font-size:clamp(34px,6vw,60px);
+    font-weight:800;
+    letter-spacing:-2px;
+    min-height:1.1em;
+  }
+
+  .head h1 .type-caret{
+    color:var(--neon);
+    animation:blink 1.05s steps(1) infinite;
+    font-weight:400;
+  }
+
+  .head p{
+    color:var(--muted);
+    margin-top:14px;
+    max-width:560px;
+  }
+
+  .tools{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    align-items:center;
+    padding:28px 0 0;
+  }
+
+  .search{
+    flex:1;
+    min-width:220px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:3px;
+    color:var(--ink);
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;
+    padding:11px 14px;
+  }
+
+  .search:focus{
+    outline:none;
+    border-color:var(--neon-dim);
+  }
+
+  .count{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .list{
+    padding:32px 0 60px;
+  }
+
+  .posts{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+
+  .post{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:3px;
+    overflow:hidden;
+    transition:all .2s;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .post:hover{
+    border-color:var(--neon-dim);
+    transform:translateY(-3px);
+  }
+
+  .post:hover h3{
+    color:var(--neon);
+  }
+
+  .post-thumb{
+    aspect-ratio:4/3;
+    background:linear-gradient(135deg,#0d130d,#060806);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-bottom:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--neon-dim);
+    letter-spacing:1px;
+    background-size:cover;
+    background-position:center;
+  }
+
+  .post-body{
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+  }
+
+  .post .date{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--muted);
+  }
+
+  .post h3{
+    font-size:17px;
+    font-weight:700;
+    margin:8px 0;
+    transition:color .2s;
+    line-height:1.3;
+  }
+
+  .post .excerpt{
+    font-size:14px;
+    color:var(--muted);
+    flex:1;
+  }
+
+  .post .cats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:14px;
+  }
+
+  .post .cat{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    color:var(--neon);
+    border:1px solid var(--line);
+    padding:3px 9px;
+    border-radius:2px;
+    display:inline-block;
+  }
+
+  .empty{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--muted);
+    padding:40px 0;
+    grid-column:1/-1;
+  }
+
+  .empty a{
+    color:var(--neon);
+  }
+
+  .more-wrap{
+    display:flex;
+    justify-content:center;
+    padding:36px 0 0;
+  }
+
+  .more{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    letter-spacing:.5px;
+    padding:13px 28px;
+    border:1px solid var(--line);
+    border-radius:3px;
+    background:var(--panel);
+    color:var(--ink);
+    cursor:pointer;
+    transition:all .2s;
+  }
+
+  .more:hover{
+    border-color:var(--neon);
+    color:var(--neon);
+    box-shadow:0 0 18px rgba(57,255,100,.2);
+  }
+
+  .more.loading{
+    opacity:.5;
+    pointer-events:none;
+  }
+
+  .more.done{
+    display:none;
+  }
 
   @media(max-width:820px){
-    .posts{grid-template-columns:1fr 1fr}
+    .posts{
+      grid-template-columns:1fr 1fr;
+    }
   }
-  @media(max-width:560px){.posts{grid-template-columns:1fr}}
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  @media(max-width:560px){
+    .posts{
+      grid-template-columns:1fr;
+    }
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{
+      animation:none!important;
+      transition:none!important;
+    }
+  }
 </style>
+
 <link rel="stylesheet" href="../site.css?v=6">
 </head>
+
 <body>
-<script>window.SITE={active:"blog",base:"../"};</script>
+
+<script>
+window.SITE={
+  active:"blog",
+  base:"../"
+};
+</script>
+
 <div id="site-nav"></div>
 
 <header class="head">
   <div class="wrap">
-    <h1 class="typed"><span id="typed-title"></span><span class="type-caret">_</span></h1>
-    <p>Welcome to my blog where I cover tech, adventure/travel, skateboarding, pop culture, nostalgia, and anything else that pops into my head.</p>
+
+    <h1 class="typed">
+      <span id="typed-title"></span>
+      <span class="type-caret">_</span>
+    </h1>
+
+    <p>
+      Welcome to my blog where I cover tech, adventure/travel, skateboarding, pop culture, nostalgia, and anything else that pops into my head.
+    </p>
+
     <div class="tools">
-      <input class="search" id="search" placeholder="search posts…" oninput="applyFilter()">
+      <input
+        class="search"
+        id="search"
+        placeholder="search posts…"
+        oninput="applyFilter()"
+      >
+
       <span class="count mono" id="count"></span>
     </div>
+
   </div>
 </header>
 
 <section class="list">
   <div class="wrap">
-    <div class="posts" id="posts"><div class="empty mono">Loading posts…</div></div>
-    <div class="more-wrap"><button class="more mono" id="more" style="display:none" onclick="loadNext()">Load more posts</button></div>
+
+    <div class="posts" id="posts">
+      <div class="empty mono">Loading posts…</div>
+    </div>
+
+    <div class="more-wrap">
+      <button
+        class="more mono"
+        id="more"
+        style="display:none"
+        onclick="loadNext()"
+      >
+        Load more posts
+      </button>
+    </div>
+
   </div>
 </section>
 
 <div id="site-footer"></div>
 
 <script src="blog-config.js"></script>
+
 <script>
-  // typewriter effect for the blog title
-  (function(){
-    const target = document.getElementById('typed-title');
-    if(!target) return;
-    const text = "Eric J. Kuhns Blog";
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduce){ target.textContent = text; return; }
-    let i = 0;
-    (function tick(){
-      if(i <= text.length){
-        target.textContent = text.slice(0,i);
-        i++;
-        setTimeout(tick, 65);
-      }
-    })();
+(function(){
+
+  const target=document.getElementById('typed-title');
+
+  if(!target){
+    return;
+  }
+
+  const text="Eric J. Kuhns Blog";
+
+  const reduce=
+    window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if(reduce){
+    target.textContent=text;
+    return;
+  }
+
+  let i=0;
+
+  (function tick(){
+
+    if(i<=text.length){
+
+      target.textContent=
+        text.slice(0,i);
+
+      i++;
+
+      setTimeout(
+        tick,
+        65
+      );
+    }
+
   })();
-  document.addEventListener('click', function(e){
+
+})();
+
+document.addEventListener(
+  'click',
+  function(e){
+
     if(!e.target.closest('.nav-drop')){
-      document.querySelectorAll('.nav-drop.open').forEach(function(d){ d.classList.remove('open'); });
-    }
-  });
 
-  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-  function fmtDate(iso){ try{ return new Date(iso).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }catch(e){ return ''; } }
-  function firstImage(html){ const m=(html||'').match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:''; }
-  function toText(html){ const d=document.createElement('div'); d.innerHTML=html||''; return (d.textContent||'').replace(/\s+/g,' ').trim(); }
-  function postSlug(entry){
-    let alt=(entry.link||[]).find(function(l){return l.rel==='alternate';}); let href=alt?alt.href:'';
-    let m=href.match(/\/(\d{4})\/(\d{2})\/([^\/]+)\.html/);
-    return m?(m[1]+'/'+m[2]+'/'+m[3]):encodeURIComponent(entry.id.$t);
+      document
+        .querySelectorAll('.nav-drop.open')
+        .forEach(function(d){
+          d.classList.remove('open');
+        });
+
+    }
+
+  }
+);
+
+function esc(s){
+
+  return (s||"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+
+}
+
+function fmtDate(iso){
+
+  try{
+
+    return new Date(iso)
+      .toLocaleDateString(
+        'en-US',
+        {
+          year:'numeric',
+          month:'short',
+          day:'numeric'
+        }
+      );
+
+  }catch(e){
+
+    return '';
+
   }
 
-  const PAGE = 30;          // posts fetched per batch
-  let startIndex = 1;       // Blogger is 1-indexed
-  let totalPosts = null;    // filled from feed
-  let allLoaded = [];       // every post we've fetched so far
-  let fetching = false;
-  let renderedOnce = false;   // true after the first batch renders
+}
 
-  const postsEl = document.getElementById('posts');
-  const moreBtn = document.getElementById('more');
-  const countEl = document.getElementById('count');
+function firstImage(html){
 
-  function cardHTML(e){
-    const title = e.title ? e.title.$t : 'Untitled';
-    const content = (e.content && e.content.$t) || (e.summary && e.summary.$t) || '';
-    const date = e.published ? e.published.$t : '';
-    const img = firstImage(content);
-    const cats = (e.category || []).map(function(c){ return c.term; });
-    const slug = postSlug(e);
-    const excerpt = toText(content).slice(0,120) + '…';
-    const thumbStyle = img ? (' style="background-image:url(\''+img+'\')"') : '';
-    const thumbText = img ? '' : '[ '+esc(cats[0]||'post')+' ]';
-    var pid = (e.id && e.id.$t) ? e.id.$t : slug;
-    return '<a class="post" href="post.html?p='+encodeURIComponent(slug)+'" '+
-      'data-id="'+esc(pid)+'" '+
-      'data-search="'+esc((title+' '+excerpt+' '+cats.join(' ')).toLowerCase())+'">'+
-      '<div class="post-thumb"'+thumbStyle+'>'+thumbText+'</div>'+
+  const m=
+    (html||'')
+      .match(
+        /<img[^>]+src=["']([^"']+)["']/i
+      );
+
+  return m
+    ? m[1]
+    : '';
+
+}
+
+function toText(html){
+
+  const d=
+    document.createElement('div');
+
+  d.innerHTML=
+    html||'';
+
+  return (d.textContent||'')
+    .replace(/\s+/g,' ')
+    .trim();
+
+}
+
+function postSlug(entry){
+
+  let alt=
+    (entry.link||[])
+      .find(function(l){
+        return l.rel==='alternate';
+      });
+
+  let href=
+    alt
+      ? alt.href
+      : '';
+
+  let m=
+    href.match(
+      /\/(\d{4})\/(\d{2})\/([^\/]+)\.html/
+    );
+
+  return m
+    ? (
+        m[1]+'/'+
+        m[2]+'/'+
+        m[3]
+      )
+    : encodeURIComponent(
+        entry.id.$t
+      );
+
+}
+
+const PAGE=30;
+
+let startIndex=1;
+let totalPosts=null;
+let allLoaded=[];
+let fetching=false;
+let renderedOnce=false;
+
+const postsEl=
+  document.getElementById('posts');
+
+const moreBtn=
+  document.getElementById('more');
+
+const countEl=
+  document.getElementById('count');
+
+function cardHTML(e){
+
+  const title=
+    e.title
+      ? e.title.$t
+      : 'Untitled';
+
+  const content=
+    (
+      e.content &&
+      e.content.$t
+    )
+    ||
+    (
+      e.summary &&
+      e.summary.$t
+    )
+    ||
+    '';
+
+  const date=
+    e.published
+      ? e.published.$t
+      : '';
+
+  const img=
+    firstImage(content);
+
+  const cats=
+    (e.category||[])
+      .map(function(c){
+        return c.term;
+      });
+
+  const slug=
+    postSlug(e);
+
+  const excerpt=
+    toText(content)
+      .slice(0,120)
+    +'…';
+
+  const thumbStyle=
+    img
+      ? (
+          ' style="background-image:url(\''+
+          img+
+          '\')"'
+        )
+      : '';
+
+  const thumbText=
+    img
+      ? ''
+      : (
+          '[ '+
+          esc(cats[0]||'post')+
+          ' ]'
+        );
+
+  var pid=
+    (
+      e.id &&
+      e.id.$t
+    )
+      ? e.id.$t
+      : slug;
+
+  return (
+    '<a class="post" href="post.html?p='+
+    encodeURIComponent(slug)+
+    '" '+
+    'data-id="'+
+    esc(pid)+
+    '" '+
+    'data-search="'+
+    esc(
+      (
+        title+
+        ' '+
+        excerpt+
+        ' '+
+        cats.join(' ')
+      )
+      .toLowerCase()
+    )+
+    '">'+
+
+      '<div class="post-thumb"'+
+      thumbStyle+
+      '>'+
+      thumbText+
+      '</div>'+
+
       '<div class="post-body">'+
-        '<span class="date mono">'+fmtDate(date)+'</span>'+
-        '<h3>'+esc(title)+'</h3>'+
-        '<div class="excerpt">'+esc(excerpt)+'</div>'+
-        (cats.length ? '<div class="cats">'+cats.map(function(c){return '<span class="cat mono">'+esc(c)+'</span>';}).join('')+'</div>' : '')+
-      '</div></a>';
+
+        '<span class="date mono">'+
+        fmtDate(date)+
+        '</span>'+
+
+        '<h3>'+
+        esc(title)+
+        '</h3>'+
+
+        '<div class="excerpt">'+
+        esc(excerpt)+
+        '</div>'+
+
+        (
+          cats.length
+            ? (
+                '<div class="cats">'+
+
+                cats
+                  .map(function(c){
+                    return (
+                      '<span class="cat mono">'+
+                      esc(c)+
+                      '</span>'
+                    );
+                  })
+                  .join('')
+
+                +'</div>'
+              )
+            : ''
+        )+
+
+      '</div>'+
+
+    '</a>'
+  );
+
+}
+
+var seenIds={};
+
+function renderAppend(entries){
+
+  if(
+    !renderedOnce ||
+    postsEl.querySelector('.empty')
+  ){
+
+    postsEl.innerHTML='';
+    renderedOnce=true;
+    seenIds={};
+
   }
 
-  var seenIds = {};   // post IDs already rendered, prevents duplicates
-  function renderAppend(entries){
-    if(!renderedOnce || postsEl.querySelector('.empty')){ postsEl.innerHTML=''; renderedOnce = true; seenIds = {}; }
-    entries.forEach(function(e){
-      var pid = (e.id && e.id.$t) ? e.id.$t : postSlug(e);
-      if(seenIds[pid]) return;   // skip anything we've already shown
-      seenIds[pid] = true;
-      postsEl.insertAdjacentHTML('beforeend', cardHTML(e));
-    });
-  }
+  entries.forEach(
+    function(e){
 
-  function updateMore(){
-    if(totalPosts !== null && allLoaded.length >= totalPosts){ moreBtn.classList.add('done'); }
-    else { moreBtn.style.display='inline-block'; moreBtn.classList.remove('loading'); }
-    // if a search is active, the count is managed by applyFilter(); don't overwrite it
-    var q = document.getElementById('search');
-    if(q && q.value.trim()) return;
-    if(totalPosts === null){ countEl.textContent = ''; return; }
-    // never show more loaded than the reported total (Blogger's total can lag pagination)
-    var total = Math.max(totalPosts, allLoaded.length);
-    var loaded = Math.min(allLoaded.length, total);
-    countEl.textContent = loaded + ' of ' + total + ' posts';
-  }
+      var pid=
+        (
+          e.id &&
+          e.id.$t
+        )
+          ? e.id.$t
+          : postSlug(e);
 
-  function loadNext(after){
-    if(fetching) return;
-    fetching = true;
-    moreBtn.classList.add('loading');
-    const CB = 'bloggerPage_' + Math.floor(Math.random()*1e9);
-    window[CB] = function(json){
-      fetching = false;
-      // total count
-      if(json.feed && json.feed.openSearch$totalResults){ totalPosts = parseInt(json.feed.openSearch$totalResults.$t,10); }
-      var entries = (json.feed && json.feed.entry) ? json.feed.entry : [];
-      if(!entries.length && allLoaded.length===0){
-        postsEl.innerHTML = '<div class="empty mono">No posts yet. Check back soon.</div>';
-        moreBtn.classList.add('done'); return;
+      if(seenIds[pid]){
+        return;
       }
-      // drop any posts we've already loaded (Blogger pages can overlap)
-      var loadedIds = {};
-      allLoaded.forEach(function(e){ loadedIds[(e.id&&e.id.$t)?e.id.$t:postSlug(e)] = true; });
-      var fresh = entries.filter(function(e){ var id=(e.id&&e.id.$t)?e.id.$t:postSlug(e); return !loadedIds[id]; });
-      allLoaded = allLoaded.concat(fresh);
-      renderAppend(fresh);
-      startIndex += entries.length;   // advance by what the feed returned, not just fresh
-      updateMore();
-      applyFilter();                  // re-apply current search/filter to the new cards
-      try{ delete window[CB]; }catch(e){}
-      if(typeof after === 'function') after();
-    };
-    const s = document.createElement('script');
-    const labelPath = (typeof BLOG_FILTER !== 'undefined' && BLOG_FILTER) ? ('/-/' + encodeURIComponent(BLOG_FILTER)) : '';
-    s.src = 'https://'+BLOG_ID+'/feeds/posts/default'+labelPath+'?alt=json-in-script&max-results='+PAGE+'&start-index='+startIndex+'&callback='+CB;
-    s.onerror = function(){
-      fetching=false; moreBtn.classList.remove('loading');
-      if(allLoaded.length===0){ postsEl.innerHTML='<div class="empty mono">Couldn\'t load posts right now.</div>'; }
-    };
-    document.body.appendChild(s);
+
+      seenIds[pid]=true;
+
+      postsEl.insertAdjacentHTML(
+        'beforeend',
+        cardHTML(e)
+      );
+
+    }
+  );
+
+}
+
+function updateMore(){
+
+  if(
+    totalPosts!==null &&
+    allLoaded.length>=totalPosts
+  ){
+
+    moreBtn
+      .classList
+      .add('done');
+
+  }else{
+
+    moreBtn.style.display=
+      'inline-block';
+
+    moreBtn
+      .classList
+      .remove('loading');
+
   }
 
-  function allPostsLoaded(){ return totalPosts !== null && allLoaded.length >= totalPosts; }
+  var q=
+    document
+      .getElementById('search');
 
-  function applyFilter(){
-    const q = document.getElementById('search').value.trim().toLowerCase();
-    let shown = 0;
-    postsEl.querySelectorAll('.post').forEach(function(card){
-      const hit = !q || card.getAttribute('data-search').indexOf(q) !== -1;
-      card.style.display = hit ? '' : 'none';
-      if(hit) shown++;
-    });
+  if(
+    q &&
+    q.value.trim()
+  ){
+    return;
+  }
 
-    // remove any previous "searching deeper" note
-    var note = document.getElementById('search-note');
-    if(note) note.remove();
+  if(totalPosts===null){
 
-    if(q){
-      // hide the manual load-more button while a search is active
-      moreBtn.style.display = 'none';
-      // counter reflects how many loaded posts match the search
-      countEl.textContent = shown + (shown === 1 ? ' match' : ' matches') + ' for "' + q + '"';
-      if(!allPostsLoaded()){
-        // keep pulling more posts from the archive until we find matches or run out
-        var hint = document.createElement('div');
-        hint.id = 'search-note';
-        hint.className = 'empty mono';
-        hint.style.opacity = '.7';
-        hint.textContent = shown ? 'Searching earlier posts…' : 'Searching the archive for "'+q+'"…';
-        postsEl.parentNode.insertBefore(hint, moreBtn.closest('.more-wrap') || null);
-        if(!fetching){
-          loadNext(function(){
-            // only continue if the query hasn't changed since we started
-            if(document.getElementById('search').value.trim().toLowerCase() === q){ applyFilter(); }
-          });
-        }
-      } else {
-        // fully loaded: if nothing matched, say so
-        if(!shown){
-          var none = document.createElement('div');
-          none.id = 'search-note';
-          none.className = 'empty mono';
-          none.textContent = 'No posts found for "'+q+'".';
-          postsEl.appendChild(none);
-        }
+    countEl.textContent='';
+    return;
+
+  }
+
+  var total=
+    Math.max(
+      totalPosts,
+      allLoaded.length
+    );
+
+  var loaded=
+    Math.min(
+      allLoaded.length,
+      total
+    );
+
+  countEl.textContent=
+    loaded+
+    ' of '+
+    total+
+    ' posts';
+
+}
+
+function loadNext(after){
+
+  if(fetching){
+    return;
+  }
+
+  fetching=true;
+
+  moreBtn
+    .classList
+    .add('loading');
+
+  const CB=
+    'bloggerPage_' +
+    Math.floor(
+      Math.random()*1e9
+    );
+
+  window[CB]=function(json){
+
+    fetching=false;
+
+    if(
+      json.feed &&
+      json.feed.openSearch$totalResults
+    ){
+
+      totalPosts=
+        parseInt(
+          json.feed.openSearch$totalResults.$t,
+          10
+        );
+
+    }
+
+    var entries=
+      (
+        json.feed &&
+        json.feed.entry
+      )
+        ? json.feed.entry
+        : [];
+
+    if(
+      !entries.length &&
+      allLoaded.length===0
+    ){
+
+      postsEl.innerHTML=
+        '<div class="empty mono">'+
+        'No posts yet. Check back soon.'+
+        '</div>';
+
+      moreBtn
+        .classList
+        .add('done');
+
+      return;
+
+    }
+
+    var loadedIds={};
+
+    allLoaded.forEach(
+      function(e){
+
+        loadedIds[
+          (
+            e.id &&
+            e.id.$t
+          )
+            ? e.id.$t
+            : postSlug(e)
+        ]=true;
+
       }
-    } else {
-      // cleared search: restore the load-more button if there's more to load
-      if(!allPostsLoaded()) moreBtn.style.display = 'inline-block';
-      updateMore(); // restore the normal "X of Y posts" count
+    );
+
+    var fresh=
+      entries.filter(
+        function(e){
+
+          var id=
+            (
+              e.id &&
+              e.id.$t
+            )
+              ? e.id.$t
+              : postSlug(e);
+
+          return !loadedIds[id];
+
+        }
+      );
+
+    allLoaded=
+      allLoaded.concat(fresh);
+
+    renderAppend(fresh);
+
+    startIndex+=
+      entries.length;
+
+    updateMore();
+
+    applyFilter();
+
+    try{
+      delete window[CB];
+    }catch(e){}
+
+    if(
+      typeof after==='function'
+    ){
+      after();
     }
+
+  };
+
+  const s=
+    document.createElement('script');
+
+  const labelPath=
+    (
+      typeof BLOG_FILTER!=='undefined' &&
+      BLOG_FILTER
+    )
+      ? (
+          '/-/' +
+          encodeURIComponent(
+            BLOG_FILTER
+          )
+        )
+      : '';
+
+  s.src=
+    'https://'+
+    BLOG_ID+
+    '/feeds/posts/default'+
+    labelPath+
+    '?alt=json-in-script'+
+    '&max-results='+
+    PAGE+
+    '&start-index='+
+    startIndex+
+    '&callback='+
+    CB;
+
+  s.onerror=
+    function(){
+
+      fetching=false;
+
+      moreBtn
+        .classList
+        .remove('loading');
+
+      if(allLoaded.length===0){
+
+        postsEl.innerHTML=
+          '<div class="empty mono">'+
+          'Couldn\'t load posts right now.'+
+          '</div>';
+
+      }
+
+    };
+
+  document.body.appendChild(s);
+
+}
+
+function allPostsLoaded(){
+
+  return (
+    totalPosts!==null &&
+    allLoaded.length>=totalPosts
+  );
+
+}
+
+function applyFilter(){
+
+  const q=
+    document
+      .getElementById('search')
+      .value
+      .trim()
+      .toLowerCase();
+
+  let shown=0;
+
+  postsEl
+    .querySelectorAll('.post')
+    .forEach(function(card){
+
+      const hit=
+        !q ||
+        card
+          .getAttribute('data-search')
+          .indexOf(q)!==-1;
+
+      card.style.display=
+        hit
+          ? ''
+          : 'none';
+
+      if(hit){
+        shown++;
+      }
+
+    });
+
+  var note=
+    document
+      .getElementById('search-note');
+
+  if(note){
+    note.remove();
   }
 
-  (function(){
-    if(typeof BLOG_ID === 'undefined' || !BLOG_ID){
-      postsEl.innerHTML = '<div class="empty mono">Blog not configured yet.</div>'; return;
+  if(q){
+
+    moreBtn.style.display=
+      'none';
+
+    countEl.textContent=
+      shown+
+      (
+        shown===1
+          ? ' match'
+          : ' matches'
+      )+
+      ' for "'+
+      q+
+      '"';
+
+    if(!allPostsLoaded()){
+
+      var hint=
+        document.createElement('div');
+
+      hint.id=
+        'search-note';
+
+      hint.className=
+        'empty mono';
+
+      hint.style.opacity=
+        '.7';
+
+      hint.textContent=
+        shown
+          ? 'Searching earlier posts…'
+          : (
+              'Searching the archive for "'+
+              q+
+              '"…'
+            );
+
+      postsEl
+        .parentNode
+        .insertBefore(
+          hint,
+          moreBtn.closest('.more-wrap') || null
+        );
+
+      if(!fetching){
+
+        loadNext(
+          function(){
+
+            if(
+              document
+                .getElementById('search')
+                .value
+                .trim()
+                .toLowerCase()===q
+            ){
+
+              applyFilter();
+
+            }
+
+          }
+        );
+
+      }
+
+    }else{
+
+      if(!shown){
+
+        var none=
+          document.createElement('div');
+
+        none.id=
+          'search-note';
+
+        none.className=
+          'empty mono';
+
+        none.textContent=
+          'No posts found for "'+
+          q+
+          '".';
+
+        postsEl.appendChild(none);
+
+      }
+
     }
-    // pre-fill the search from a ?q= in the URL (used by the 404 page's search box)
-    var pm = location.search.match(/[?&]q=([^&]+)/);
-    if(pm){
-      try{
-        var preset = decodeURIComponent(pm[1].replace(/\+/g,' '));
-        var si = document.getElementById('search');
-        if(si && preset){ si.value = preset; }
-      }catch(e){}
+
+  }else{
+
+    if(!allPostsLoaded()){
+
+      moreBtn.style.display=
+        'inline-block';
+
     }
-    loadNext(function(){
-      var si = document.getElementById('search');
-      if(si && si.value.trim()) applyFilter();
-    });
-  })();
+
+    updateMore();
+
+  }
+
+}
+
+(function(){
+
+  if(
+    typeof BLOG_ID==='undefined' ||
+    !BLOG_ID
+  ){
+
+    postsEl.innerHTML=
+      '<div class="empty mono">'+
+      'Blog not configured yet.'+
+      '</div>';
+
+    return;
+
+  }
+
+  var pm=
+    location.search.match(
+      /[?&]q=([^&]+)/
+    );
+
+  if(pm){
+
+    try{
+
+      var preset=
+        decodeURIComponent(
+          pm[1]
+            .replace(/\+/g,' ')
+        );
+
+      var si=
+        document
+          .getElementById('search');
+
+      if(
+        si &&
+        preset
+      ){
+
+        si.value=
+          preset;
+
+      }
+
+    }catch(e){}
+
+  }
+
+  loadNext(
+    function(){
+
+      var si=
+        document
+          .getElementById('search');
+
+      if(
+        si &&
+        si.value.trim()
+      ){
+
+        applyFilter();
+
+      }
+
+    }
+  );
+
+})();
 </script>
 
 <script src="../site.js?v=6"></script>
+
 </body>
 </html>
