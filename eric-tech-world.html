@@ -8,6 +8,16 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <title>Eric's Tech World | Eric J. Kuhns</title>
 <meta name="description" content="Eric's Tech World: robot reviews, future tech, articles, and the robot shop. The companion site to the Eric's Tech World YouTube channel.">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VC2DP6JN4S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VC2DP6JN4S');
+</script>
+
 <style>
   :root{
     --bg:#0a0c0a;--panel:#101410;--panel2:#0d110d;--ink:#f4f6f4;--muted:#8a938c;
@@ -21,7 +31,6 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
-  /* hero */
   .hero{padding:100px 0 84px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;min-height:460px;display:flex;align-items:center}
   #matrix-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;opacity:.55}
   .hero-inner{position:relative;z-index:2;width:100%}
@@ -44,7 +53,6 @@
   .sec-head h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-1px}
   .sec-head .line{flex:1;height:1px;background:var(--line)}
 
-  /* video (reused from home) */
   .vid-loading,.vid-error{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);padding:40px 0;text-align:center}
   .vid-error b{color:var(--neon)}
   .vid-feature{margin-bottom:16px}
@@ -81,7 +89,6 @@
   .vid-cap{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:14px}
   .vid-cap b{color:var(--neon)}
 
-  /* articles carousel */
   .art-carousel{display:flex;align-items:stretch;gap:10px}
   .art-viewport{flex:1;overflow:hidden;padding-top:6px;margin-top:-6px}
   .art-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
@@ -95,10 +102,18 @@
   .art-body h3{font-size:16px;font-weight:700;margin:8px 0;line-height:1.3;transition:color .2s}
   .art-body .cat{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--neon);border:1px solid var(--line);padding:3px 9px;border-radius:2px;display:inline-block;align-self:flex-start;margin-top:auto}
   .art-loading{font-family:'JetBrains Mono',monospace;color:var(--muted);padding:20px 0}
-  @media(max-width:820px){.car-item{flex:0 0 calc((100% - 12px) / 2)}.art-card{flex:0 0 calc((100% - 16px) / 2)}}
-  @media(max-width:560px){.car-item{flex:0 0 85%}.art-card{flex:0 0 85%}.car-arrow,.art-arrow{display:none}}
 
-  /* shop */
+  @media(max-width:820px){
+    .car-item{flex:0 0 calc((100% - 12px) / 2)}
+    .art-card{flex:0 0 calc((100% - 16px) / 2)}
+  }
+
+  @media(max-width:560px){
+    .car-item{flex:0 0 85%}
+    .art-card{flex:0 0 85%}
+    .car-arrow,.art-arrow{display:none}
+  }
+
   .shop{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center}
   .shop-art{aspect-ratio:4/3;background:linear-gradient(135deg,#0d130d,#060806);border:1px solid var(--neon-dim);border-radius:4px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(57,255,100,.08);overflow:hidden}
   .shop-art span{font-size:64px;filter:grayscale(.2)}
@@ -110,7 +125,6 @@
     .shop{grid-template-columns:1fr;gap:24px}
   }
 
-  /* ===== ROBOT FINDER ===== */
   .rf-intro{color:var(--muted);max-width:680px;margin-bottom:28px;font-size:15px}
   .rf-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:28px;padding:22px;background:var(--panel2);border:1px solid var(--line);border-radius:6px}
   .rf-fg{display:flex;flex-direction:column}
@@ -147,72 +161,145 @@
   .rf-more{display:block;margin:30px auto 0;padding:14px 34px;background:var(--panel);color:var(--neon);border:1px solid var(--neon-dim);border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.5px}
   .rf-more:hover{box-shadow:0 0 20px rgba(57,255,100,.25);transform:translateY(-1px)}
   .rf-more.hidden{display:none}
-  @media(max-width:560px){.rf-grid{grid-template-columns:1fr}.rf-stats{grid-template-columns:1fr}.rf-actions{flex-direction:column}}
 
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media(max-width:560px){
+    .rf-grid{grid-template-columns:1fr}
+    .rf-stats{grid-template-columns:1fr}
+    .rf-actions{flex-direction:column}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
 </style>
+
 <link rel="stylesheet" href="site.css?v=6">
 </head>
+
 <body>
-<script>window.SITE={active:"techworld",base:"",logo:"Eric's Tech World"};</script>
+
+<script>
+window.SITE={
+  active:"techworld",
+  base:"",
+  logo:"Eric's Tech World"
+};
+</script>
+
 <div id="site-nav"></div>
 
 <header class="hero" id="tw-hero">
   <canvas id="matrix-canvas"></canvas>
+
   <div class="wrap hero-inner">
     <div class="eyebrow mono">// official companion site to my YouTube</div>
-    <h1><span id="tw-typed"></span><span class="type-caret" id="tw-caret">_</span></h1>
-    <p class="lead"><em>Where tech and adventure meet.</em></p>
+
+    <h1>
+      <span id="tw-typed"></span>
+      <span class="type-caret" id="tw-caret">_</span>
+    </h1>
+
+    <p class="lead">
+      <em>Where tech and adventure meet.</em>
+    </p>
+
     <div class="cta-row">
-      <a href="https://www.youtube.com/@ericstechworld" target="_blank" rel="noopener" class="btn btn-primary mono">▶ Subscribe on YouTube</a>
+      <a
+        href="https://www.youtube.com/@ericstechworld"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-primary mono"
+      >
+        ▶ Subscribe on YouTube
+      </a>
     </div>
   </div>
 </header>
 
 <section class="blk" id="videos">
   <div class="wrap">
+
     <div class="sec-head">
       <span class="tag mono">01</span>
       <h2>Latest videos</h2>
       <div class="line"></div>
     </div>
-    <div class="vid-panel" id="vid-etw" data-playlist="PLC_X1O0yNkfTPBVDezefBILpkI6IDSnrk" data-label="Eric's Tech World">
-      <div class="vid-loading mono">Loading latest videos…</div>
+
+    <div
+      class="vid-panel"
+      id="vid-etw"
+      data-playlist="PLC_X1O0yNkfTPBVDezefBILpkI6IDSnrk"
+      data-label="Eric's Tech World"
+    >
+      <div class="vid-loading mono">
+        Loading latest videos…
+      </div>
     </div>
+
   </div>
 </section>
 
 <section class="blk" id="articles">
   <div class="wrap">
+
     <div class="sec-head">
       <span class="tag mono">02</span>
       <h2>Tech &amp; robot articles</h2>
       <div class="line"></div>
     </div>
+
     <div class="art-carousel">
-      <button class="car-arrow art-prev disabled" aria-label="Previous" onclick="artSlide(-1)">‹</button>
+
+      <button
+        class="car-arrow art-prev disabled"
+        aria-label="Previous"
+        onclick="artSlide(-1)"
+      >
+        ‹
+      </button>
+
       <div class="art-viewport">
-        <div class="art-track" id="art-track"><div class="art-loading mono">Loading articles…</div></div>
+        <div class="art-track" id="art-track">
+          <div class="art-loading mono">
+            Loading articles…
+          </div>
+        </div>
       </div>
-      <button class="car-arrow art-next" aria-label="More" onclick="artSlide(1)">›</button>
+
+      <button
+        class="car-arrow art-next"
+        aria-label="More"
+        onclick="artSlide(1)"
+      >
+        ›
+      </button>
+
     </div>
+
     <div style="margin-top:24px">
-      <a href="blog/index.html" class="btn btn-ghost mono">Read all posts →</a>
+      <a href="blog/index.html" class="btn btn-ghost mono">
+        Read all posts →
+      </a>
     </div>
+
   </div>
 </section>
 
-
 <section class="blk" id="robot-finder">
   <div class="wrap">
+
     <div class="sec-head">
       <span class="tag mono">03</span>
       <h2>AI Robot Finder</h2>
       <div class="line"></div>
     </div>
-    <p class="rf-intro">Every AI companion robot I've reviewed, ranked and filterable. Sort by price, battery, conversation quality and more to find the right one for you. Buy links help support the channel.</p>
+
+    <p class="rf-intro">
+      Every AI companion robot I've reviewed, ranked and filterable. Sort by price, battery, conversation quality and more to find the right one for you. Buy links help support the channel.
+    </p>
 
     <div class="rf-filters">
+
       <div class="rf-fg">
         <label for="rfSort">Sort By</label>
         <select id="rfSort">
@@ -226,11 +313,20 @@
           <option value="subscription">Subscription (No first)</option>
         </select>
       </div>
+
       <div class="rf-fg">
         <label for="rfPrice">Max Price</label>
-        <input type="range" id="rfPrice" min="0" max="1000" value="1000" step="10">
+        <input
+          type="range"
+          id="rfPrice"
+          min="0"
+          max="1000"
+          value="1000"
+          step="10"
+        >
         <span class="rf-price-val" id="rfPriceVal">$1000+</span>
       </div>
+
       <div class="rf-fg">
         <label for="rfConv">Min Conversation</label>
         <select id="rfConv">
@@ -240,6 +336,7 @@
           <option value="3">Good</option>
         </select>
       </div>
+
       <div class="rf-fg">
         <label for="rfApp">App Experience</label>
         <select id="rfApp">
@@ -250,6 +347,7 @@
           <option value="0">No App</option>
         </select>
       </div>
+
       <div class="rf-fg">
         <label for="rfGames">Games</label>
         <select id="rfGames">
@@ -260,6 +358,7 @@
           <option value="0">No Games</option>
         </select>
       </div>
+
       <div class="rf-fg">
         <label for="rfSub">Subscription</label>
         <select id="rfSub">
@@ -268,303 +367,1685 @@
           <option value="yes">Has Subscription</option>
         </select>
       </div>
+
     </div>
 
-    <div class="rf-sortinfo" id="rfSortInfo">Showing all robots sorted by Overall Rating</div>
+    <div class="rf-sortinfo" id="rfSortInfo">
+      Showing all robots sorted by Overall Rating
+    </div>
+
     <div class="rf-grid" id="rfGrid"></div>
-    <button id="rfMore" class="rf-more">Show More Robots ▾</button>
+
+    <button id="rfMore" class="rf-more">
+      Show More Robots ▾
+    </button>
+
   </div>
 </section>
-
 
 <div id="site-footer"></div>
 
 <script>
-  // ---- matrix rain background ----
-  (function(){
-    var canvas = document.getElementById('matrix-canvas');
-    if(!canvas) return;
-    var ctx = canvas.getContext('2d');
-    if(!ctx) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var W, H, cols, drops, fontSize = 15;
-    var chars = "アイウエオカキクケコサシスセソ0123456789ABCDEFｦｧｨｩｪ<>{}[]/*-+=".split("");
-    function resize(){
-      var host = canvas.parentElement.getBoundingClientRect();
-      W = host.width; H = host.height;
-      var DPR = Math.min(window.devicePixelRatio||1, 2);
-      canvas.width = W*DPR; canvas.height = H*DPR;
-      canvas.style.width = W+'px'; canvas.style.height = H+'px';
-      ctx.setTransform(DPR,0,0,DPR,0,0);
-      cols = Math.floor(W / fontSize);
-      drops = [];
-      for(var i=0;i<cols;i++){ drops[i] = Math.random()*-H; }
+(function(){
+
+  var canvas=document.getElementById('matrix-canvas');
+
+  if(!canvas){
+    return;
+  }
+
+  var ctx=canvas.getContext('2d');
+
+  if(!ctx){
+    return;
+  }
+
+  var reduce=
+    window.matchMedia &&
+    window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+  var W;
+  var H;
+  var cols;
+  var drops;
+  var fontSize=15;
+
+  var chars=
+    "アイウエオカキクケコサシスセソ0123456789ABCDEFｦｧｨｩｪ<>{}[]/*-+=".split("");
+
+  function resize(){
+
+    var host=
+      canvas
+        .parentElement
+        .getBoundingClientRect();
+
+    W=host.width;
+    H=host.height;
+
+    var DPR=
+      Math.min(
+        window.devicePixelRatio||1,
+        2
+      );
+
+    canvas.width=W*DPR;
+    canvas.height=H*DPR;
+
+    canvas.style.width=W+'px';
+    canvas.style.height=H+'px';
+
+    ctx.setTransform(
+      DPR,
+      0,
+      0,
+      DPR,
+      0,
+      0
+    );
+
+    cols=
+      Math.floor(
+        W/fontSize
+      );
+
+    drops=[];
+
+    for(var i=0;i<cols;i++){
+      drops[i]=Math.random()*-H;
     }
-    function frame(){
-      ctx.fillStyle = 'rgba(10,12,10,0.08)';
-      ctx.fillRect(0,0,W,H);
-      ctx.font = fontSize + "px 'JetBrains Mono', monospace";
-      for(var i=0;i<cols;i++){
-        var ch = chars[Math.floor(Math.random()*chars.length)];
-        var x = i*fontSize, y = drops[i];
-        // leading char brighter
-        ctx.fillStyle = 'rgba(150,255,180,0.9)';
-        ctx.fillText(ch, x, y);
-        ctx.fillStyle = 'rgba(57,255,100,0.35)';
-        ctx.fillText(chars[Math.floor(Math.random()*chars.length)], x, y - fontSize);
-        if(y > H && Math.random() > 0.975){ drops[i] = Math.random()*-40; }
-        drops[i] += fontSize * 0.6;
+
+  }
+
+  function frame(){
+
+    ctx.fillStyle=
+      'rgba(10,12,10,0.08)';
+
+    ctx.fillRect(
+      0,
+      0,
+      W,
+      H
+    );
+
+    ctx.font=
+      fontSize+
+      "px 'JetBrains Mono', monospace";
+
+    for(var i=0;i<cols;i++){
+
+      var ch=
+        chars[
+          Math.floor(
+            Math.random()*
+            chars.length
+          )
+        ];
+
+      var x=
+        i*fontSize;
+
+      var y=
+        drops[i];
+
+      ctx.fillStyle=
+        'rgba(150,255,180,0.9)';
+
+      ctx.fillText(
+        ch,
+        x,
+        y
+      );
+
+      ctx.fillStyle=
+        'rgba(57,255,100,0.35)';
+
+      ctx.fillText(
+        chars[
+          Math.floor(
+            Math.random()*
+            chars.length
+          )
+        ],
+        x,
+        y-fontSize
+      );
+
+      if(
+        y>H &&
+        Math.random()>0.975
+      ){
+        drops[i]=Math.random()*-40;
       }
-      requestAnimationFrame(frame);
+
+      drops[i]+=
+        fontSize*.6;
+
     }
-    resize();
-    window.addEventListener('resize', resize);
-    if(!reduce){ frame(); }
-    else { ctx.fillStyle='rgba(57,255,100,0.15)'; ctx.font=fontSize+"px monospace"; for(var i=0;i<cols;i++){ ctx.fillText(chars[i%chars.length], i*fontSize, (i*37)%H); } }
-  })();
 
-  // ---- typing page title ----
-  (function(){
-    var el = document.getElementById('tw-typed');
-    if(!el) return;
-    var text = "Eric's Tech World";
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduce){ el.textContent = text; return; }
-    var i = 0;
-    (function tick(){ if(i<=text.length){ el.textContent = text.slice(0,i); i++; setTimeout(tick, 70); } })();
-  })();
+    requestAnimationFrame(
+      frame
+    );
 
-  // ---- shared helpers ----
-  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-  function thumb(id,q){return "https://i.ytimg.com/vi/"+id+"/"+(q||"hqdefault")+".jpg";}
-  const YT_PROXY = "https://youtube-feed.silent-hall-684c.workers.dev/?url=";
-  const BLOG_ID = "ericjkuhns.blogspot.com";
-
-  // ================= VIDEOS =================
-  function feedUrl(pl){ return "https://www.youtube.com/feeds/videos.xml?playlist_id=" + pl; }
-  function playFeature(el, id, title){
-    el.innerHTML = '<div class="embed"><iframe src="https://www.youtube.com/embed/'+id+'?autoplay=1" title="'+esc(title)+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>';
   }
-  function renderVideos(panel, videos){
-    if(!videos.length){ return videoFallback(panel); }
-    const label = panel.getAttribute('data-label');
-    const pl = panel.getAttribute('data-playlist');
-    const feat = videos[0];
-    const rest = videos.slice(1);
-    const wrap = document.createElement('div');
-    const f = document.createElement('div'); f.className='vid-feature';
-    const ft = document.createElement('div'); ft.className='vid-thumb';
-    ft.style.backgroundImage = "url('"+thumb(feat.id,'maxresdefault')+"'),url('"+thumb(feat.id,'hqdefault')+"')";
-    ft.innerHTML = '<div class="vid-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div class="vid-title">'+esc(feat.title)+'</div>';
-    ft.onclick = function(){ playFeature(f, feat.id, feat.title); };
-    f.appendChild(ft);
-    const sub = document.createElement('div'); sub.className='vid-sub mono';
-    sub.innerHTML = '▸ Latest from <b>'+esc(label)+'</b>'; f.appendChild(sub);
-    wrap.appendChild(f);
-    const car = document.createElement('div'); car.className='vid-carousel';
-    const prev = document.createElement('button'); prev.className='car-arrow'; prev.innerHTML='‹'; prev.setAttribute('aria-label','Previous');
-    const next = document.createElement('button'); next.className='car-arrow'; next.innerHTML='›'; next.setAttribute('aria-label','More');
-    const vp = document.createElement('div'); vp.className='car-viewport';
-    const track = document.createElement('div'); track.className='car-track';
-    rest.forEach(function(v){
-      const m = document.createElement('div'); m.className='vid-mini car-item';
-      m.innerHTML = '<div class="m-thumb" style="background-image:url(\''+thumb(v.id,'mqdefault')+'\')"></div><div class="m-title">'+esc(v.title)+'</div>';
-      m.onclick = function(){ playFeature(f, v.id, v.title); window.scrollTo({top:f.getBoundingClientRect().top+window.scrollY-90,behavior:'smooth'}); };
+
+  resize();
+
+  window.addEventListener(
+    'resize',
+    resize
+  );
+
+  if(!reduce){
+
+    frame();
+
+  }else{
+
+    ctx.fillStyle=
+      'rgba(57,255,100,0.15)';
+
+    ctx.font=
+      fontSize+
+      "px monospace";
+
+    for(var i=0;i<cols;i++){
+
+      ctx.fillText(
+        chars[i%chars.length],
+        i*fontSize,
+        (i*37)%H
+      );
+
+    }
+
+  }
+
+})();
+
+(function(){
+
+  var el=
+    document.getElementById(
+      'tw-typed'
+    );
+
+  if(!el){
+    return;
+  }
+
+  var text=
+    "Eric's Tech World";
+
+  var reduce=
+    window.matchMedia &&
+    window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+  if(reduce){
+
+    el.textContent=text;
+    return;
+
+  }
+
+  var i=0;
+
+  (function tick(){
+
+    if(i<=text.length){
+
+      el.textContent=
+        text.slice(0,i);
+
+      i++;
+
+      setTimeout(
+        tick,
+        70
+      );
+
+    }
+
+  })();
+
+})();
+
+function esc(s){
+
+  return (s||"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+
+}
+
+function thumb(id,q){
+
+  return (
+    "https://i.ytimg.com/vi/"+
+    id+
+    "/"+
+    (q||"hqdefault")+
+    ".jpg"
+  );
+
+}
+
+const YT_PROXY=
+  "https://youtube-feed.silent-hall-684c.workers.dev/?url=";
+
+const BLOG_ID=
+  "ericjkuhns.blogspot.com";
+
+function feedUrl(pl){
+
+  return (
+    "https://www.youtube.com/feeds/videos.xml?playlist_id="+
+    pl
+  );
+
+}
+
+function playFeature(
+  el,
+  id,
+  title
+){
+
+  el.innerHTML=
+    '<div class="embed">'+
+    '<iframe src="https://www.youtube.com/embed/'+
+    id+
+    '?autoplay=1" title="'+
+    esc(title)+
+    '" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>'+
+    '</div>';
+
+}
+
+function renderVideos(
+  panel,
+  videos
+){
+
+  if(!videos.length){
+    return videoFallback(panel);
+  }
+
+  const label=
+    panel.getAttribute(
+      'data-label'
+    );
+
+  const pl=
+    panel.getAttribute(
+      'data-playlist'
+    );
+
+  const feat=
+    videos[0];
+
+  const rest=
+    videos.slice(1);
+
+  const wrap=
+    document.createElement(
+      'div'
+    );
+
+  const f=
+    document.createElement(
+      'div'
+    );
+
+  f.className=
+    'vid-feature';
+
+  const ft=
+    document.createElement(
+      'div'
+    );
+
+  ft.className=
+    'vid-thumb';
+
+  ft.style.backgroundImage=
+    "url('"+
+    thumb(
+      feat.id,
+      'maxresdefault'
+    )+
+    "'),url('"+
+    thumb(
+      feat.id,
+      'hqdefault'
+    )+
+    "')";
+
+  ft.innerHTML=
+    '<div class="vid-play">'+
+    '<svg viewBox="0 0 24 24">'+
+    '<path d="M8 5v14l11-7z"/>'+
+    '</svg>'+
+    '</div>'+
+    '<div class="vid-title">'+
+    esc(feat.title)+
+    '</div>';
+
+  ft.onclick=
+    function(){
+
+      playFeature(
+        f,
+        feat.id,
+        feat.title
+      );
+
+    };
+
+  f.appendChild(ft);
+
+  const sub=
+    document.createElement(
+      'div'
+    );
+
+  sub.className=
+    'vid-sub mono';
+
+  sub.innerHTML=
+    '▸ Latest from <b>'+
+    esc(label)+
+    '</b>';
+
+  f.appendChild(sub);
+
+  wrap.appendChild(f);
+
+  const car=
+    document.createElement(
+      'div'
+    );
+
+  car.className=
+    'vid-carousel';
+
+  const prev=
+    document.createElement(
+      'button'
+    );
+
+  prev.className=
+    'car-arrow';
+
+  prev.innerHTML='‹';
+
+  prev.setAttribute(
+    'aria-label',
+    'Previous'
+  );
+
+  const next=
+    document.createElement(
+      'button'
+    );
+
+  next.className=
+    'car-arrow';
+
+  next.innerHTML='›';
+
+  next.setAttribute(
+    'aria-label',
+    'More'
+  );
+
+  const vp=
+    document.createElement(
+      'div'
+    );
+
+  vp.className=
+    'car-viewport';
+
+  const track=
+    document.createElement(
+      'div'
+    );
+
+  track.className=
+    'car-track';
+
+  rest.forEach(
+    function(v){
+
+      const m=
+        document.createElement(
+          'div'
+        );
+
+      m.className=
+        'vid-mini car-item';
+
+      m.innerHTML=
+        '<div class="m-thumb" style="background-image:url(\''+
+        thumb(
+          v.id,
+          'mqdefault'
+        )+
+        '\')"></div>'+
+        '<div class="m-title">'+
+        esc(v.title)+
+        '</div>';
+
+      m.onclick=
+        function(){
+
+          playFeature(
+            f,
+            v.id,
+            v.title
+          );
+
+          window.scrollTo({
+            top:
+              f
+                .getBoundingClientRect()
+                .top+
+              window.scrollY-
+              90,
+
+            behavior:'smooth'
+          });
+
+        };
+
       track.appendChild(m);
-    });
-    const all = document.createElement('a'); all.className='vid-mini car-item vid-all';
-    all.href="https://www.youtube.com/playlist?list="+pl; all.target="_blank"; all.rel="noopener";
-    all.innerHTML='<div class="m-thumb all-thumb"><span>▸</span></div><div class="m-title">See all videos on YouTube</div>';
-    track.appendChild(all);
-    vp.appendChild(track); car.appendChild(prev); car.appendChild(vp); car.appendChild(next);
-    wrap.appendChild(car);
-    const cap = document.createElement('div'); cap.className='vid-cap mono'; cap.innerHTML='Auto-updates from the channel playlist.'; wrap.appendChild(cap);
-    panel.innerHTML=''; panel.appendChild(wrap);
-    setupCar(track, prev, next);
-  }
-  function setupCar(track, prev, next){
-    function step(){ const f=track.querySelector('.car-item'); if(!f) return 0; const gap=parseFloat(getComputedStyle(track).columnGap||getComputedStyle(track).gap||0)||0; return f.getBoundingClientRect().width+gap; }
-    function per(){ return Math.max(1, Math.round(track.parentElement.getBoundingClientRect().width/step())); }
-    function maxS(){ return track.scrollWidth - track.parentElement.getBoundingClientRect().width; }
-    function upd(){ const x=track.scrollLeft; prev.classList.toggle('disabled',x<=2); next.classList.toggle('disabled',x>=maxS()-2); }
-    prev.onclick=function(){ track.scrollBy({left:-step()*per(),behavior:'smooth'}); };
-    next.onclick=function(){ track.scrollBy({left:step()*per(),behavior:'smooth'}); };
-    track.addEventListener('scroll',upd,{passive:true}); window.addEventListener('resize',upd); setTimeout(upd,60);
-  }
-  function videoFallback(panel){
-    const pl = panel.getAttribute('data-playlist');
-    panel.innerHTML = '<div class="embed"><iframe src="https://www.youtube.com/embed/videoseries?list='+pl+'" title="playlist" allow="encrypted-media;picture-in-picture" allowfullscreen></iframe></div><div class="vid-cap mono">▸ Newest upload plays first. <a href="https://www.youtube.com/playlist?list='+pl+'" target="_blank" rel="noopener" style="color:var(--neon)">See all videos on YouTube →</a></div>';
-  }
-  function loadVideos(panel){
-    const pl = panel.getAttribute('data-playlist');
-    const url = YT_PROXY + encodeURIComponent(feedUrl(pl));
-    let done=false;
-    const controller = ("AbortController" in window) ? new AbortController() : null;
-    const timer = setTimeout(function(){ if(done)return; done=true; if(controller)controller.abort(); videoFallback(panel); }, 6000);
-    fetch(url, controller?{signal:controller.signal}:{})
-      .then(function(r){ if(!r.ok) throw new Error('http'); return r.text(); })
-      .then(function(xml){
-        if(done) return;
-        const doc = new DOMParser().parseFromString(xml,"text/xml");
-        if(doc.getElementsByTagName('parsererror').length) throw new Error('parse');
-        const entries = Array.from(doc.getElementsByTagName('entry'));
-        const vids = entries.map(function(e){ const idEl=e.getElementsByTagName('yt:videoId')[0]||e.getElementsByTagName('videoId')[0]; const tEl=e.getElementsByTagName('title')[0]; return {id:idEl?idEl.textContent:null,title:tEl?tEl.textContent:''}; }).filter(function(v){return v.id;});
-        if(!vids.length) throw new Error('empty');
-        done=true; clearTimeout(timer); renderVideos(panel, vids);
-      })
-      .catch(function(){ if(done)return; done=true; clearTimeout(timer); videoFallback(panel); });
+
+    }
+  );
+
+  const all=
+    document.createElement(
+      'a'
+    );
+
+  all.className=
+    'vid-mini car-item vid-all';
+
+  all.href=
+    "https://www.youtube.com/playlist?list="+
+    pl;
+
+  all.target=
+    "_blank";
+
+  all.rel=
+    "noopener";
+
+  all.innerHTML=
+    '<div class="m-thumb all-thumb">'+
+    '<span>▸</span>'+
+    '</div>'+
+    '<div class="m-title">'+
+    'See all videos on YouTube'+
+    '</div>';
+
+  track.appendChild(all);
+
+  vp.appendChild(track);
+
+  car.appendChild(prev);
+  car.appendChild(vp);
+  car.appendChild(next);
+
+  wrap.appendChild(car);
+
+  const cap=
+    document.createElement(
+      'div'
+    );
+
+  cap.className=
+    'vid-cap mono';
+
+  cap.innerHTML=
+    'Auto-updates from the channel playlist.';
+
+  wrap.appendChild(cap);
+
+  panel.innerHTML='';
+
+  panel.appendChild(wrap);
+
+  setupCar(
+    track,
+    prev,
+    next
+  );
+
+}
+
+function setupCar(
+  track,
+  prev,
+  next
+){
+
+  function step(){
+
+    const f=
+      track.querySelector(
+        '.car-item'
+      );
+
+    if(!f){
+      return 0;
+    }
+
+    const gap=
+      parseFloat(
+        getComputedStyle(track).columnGap ||
+        getComputedStyle(track).gap ||
+        0
+      )
+      ||
+      0;
+
+    return (
+      f
+        .getBoundingClientRect()
+        .width+
+      gap
+    );
+
   }
 
-  // ================= ARTICLES (Blogger tech label) =================
-  function firstImage(html){ const m=(html||'').match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:''; }
-  function postSlug(entry){ let alt=(entry.link||[]).find(function(l){return l.rel==='alternate';}); let href=alt?alt.href:''; let m=href.match(/\/(\d{4})\/(\d{2})\/([^\/]+)\.html/); return m?(m[1]+'/'+m[2]+'/'+m[3]):encodeURIComponent(entry.id.$t); }
-  function fmtDate(iso){ try{ return new Date(iso).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }catch(e){ return ''; } }
-  const artTrack = document.getElementById('art-track');
-  const CB = 'techArticles_' + Math.floor(Math.random()*1e9);
-  window[CB] = function(json){
-    const entries = (json.feed && json.feed.entry) ? json.feed.entry : [];
-    if(!entries.length){ artTrack.innerHTML = '<div class="art-loading mono">No tech articles yet.</div>'; return; }
-    artTrack.innerHTML = '';
-    entries.forEach(function(e){
-      const title = e.title ? e.title.$t : 'Untitled';
-      const content = (e.content && e.content.$t) || (e.summary && e.summary.$t) || '';
-      const date = e.published ? e.published.$t : '';
-      const img = firstImage(content);
-      const cats = (e.category||[]).map(function(c){ return c.term; });
-      const slug = postSlug(e);
-      const a = document.createElement('a');
-      a.className='art-card'; a.href='blog/post.html?p='+encodeURIComponent(slug);
-      const thumbStyle = img ? (' style="background-image:url(\''+img+'\')"') : '';
-      const thumbText = img ? '' : '[ tech ]';
-      a.innerHTML = '<div class="art-thumb"'+thumbStyle+'>'+thumbText+'</div>'+
-        '<div class="art-body"><span class="date mono">'+fmtDate(date)+'</span><h3>'+esc(title)+'</h3>'+
-        (cats.length?'<span class="cat mono">'+esc(cats[0])+'</span>':'')+'</div>';
-      artTrack.appendChild(a);
-    });
+  function per(){
+
+    return Math.max(
+      1,
+      Math.round(
+        track
+          .parentElement
+          .getBoundingClientRect()
+          .width/
+        step()
+      )
+    );
+
+  }
+
+  function maxS(){
+
+    return (
+      track.scrollWidth-
+      track
+        .parentElement
+        .getBoundingClientRect()
+        .width
+    );
+
+  }
+
+  function upd(){
+
+    const x=
+      track.scrollLeft;
+
+    prev.classList.toggle(
+      'disabled',
+      x<=2
+    );
+
+    next.classList.toggle(
+      'disabled',
+      x>=maxS()-2
+    );
+
+  }
+
+  prev.onclick=
+    function(){
+
+      track.scrollBy({
+        left:
+          -step()*per(),
+        behavior:'smooth'
+      });
+
+    };
+
+  next.onclick=
+    function(){
+
+      track.scrollBy({
+        left:
+          step()*per(),
+        behavior:'smooth'
+      });
+
+    };
+
+  track.addEventListener(
+    'scroll',
+    upd,
+    {passive:true}
+  );
+
+  window.addEventListener(
+    'resize',
+    upd
+  );
+
+  setTimeout(
+    upd,
+    60
+  );
+
+}
+
+function videoFallback(panel){
+
+  const pl=
+    panel.getAttribute(
+      'data-playlist'
+    );
+
+  panel.innerHTML=
+    '<div class="embed">'+
+      '<iframe src="https://www.youtube.com/embed/videoseries?list='+
+      pl+
+      '" title="playlist" allow="encrypted-media;picture-in-picture" allowfullscreen></iframe>'+
+    '</div>'+
+    '<div class="vid-cap mono">'+
+      '▸ Newest upload plays first. '+
+      '<a href="https://www.youtube.com/playlist?list='+
+      pl+
+      '" target="_blank" rel="noopener" style="color:var(--neon)">'+
+      'See all videos on YouTube →'+
+      '</a>'+
+    '</div>';
+
+}
+
+function loadVideos(panel){
+
+  const pl=
+    panel.getAttribute(
+      'data-playlist'
+    );
+
+  const url=
+    YT_PROXY+
+    encodeURIComponent(
+      feedUrl(pl)
+    );
+
+  let done=false;
+
+  const controller=
+    ("AbortController" in window)
+      ? new AbortController()
+      : null;
+
+  const timer=
+    setTimeout(
+      function(){
+
+        if(done){
+          return;
+        }
+
+        done=true;
+
+        if(controller){
+          controller.abort();
+        }
+
+        videoFallback(panel);
+
+      },
+      6000
+    );
+
+  fetch(
+    url,
+    controller
+      ? {signal:controller.signal}
+      : {}
+  )
+
+  .then(
+    function(r){
+
+      if(!r.ok){
+        throw new Error('http');
+      }
+
+      return r.text();
+
+    }
+  )
+
+  .then(
+    function(xml){
+
+      if(done){
+        return;
+      }
+
+      const doc=
+        new DOMParser()
+          .parseFromString(
+            xml,
+            "text/xml"
+          );
+
+      if(
+        doc
+          .getElementsByTagName(
+            'parsererror'
+          )
+          .length
+      ){
+        throw new Error('parse');
+      }
+
+      const entries=
+        Array.from(
+          doc.getElementsByTagName(
+            'entry'
+          )
+        );
+
+      const vids=
+        entries
+          .map(function(e){
+
+            const idEl=
+              e.getElementsByTagName(
+                'yt:videoId'
+              )[0]
+              ||
+              e.getElementsByTagName(
+                'videoId'
+              )[0];
+
+            const tEl=
+              e.getElementsByTagName(
+                'title'
+              )[0];
+
+            return {
+              id:
+                idEl
+                  ? idEl.textContent
+                  : null,
+
+              title:
+                tEl
+                  ? tEl.textContent
+                  : ''
+            };
+
+          })
+          .filter(function(v){
+            return v.id;
+          });
+
+      if(!vids.length){
+        throw new Error('empty');
+      }
+
+      done=true;
+
+      clearTimeout(timer);
+
+      renderVideos(
+        panel,
+        vids
+      );
+
+    }
+  )
+
+  .catch(
+    function(){
+
+      if(done){
+        return;
+      }
+
+      done=true;
+
+      clearTimeout(timer);
+
+      videoFallback(panel);
+
+    }
+  );
+
+}
+
+function firstImage(html){
+
+  const m=
+    (html||'')
+      .match(
+        /<img[^>]+src=["']([^"']+)["']/i
+      );
+
+  return m
+    ? m[1]
+    : '';
+
+}
+
+function postSlug(entry){
+
+  let alt=
+    (entry.link||[])
+      .find(
+        function(l){
+          return l.rel==='alternate';
+        }
+      );
+
+  let href=
+    alt
+      ? alt.href
+      : '';
+
+  let m=
+    href.match(
+      /\/(\d{4})\/(\d{2})\/([^\/]+)\.html/
+    );
+
+  return m
+    ? (
+        m[1]+'/'+
+        m[2]+'/'+
+        m[3]
+      )
+    : encodeURIComponent(
+        entry.id.$t
+      );
+
+}
+
+function fmtDate(iso){
+
+  try{
+
+    return new Date(iso)
+      .toLocaleDateString(
+        'en-US',
+        {
+          year:'numeric',
+          month:'short',
+          day:'numeric'
+        }
+      );
+
+  }catch(e){
+
+    return '';
+
+  }
+
+}
+
+const artTrack=
+  document.getElementById(
+    'art-track'
+  );
+
+const CB=
+  'techArticles_' +
+  Math.floor(
+    Math.random()*1e9
+  );
+
+window[CB]=
+  function(json){
+
+    const entries=
+      (
+        json.feed &&
+        json.feed.entry
+      )
+        ? json.feed.entry
+        : [];
+
+    if(!entries.length){
+
+      artTrack.innerHTML=
+        '<div class="art-loading mono">'+
+        'No tech articles yet.'+
+        '</div>';
+
+      return;
+
+    }
+
+    artTrack.innerHTML='';
+
+    entries.forEach(
+      function(e){
+
+        const title=
+          e.title
+            ? e.title.$t
+            : 'Untitled';
+
+        const content=
+          (
+            e.content &&
+            e.content.$t
+          )
+          ||
+          (
+            e.summary &&
+            e.summary.$t
+          )
+          ||
+          '';
+
+        const date=
+          e.published
+            ? e.published.$t
+            : '';
+
+        const img=
+          firstImage(content);
+
+        const cats=
+          (e.category||[])
+            .map(
+              function(c){
+                return c.term;
+              }
+            );
+
+        const slug=
+          postSlug(e);
+
+        const a=
+          document.createElement(
+            'a'
+          );
+
+        a.className=
+          'art-card';
+
+        a.href=
+          'blog/post.html?p='+
+          encodeURIComponent(slug);
+
+        const thumbStyle=
+          img
+            ? (
+                ' style="background-image:url(\''+
+                img+
+                '\')"'
+              )
+            : '';
+
+        const thumbText=
+          img
+            ? ''
+            : '[ tech ]';
+
+        a.innerHTML=
+          '<div class="art-thumb"'+
+          thumbStyle+
+          '>'+
+          thumbText+
+          '</div>'+
+          '<div class="art-body">'+
+            '<span class="date mono">'+
+            fmtDate(date)+
+            '</span>'+
+            '<h3>'+
+            esc(title)+
+            '</h3>'+
+            (
+              cats.length
+                ? (
+                    '<span class="cat mono">'+
+                    esc(cats[0])+
+                    '</span>'
+                  )
+                : ''
+            )+
+          '</div>';
+
+        artTrack.appendChild(a);
+
+      }
+    );
+
     setupArt();
-  };
-  let artTrackEl;
-  function setupArt(){ artTrackEl = artTrack; artUpd(); }
-  function artUpd(){
-    const prev=document.querySelector('.art-prev'), next=document.querySelector('.art-next');
-    if(!artTrack) return;
-    const x=artTrack.scrollLeft, maxS=artTrack.scrollWidth-artTrack.parentElement.getBoundingClientRect().width;
-    prev.classList.toggle('disabled',x<=2); next.classList.toggle('disabled',x>=maxS-2);
-  }
-  window.artSlide = function(dir){
-    const f=artTrack.querySelector('.art-card'); if(!f) return;
-    const gap=parseFloat(getComputedStyle(artTrack).columnGap||getComputedStyle(artTrack).gap||16)||16;
-    const step=f.getBoundingClientRect().width+gap;
-    const per=Math.max(1,Math.round(artTrack.parentElement.getBoundingClientRect().width/step));
-    artTrack.scrollBy({left:dir*step*per,behavior:'smooth'});
-  };
-  if(artTrack){ artTrack.addEventListener('scroll',artUpd,{passive:true}); window.addEventListener('resize',artUpd); }
 
-  // ---- kick off ----
-  document.addEventListener('DOMContentLoaded', function(){
-    loadVideos(document.getElementById('vid-etw'));
-    const s = document.createElement('script');
-    s.src = 'https://'+BLOG_ID+'/feeds/posts/default/-/tech?alt=json-in-script&max-results=15&callback='+CB;
-    s.onerror = function(){ if(artTrack) artTrack.innerHTML='<div class="art-loading mono">Couldn\'t load articles right now.</div>'; };
+  };
+
+let artTrackEl;
+
+function setupArt(){
+
+  artTrackEl=
+    artTrack;
+
+  artUpd();
+
+}
+
+function artUpd(){
+
+  const prev=
+    document.querySelector(
+      '.art-prev'
+    );
+
+  const next=
+    document.querySelector(
+      '.art-next'
+    );
+
+  if(!artTrack){
+    return;
+  }
+
+  const x=
+    artTrack.scrollLeft;
+
+  const maxS=
+    artTrack.scrollWidth-
+    artTrack
+      .parentElement
+      .getBoundingClientRect()
+      .width;
+
+  prev.classList.toggle(
+    'disabled',
+    x<=2
+  );
+
+  next.classList.toggle(
+    'disabled',
+    x>=maxS-2
+  );
+
+}
+
+window.artSlide=
+  function(dir){
+
+    const f=
+      artTrack.querySelector(
+        '.art-card'
+      );
+
+    if(!f){
+      return;
+    }
+
+    const gap=
+      parseFloat(
+        getComputedStyle(artTrack).columnGap ||
+        getComputedStyle(artTrack).gap ||
+        16
+      )
+      ||
+      16;
+
+    const step=
+      f.getBoundingClientRect().width+
+      gap;
+
+    const per=
+      Math.max(
+        1,
+        Math.round(
+          artTrack
+            .parentElement
+            .getBoundingClientRect()
+            .width/
+          step
+        )
+      );
+
+    artTrack.scrollBy({
+      left:
+        dir*
+        step*
+        per,
+
+      behavior:'smooth'
+    });
+
+  };
+
+if(artTrack){
+
+  artTrack.addEventListener(
+    'scroll',
+    artUpd,
+    {passive:true}
+  );
+
+  window.addEventListener(
+    'resize',
+    artUpd
+  );
+
+}
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function(){
+
+    loadVideos(
+      document.getElementById(
+        'vid-etw'
+      )
+    );
+
+    const s=
+      document.createElement(
+        'script'
+      );
+
+    s.src=
+      'https://'+
+      BLOG_ID+
+      '/feeds/posts/default/-/tech'+
+      '?alt=json-in-script'+
+      '&max-results=15'+
+      '&callback='+
+      CB;
+
+    s.onerror=
+      function(){
+
+        if(artTrack){
+
+          artTrack.innerHTML=
+            '<div class="art-loading mono">'+
+            'Couldn\'t load articles right now.'+
+            '</div>';
+
+        }
+
+      };
+
     document.body.appendChild(s);
-  });
+
+  }
+);
 </script>
 
 <script src="robot-data.js?v=1"></script>
+
 <script>
 (function(){
-  var RF_PER_PAGE = 9;
-  var robots = window.ROBOT_DATA || [];
-  var filtered = robots.slice();
-  var shown = RF_PER_PAGE;
-  var sortLabels = {overall:'Overall Rating',price:'Price (Low to High)',priceDesc:'Price (High to Low)',battery:'Battery Life',conversation:'Conversation',appExperience:'App Experience',games:'Games',subscription:'Subscription'};
 
-  function el(id){ return document.getElementById(id); }
-  function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  var RF_PER_PAGE=9;
+
+  var robots=
+    window.ROBOT_DATA || [];
+
+  var filtered=
+    robots.slice();
+
+  var shown=
+    RF_PER_PAGE;
+
+  var sortLabels={
+    overall:'Overall Rating',
+    price:'Price (Low to High)',
+    priceDesc:'Price (High to Low)',
+    battery:'Battery Life',
+    conversation:'Conversation',
+    appExperience:'App Experience',
+    games:'Games',
+    subscription:'Subscription'
+  };
+
+  function el(id){
+    return document.getElementById(id);
+  }
+
+  function esc(s){
+
+    return (s||'')
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;');
+
+  }
 
   function render(){
-    var grid = el('rfGrid'); grid.innerHTML='';
-    filtered.slice(0,shown).forEach(function(r,i){
-      var card = document.createElement('div'); card.className='rf-card';
-      var buyClass = r.buyLink ? 'rf-btn rf-buy' : 'rf-btn rf-buy na';
-      var buyText = r.buyLink ? 'Buy Now' : 'Unavailable';
-      var buyTag = r.buyLink
-        ? '<a href="'+esc(r.buyLink)+'" class="'+buyClass+'" target="_blank" rel="noopener">'+buyText+'</a>'
-        : '<span class="'+buyClass+'">'+buyText+'</span>';
-      var reviewTag = r.reviewLink ? '<a href="'+esc(r.reviewLink)+'" class="rf-btn rf-review" target="_blank" rel="noopener">Watch Review</a>' : '';
-      card.innerHTML =
-        '<img src="'+esc(r.image)+'" alt="'+esc(r.name)+'" class="rf-img" loading="lazy" onerror="this.style.display=\'none\'">'+
-        '<div class="rf-content">'+
-          '<div class="rf-head"><div class="rf-name">'+esc(r.name)+'</div><div class="rf-rank">#'+(i+1)+'</div></div>'+
-          '<div class="rf-stats">'+
-            '<div class="rf-stat"><span class="k">PRICE</span><span class="v price">'+(r.price>0?'$'+r.price:'N/A')+'</span></div>'+
-            '<div class="rf-stat"><span class="k">BATTERY</span><span class="v">'+esc(r.battery)+'</span></div>'+
-            '<div class="rf-stat"><span class="k">CONVO</span><span class="v">'+esc(r.conversation)+'</span></div>'+
-            '<div class="rf-stat"><span class="k">APP</span><span class="v">'+esc(r.appExperience)+'</span></div>'+
-            '<div class="rf-stat"><span class="k">GAMES</span><span class="v">'+esc(r.games)+'</span></div>'+
-            '<div class="rf-stat"><span class="k">SUB</span><span class="v">'+esc(r.subscription)+'</span></div>'+
-          '</div>'+
-          '<div class="rf-actions">'+buyTag+reviewTag+'</div>'+
-        '</div>';
-      grid.appendChild(card);
-    });
-    el('rfMore').classList.toggle('hidden', shown >= filtered.length);
+
+    var grid=
+      el('rfGrid');
+
+    grid.innerHTML='';
+
+    filtered
+      .slice(0,shown)
+      .forEach(
+        function(r,i){
+
+          var card=
+            document.createElement(
+              'div'
+            );
+
+          card.className=
+            'rf-card';
+
+          var buyClass=
+            r.buyLink
+              ? 'rf-btn rf-buy'
+              : 'rf-btn rf-buy na';
+
+          var buyText=
+            r.buyLink
+              ? 'Buy Now'
+              : 'Unavailable';
+
+          var buyTag=
+            r.buyLink
+              ? (
+                  '<a href="'+
+                  esc(r.buyLink)+
+                  '" class="'+
+                  buyClass+
+                  '" target="_blank" rel="noopener">'+
+                  buyText+
+                  '</a>'
+                )
+              : (
+                  '<span class="'+
+                  buyClass+
+                  '">'+
+                  buyText+
+                  '</span>'
+                );
+
+          var reviewTag=
+            r.reviewLink
+              ? (
+                  '<a href="'+
+                  esc(r.reviewLink)+
+                  '" class="rf-btn rf-review" target="_blank" rel="noopener">'+
+                  'Watch Review'+
+                  '</a>'
+                )
+              : '';
+
+          card.innerHTML=
+            '<img src="'+
+            esc(r.image)+
+            '" alt="'+
+            esc(r.name)+
+            '" class="rf-img" loading="lazy" onerror="this.style.display=\'none\'">'+
+
+            '<div class="rf-content">'+
+
+              '<div class="rf-head">'+
+                '<div class="rf-name">'+
+                  esc(r.name)+
+                '</div>'+
+                '<div class="rf-rank">#'+
+                  (i+1)+
+                '</div>'+
+              '</div>'+
+
+              '<div class="rf-stats">'+
+
+                '<div class="rf-stat">'+
+                  '<span class="k">PRICE</span>'+
+                  '<span class="v price">'+
+                    (
+                      r.price>0
+                        ? '$'+r.price
+                        : 'N/A'
+                    )+
+                  '</span>'+
+                '</div>'+
+
+                '<div class="rf-stat">'+
+                  '<span class="k">BATTERY</span>'+
+                  '<span class="v">'+
+                    esc(r.battery)+
+                  '</span>'+
+                '</div>'+
+
+                '<div class="rf-stat">'+
+                  '<span class="k">CONVO</span>'+
+                  '<span class="v">'+
+                    esc(r.conversation)+
+                  '</span>'+
+                '</div>'+
+
+                '<div class="rf-stat">'+
+                  '<span class="k">APP</span>'+
+                  '<span class="v">'+
+                    esc(r.appExperience)+
+                  '</span>'+
+                '</div>'+
+
+                '<div class="rf-stat">'+
+                  '<span class="k">GAMES</span>'+
+                  '<span class="v">'+
+                    esc(r.games)+
+                  '</span>'+
+                '</div>'+
+
+                '<div class="rf-stat">'+
+                  '<span class="k">SUB</span>'+
+                  '<span class="v">'+
+                    esc(r.subscription)+
+                  '</span>'+
+                '</div>'+
+
+              '</div>'+
+
+              '<div class="rf-actions">'+
+                buyTag+
+                reviewTag+
+              '</div>'+
+
+            '</div>';
+
+          grid.appendChild(card);
+
+        }
+      );
+
+    el('rfMore')
+      .classList
+      .toggle(
+        'hidden',
+        shown>=filtered.length
+      );
+
   }
 
   function updateInfo(){
-    var sortBy = el('rfSort').value;
-    el('rfSortInfo').innerHTML = 'Showing <b>'+Math.min(shown,filtered.length)+'</b> of <b>'+filtered.length+'</b> robots sorted by <b>'+sortLabels[sortBy]+'</b>';
+
+    var sortBy=
+      el('rfSort').value;
+
+    el('rfSortInfo').innerHTML=
+      'Showing <b>'+
+      Math.min(
+        shown,
+        filtered.length
+      )+
+      '</b> of <b>'+
+      filtered.length+
+      '</b> robots sorted by <b>'+
+      sortLabels[sortBy]+
+      '</b>';
+
   }
 
   function applyFilters(){
-    var sortBy = el('rfSort').value;
-    var maxPrice = parseInt(el('rfPrice').value,10);
-    var minConv = parseInt(el('rfConv').value,10);
-    var appF = el('rfApp').value;
-    var gamesF = el('rfGames').value;
-    var subF = el('rfSub').value;
 
-    filtered = robots.filter(function(r){
-      if(r.price===0) return true;
-      if(r.price>maxPrice) return false;
-      if(r.conversationNum<minConv) return false;
-      if(appF!=='all' && r.appNum<parseInt(appF,10)) return false;
-      if(gamesF!=='all' && r.gamesNum<parseInt(gamesF,10)) return false;
-      if(subF==='no' && r.subscription==='Yes') return false;
-      if(subF==='yes' && r.subscription==='No') return false;
-      return true;
-    });
+    var sortBy=
+      el('rfSort').value;
 
-    filtered.sort(function(a,b){
-      switch(sortBy){
-        case 'price': if(a.price===0)return 1; if(b.price===0)return -1; return a.price-b.price;
-        case 'priceDesc': if(a.price===0)return 1; if(b.price===0)return -1; return b.price-a.price;
-        case 'battery': return b.batteryHours-a.batteryHours;
-        case 'conversation': return b.conversationNum-a.conversationNum;
-        case 'appExperience': return b.appNum-a.appNum;
-        case 'games': return b.gamesNum-a.gamesNum;
-        case 'subscription':
-          if(a.subscription==='No'&&b.subscription==='Yes')return -1;
-          if(a.subscription==='Yes'&&b.subscription==='No')return 1;
-          return 0;
-        default: return b.overall-a.overall;
+    var maxPrice=
+      parseInt(
+        el('rfPrice').value,
+        10
+      );
+
+    var minConv=
+      parseInt(
+        el('rfConv').value,
+        10
+      );
+
+    var appF=
+      el('rfApp').value;
+
+    var gamesF=
+      el('rfGames').value;
+
+    var subF=
+      el('rfSub').value;
+
+    filtered=
+      robots.filter(
+        function(r){
+
+          if(r.price===0){
+            return true;
+          }
+
+          if(r.price>maxPrice){
+            return false;
+          }
+
+          if(
+            r.conversationNum<
+            minConv
+          ){
+            return false;
+          }
+
+          if(
+            appF!=='all' &&
+            r.appNum<
+            parseInt(
+              appF,
+              10
+            )
+          ){
+            return false;
+          }
+
+          if(
+            gamesF!=='all' &&
+            r.gamesNum<
+            parseInt(
+              gamesF,
+              10
+            )
+          ){
+            return false;
+          }
+
+          if(
+            subF==='no' &&
+            r.subscription==='Yes'
+          ){
+            return false;
+          }
+
+          if(
+            subF==='yes' &&
+            r.subscription==='No'
+          ){
+            return false;
+          }
+
+          return true;
+
+        }
+      );
+
+    filtered.sort(
+      function(a,b){
+
+        switch(sortBy){
+
+          case 'price':
+
+            if(a.price===0){
+              return 1;
+            }
+
+            if(b.price===0){
+              return -1;
+            }
+
+            return a.price-b.price;
+
+          case 'priceDesc':
+
+            if(a.price===0){
+              return 1;
+            }
+
+            if(b.price===0){
+              return -1;
+            }
+
+            return b.price-a.price;
+
+          case 'battery':
+
+            return (
+              b.batteryHours-
+              a.batteryHours
+            );
+
+          case 'conversation':
+
+            return (
+              b.conversationNum-
+              a.conversationNum
+            );
+
+          case 'appExperience':
+
+            return (
+              b.appNum-
+              a.appNum
+            );
+
+          case 'games':
+
+            return (
+              b.gamesNum-
+              a.gamesNum
+            );
+
+          case 'subscription':
+
+            if(
+              a.subscription==='No' &&
+              b.subscription==='Yes'
+            ){
+              return -1;
+            }
+
+            if(
+              a.subscription==='Yes' &&
+              b.subscription==='No'
+            ){
+              return 1;
+            }
+
+            return 0;
+
+          default:
+
+            return (
+              b.overall-
+              a.overall
+            );
+
+        }
+
       }
-    });
-    shown = RF_PER_PAGE;
-    updateInfo(); render();
+    );
+
+    shown=
+      RF_PER_PAGE;
+
+    updateInfo();
+    render();
+
   }
 
-  el('rfMore').addEventListener('click', function(){ shown += RF_PER_PAGE; updateInfo(); render(); });
-  el('rfSort').addEventListener('change', applyFilters);
-  el('rfPrice').addEventListener('input', function(){ el('rfPriceVal').textContent = this.value>=1000?'$1000+':'$'+this.value; applyFilters(); });
-  el('rfConv').addEventListener('change', applyFilters);
-  el('rfApp').addEventListener('change', applyFilters);
-  el('rfGames').addEventListener('change', applyFilters);
-  el('rfSub').addEventListener('change', applyFilters);
+  el('rfMore')
+    .addEventListener(
+      'click',
+      function(){
+
+        shown+=
+          RF_PER_PAGE;
+
+        updateInfo();
+        render();
+
+      }
+    );
+
+  el('rfSort')
+    .addEventListener(
+      'change',
+      applyFilters
+    );
+
+  el('rfPrice')
+    .addEventListener(
+      'input',
+      function(){
+
+        el('rfPriceVal').textContent=
+          this.value>=1000
+            ? '$1000+'
+            : '$'+this.value;
+
+        applyFilters();
+
+      }
+    );
+
+  el('rfConv')
+    .addEventListener(
+      'change',
+      applyFilters
+    );
+
+  el('rfApp')
+    .addEventListener(
+      'change',
+      applyFilters
+    );
+
+  el('rfGames')
+    .addEventListener(
+      'change',
+      applyFilters
+    );
+
+  el('rfSub')
+    .addEventListener(
+      'change',
+      applyFilters
+    );
+
   applyFilters();
+
 })();
 </script>
 
 <script src="site.js?v=6"></script>
+
 </body>
 </html>
