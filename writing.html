@@ -8,6 +8,16 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <title>Writing | Eric J. Kuhns</title>
 <meta name="description" content="The writing of Eric J. Kuhns, including his debut sci-fi novel Spacecosis: a nested-transmission story following Dr. Natalia Zeal across the cosmos.">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VC2DP6JN4S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VC2DP6JN4S');
+</script>
+
 <style>
   :root{--bg:#0a0c0a;--panel:#101410;--panel2:#0d110d;--ink:#f4f6f4;--muted:#8a938c;--line:#1e241e;--neon:#39ff64;--neon-dim:#1f8a37;}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -18,7 +28,6 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 
-  /* space hero with canvas */
   .space-hero{position:relative;border-bottom:1px solid var(--line);overflow:hidden;min-height:560px;display:flex;align-items:center}
   #space-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
   .space-hero .inner{position:relative;z-index:2;padding:100px 0 90px}
@@ -33,7 +42,6 @@
   .btn-ghost{color:var(--ink);background:rgba(10,12,10,.5)}
   .btn-ghost:hover{border-color:var(--neon);color:var(--neon)}
 
-  /* book feature */
   section.blk{padding:74px 0;border-bottom:1px solid var(--line)}
   .book-feature{display:grid;grid-template-columns:340px 1fr;gap:48px;align-items:start}
   .book-cover-wrap{position:relative}
@@ -48,7 +56,6 @@
   .synopsis p.lead-line{font-style:italic;color:var(--ink)}
   .synopsis .continues{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--neon-dim);margin-top:4px}
 
-  /* articles carousel */
   .art-carousel{display:flex;align-items:stretch;gap:10px;margin-top:30px}
   .art-viewport{flex:1;overflow:hidden;padding-top:6px;margin-top:-6px}
   .art-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;padding-bottom:2px}
@@ -74,350 +81,1498 @@
     .book-cover-wrap{max-width:280px}
     .art-card{flex:0 0 calc((100% - 16px) / 2)}
   }
-  @media(max-width:560px){.art-card{flex:0 0 86%}.cat-arrow{display:none}}
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  @media(max-width:560px){
+    .art-card{flex:0 0 86%}
+    .cat-arrow{display:none}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
 </style>
+
 <link rel="stylesheet" href="site.css?v=6">
 </head>
+
 <body>
-<script>window.SITE={active:"",base:""};</script>
+
+<script>
+window.SITE={
+  active:"",
+  base:""
+};
+</script>
 
 <div id="site-nav"></div>
 
 <header class="space-hero">
+
   <canvas id="space-canvas"></canvas>
+
   <div class="wrap inner">
-    <div class="eyebrow mono">// the writing of eric j. kuhns</div>
-    <h1>"Into the cosmos<br>we go, in search<br>of <span class="hl">a new home."</span></h1>
-    <p class="sub">Welcome to the Spacecosis universe.</p>
-    <div class="cta-row">
-      <a href="https://amzn.to/4qOUtx9" target="_blank" rel="noopener" class="btn btn-primary mono">Buy Spacecosis Now</a>
-      <a href="#writing-blog" class="btn btn-ghost mono">Read my writing ↓</a>
+
+    <div class="eyebrow mono">
+      // the writing of eric j. kuhns
     </div>
+
+    <h1>
+      "Into the cosmos<br>
+      we go, in search<br>
+      of <span class="hl">a new home."</span>
+    </h1>
+
+    <p class="sub">
+      Welcome to the Spacecosis universe.
+    </p>
+
+    <div class="cta-row">
+
+      <a
+        href="https://amzn.to/4qOUtx9"
+        target="_blank"
+        rel="noopener"
+        class="btn btn-primary mono"
+      >
+        Buy Spacecosis Now
+      </a>
+
+      <a href="#writing-blog" class="btn btn-ghost mono">
+        Read my writing ↓
+      </a>
+
+    </div>
+
   </div>
+
 </header>
 
-<!-- BOOK FEATURE -->
 <section class="blk" id="book">
+
   <div class="wrap">
+
     <div class="book-feature">
+
       <div class="book-cover-wrap">
-        <img src="https://i.imgur.com/yZN4U1z.png" alt="Spacecosis cover">
-        <span class="book-badge mono">AVAILABLE NOW</span>
+
+        <img
+          src="https://i.imgur.com/yZN4U1z.png"
+          alt="Spacecosis cover"
+        >
+
+        <span class="book-badge mono">
+          AVAILABLE NOW
+        </span>
+
       </div>
+
       <div class="book-info">
-        <div class="kicker mono">// debut novel</div>
-        <h2>Spacecosis</h2>
-        <div class="tagline mono">A sci-fi novel by Eric J. Kuhns</div>
+
+        <div class="kicker mono">
+          // debut novel
+        </div>
+
+        <h2>
+          Spacecosis
+        </h2>
+
+        <div class="tagline mono">
+          A sci-fi novel by Eric J. Kuhns
+        </div>
+
         <div class="synopsis">
-          <p class="lead-line">Into the cosmos we go, in search of a new home.</p>
-          <div class="transmission mono">[ Transmission Start: Channel 7.391.044.∞ ]</div>
-          <p>Good evening, and thank you for tuning in. I've got a strange one for you tonight. Might be the strangest I'll ever tell.</p>
-          <p>It starts with Dr. Natalia Zeal, who is brilliant, stubborn, and one of the most amazing human beings I've ever known. She left her dying home planet, Earth, on a ship built to outrun extinction, carrying her frozen consciousness, her life's work, and a photo of the woman she loved tucked somewhere close. She wakes up eons later, in a body that isn't hers and on a strange planet that isn't either. Someone, or something, has been watching. This is where our story truly begins...</p>
-          <p>I won't tell you everything that happens next. I'll just say it's stranger than you're expecting, and it isn't only her story to tell. It's mine too, in ways I'm still working out even as I broadcast this.</p>
+
+          <p class="lead-line">
+            Into the cosmos we go, in search of a new home.
+          </p>
+
+          <div class="transmission mono">
+            [ Transmission Start: Channel 7.391.044.∞ ]
+          </div>
+
+          <p>
+            Good evening, and thank you for tuning in. I've got a strange one for you tonight. Might be the strangest I'll ever tell.
+          </p>
+
+          <p>
+            It starts with Dr. Natalia Zeal, who is brilliant, stubborn, and one of the most amazing human beings I've ever known. She left her dying home planet, Earth, on a ship built to outrun extinction, carrying her frozen consciousness, her life's work, and a photo of the woman she loved tucked somewhere close. She wakes up eons later, in a body that isn't hers and on a strange planet that isn't either. Someone, or something, has been watching. This is where our story truly begins...
+          </p>
+
+          <p>
+            I won't tell you everything that happens next. I'll just say it's stranger than you're expecting, and it isn't only her story to tell. It's mine too, in ways I'm still working out even as I broadcast this.
+          </p>
+
         </div>
+
         <div class="cta-row">
-          <a href="https://amzn.to/4qOUtx9" target="_blank" rel="noopener" class="btn btn-primary mono">Buy Spacecosis Now</a>
+
+          <a
+            href="https://amzn.to/4qOUtx9"
+            target="_blank"
+            rel="noopener"
+            class="btn btn-primary mono"
+          >
+            Buy Spacecosis Now
+          </a>
+
         </div>
+
       </div>
+
     </div>
+
   </div>
+
 </section>
 
-<!-- WRITING BLOG -->
 <section class="blk" id="writing-blog">
+
   <div class="wrap">
+
     <div class="sec-head">
-      <h2>From the writing desk</h2>
-      <p>Posts on various writing topics, short stories, fan fics I've written, and deep dives into the making of Spacecosis.</p>
+
+      <h2>
+        From the writing desk
+      </h2>
+
+      <p>
+        Posts on various writing topics, short stories, fan fics I've written, and deep dives into the making of Spacecosis.
+      </p>
+
     </div>
+
     <div class="art-carousel">
-      <button class="cat-arrow art-prev disabled" aria-label="Previous" onclick="artSlide(-1)">‹</button>
-      <div class="art-viewport"><div class="art-track" id="art-track"><div class="art-loading mono">Loading writing…</div></div></div>
-      <button class="cat-arrow art-next" aria-label="More" onclick="artSlide(1)">›</button>
+
+      <button
+        class="cat-arrow art-prev disabled"
+        aria-label="Previous"
+        onclick="artSlide(-1)"
+      >
+        ‹
+      </button>
+
+      <div class="art-viewport">
+
+        <div class="art-track" id="art-track">
+
+          <div class="art-loading mono">
+            Loading writing…
+          </div>
+
+        </div>
+
+      </div>
+
+      <button
+        class="cat-arrow art-next"
+        aria-label="More"
+        onclick="artSlide(1)"
+      >
+        ›
+      </button>
+
     </div>
+
     <div style="margin-top:24px">
-      <a href="blog/index.html" class="btn btn-ghost mono">Read all posts →</a>
+
+      <a
+        href="blog/index.html"
+        class="btn btn-ghost mono"
+      >
+        Read all posts →
+      </a>
+
     </div>
+
   </div>
+
 </section>
 
 <div id="site-footer"></div>
 
 <script>
-  /* ===== space canvas: starfield + digital ship ===== */
-  (function(){
-    var canvas = document.getElementById('space-canvas');
-    if(!canvas) return;
-    var ctx = canvas.getContext('2d');
-    if(!ctx) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var W, H, DPR;
-    var stars = [];
-    var ship = null;
-    var raf = null;
-    var planets = [];
-    var galaxy = null;
-    var galaxy2 = null;
+(function(){
 
-    function resize(){
-      DPR = Math.min(window.devicePixelRatio || 1, 2);
-      var host = canvas.parentElement.getBoundingClientRect();
-      W = host.width; H = host.height;
-      canvas.width = W * DPR; canvas.height = H * DPR;
-      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-      ctx.setTransform(DPR,0,0,DPR,0,0);
-      makeStars();
-      makeScenery();
-    }
-    function makeStars(){
-      stars = [];
-      var count = Math.min(160, Math.floor(W * H / 7000));
-      for(var i=0;i<count;i++){
-        stars.push({
-          x: Math.random()*W, y: Math.random()*H,
-          z: Math.random()*1 + 0.2,       // depth -> speed & size
-          tw: Math.random()*Math.PI*2      // twinkle phase
-        });
-      }
-    }
-    function makeScenery(){
-      // main spiral galaxy in a back corner (the "rip in space")
-      galaxy = { x: W*0.82, y: H*0.28, r: Math.min(W,H)*0.34, rot: 0 };
-      // smaller distant galaxy on the left to balance the composition
-      galaxy2 = { x: W*0.12, y: H*0.66, r: Math.min(W,H)*0.13, rot: 1.2 };
-      planets = [];
-    }
-    // draw a soft-shaded planet
-    function drawPlanet(p){
-      ctx.save();
-      // glow
-      var g = ctx.createRadialGradient(p.x, p.y, p.r*0.6, p.x, p.y, p.r*2.1);
-      g.addColorStop(0, p.glow);
-      g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r*2.1, 0, Math.PI*2); ctx.fill();
-      // body with terminator shading
-      var bg = ctx.createRadialGradient(p.x - p.r*0.4, p.y - p.r*0.4, p.r*0.2, p.x, p.y, p.r);
-      bg.addColorStop(0, p.hue);
-      bg.addColorStop(1, p.shadow);
-      ctx.fillStyle = bg;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
-      // rim light
-      ctx.strokeStyle = 'rgba(244,246,244,0.12)';
-      ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.stroke();
-      // ring
-      if(p.ring){
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(-0.5);
-        ctx.scale(1, 0.32);
-        ctx.strokeStyle = 'rgba(200,170,120,0.5)';
-        ctx.lineWidth = Math.max(2, p.r*0.13);
-        ctx.beginPath(); ctx.arc(0, 0, p.r*1.6, 0, Math.PI*2); ctx.stroke();
-        ctx.restore();
-      }
-      ctx.restore();
-    }
-    // draw a rotating spiral galaxy
-    function drawGalaxy(gx){
-      ctx.save();
-      ctx.translate(gx.x, gx.y);
-      ctx.rotate(gx.rot);
-      // core glow
-      var core = ctx.createRadialGradient(0,0,0,0,0,gx.r);
-      core.addColorStop(0, 'rgba(244,246,244,0.16)');
-      core.addColorStop(0.15, 'rgba(120,180,255,0.10)');
-      core.addColorStop(0.5, 'rgba(57,255,100,0.05)');
-      core.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = core;
-      ctx.beginPath(); ctx.arc(0,0,gx.r,0,Math.PI*2); ctx.fill();
-      // spiral arms of tiny stars
-      ctx.globalCompositeOperation = 'lighter';
-      var arms = 2, perArm = 220;
-      for(var a=0;a<arms;a++){
-        var base = a * Math.PI;
-        for(var i=0;i<perArm;i++){
-          var frac = i/perArm;
-          var ang = base + frac*4.2;
-          var rad = frac*gx.r;
-          var jitter = (Math.sin(i*12.9)*0.5) * rad*0.08;
-          var sx = Math.cos(ang)*rad + jitter;
-          var sy = Math.sin(ang)*rad + jitter*0.6;
-          var alpha = (1-frac)*0.5;
-          ctx.fillStyle = i%7===0 ? 'rgba(57,255,100,'+alpha+')' : 'rgba(210,225,255,'+(alpha*0.8)+')';
-          var sz = (1-frac)*1.6 + 0.3;
-          ctx.fillRect(sx, sy, sz, sz);
-        }
-      }
-      ctx.restore();
-    }
-    // pixel-art style ship drawn on a small grid, scaled up
-    function drawShip(x, y, scale, t){
-      var s = scale;
-      ctx.save();
-      ctx.translate(x, y);
-      // engine trail
-      var trailLen = 60 + Math.sin(t*0.02)*10;
-      var grad = ctx.createLinearGradient(-trailLen, 0, 0, 0);
-      grad.addColorStop(0, 'rgba(57,255,100,0)');
-      grad.addColorStop(1, 'rgba(57,255,100,0.5)');
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.moveTo(-trailLen, -2*s); ctx.lineTo(0, -3*s); ctx.lineTo(0, 3*s); ctx.lineTo(-trailLen, 2*s);
-      ctx.closePath(); ctx.fill();
-      // body (blocky, retro)
-      ctx.fillStyle = '#cfd6cf';
-      ctx.fillRect(-6*s, -2*s, 10*s, 4*s);   // hull
-      ctx.fillStyle = '#8a938c';
-      ctx.fillRect(4*s, -1*s, 4*s, 2*s);      // nose
-      ctx.fillStyle = '#39ff64';
-      ctx.fillRect(-2*s, -1*s, 3*s, 2*s);     // cockpit glow
-      ctx.fillStyle = '#1f8a37';
-      ctx.fillRect(-6*s, -4*s, 3*s, 2*s);     // top fin
-      ctx.fillRect(-6*s, 2*s, 3*s, 2*s);      // bottom fin
-      ctx.restore();
-    }
-    function spawnShip(){
-      ship = {
-        x: -80,
-        y: H*0.25 + Math.random()*H*0.4,
-        speed: 1.6 + Math.random()*1.2,
-        scale: 2 + Math.random()*1.4,
-        bob: Math.random()*Math.PI*2
-      };
-    }
-    // smaller elliptical/globular galaxy (denser, different look)
-    function drawGalaxy2(gx){
-      ctx.save();
-      ctx.translate(gx.x, gx.y);
-      ctx.rotate(gx.rot);
-      // soft elliptical glow
-      ctx.scale(1, 0.62);
-      var core = ctx.createRadialGradient(0,0,0,0,0,gx.r);
-      core.addColorStop(0, 'rgba(200,220,255,0.14)');
-      core.addColorStop(0.3, 'rgba(120,160,255,0.07)');
-      core.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = core;
-      ctx.beginPath(); ctx.arc(0,0,gx.r,0,Math.PI*2); ctx.fill();
-      // scattered dense star cluster
-      ctx.globalCompositeOperation = 'lighter';
-      for(var i=0;i<160;i++){
-        var ang = Math.random()*Math.PI*2;
-        var rad = Math.pow(Math.random(),1.7) * gx.r;   // dense center
-        var sx = Math.cos(ang)*rad;
-        var sy = Math.sin(ang)*rad;
-        var alpha = (1 - rad/gx.r) * 0.6;
-        ctx.fillStyle = i%9===0 ? 'rgba(57,255,100,'+alpha+')' : 'rgba(215,228,255,'+alpha+')';
-        ctx.fillRect(sx, sy, 1, 1);
-      }
-      ctx.restore();
-    }
-    var t = 0;
-    function frame(){
-      t++;
-      ctx.clearRect(0,0,W,H);
-      // subtle nebula glow
-      var ng = ctx.createRadialGradient(W*0.7, H*0.3, 0, W*0.7, H*0.3, Math.max(W,H)*0.6);
-      ng.addColorStop(0, 'rgba(31,138,55,0.06)');
-      ng.addColorStop(1, 'rgba(10,12,10,0)');
-      ctx.fillStyle = ng; ctx.fillRect(0,0,W,H);
-      // galaxy (slow rotation)
-      if(galaxy){ galaxy.rot += 0.0006; drawGalaxy(galaxy); }
-      if(galaxy2){ galaxy2.rot += 0.0004; drawGalaxy2(galaxy2); }
-      // planets
-      for(var p=0;p<planets.length;p++){ drawPlanet(planets[p]); }
-      // stars
-      for(var i=0;i<stars.length;i++){
-        var st = stars[i];
-        st.x -= st.z * 0.5;               // drift left
-        if(st.x < 0){ st.x = W; st.y = Math.random()*H; }
-        var tw = 0.5 + 0.5*Math.sin(t*0.03 + st.tw);
-        var size = st.z * 1.6;
-        ctx.fillStyle = 'rgba(244,246,244,' + (0.25 + tw*0.55*st.z) + ')';
-        ctx.fillRect(st.x, st.y, size, size);
-      }
-      // ship
-      if(ship){
-        ship.x += ship.speed;
-        var yy = ship.y + Math.sin(t*0.04 + ship.bob) * 6;
-        drawShip(ship.x, yy, ship.scale, t);
-        if(ship.x > W + 100){ ship = null; setTimeout(spawnShip, 2500 + Math.random()*4000); }
-      }
-      raf = requestAnimationFrame(frame);
-    }
+  var canvas=
+    document.getElementById(
+      'space-canvas'
+    );
 
-    resize();
-    window.addEventListener('resize', resize);
-    if(!reduce){
-      spawnShip();
-      frame();
-    } else {
-      // static scene for reduced motion
-      var ng2 = ctx.createRadialGradient(W*0.7, H*0.3, 0, W*0.7, H*0.3, Math.max(W,H)*0.6);
-      ng2.addColorStop(0, 'rgba(31,138,55,0.06)'); ng2.addColorStop(1, 'rgba(10,12,10,0)');
-      ctx.fillStyle = ng2; ctx.fillRect(0,0,W,H);
-      if(galaxy) drawGalaxy(galaxy);
-      if(galaxy2) drawGalaxy2(galaxy2);
-      for(var p2=0;p2<planets.length;p2++){ drawPlanet(planets[p2]); }
-      for(var i2=0;i2<stars.length;i2++){ var st2=stars[i2]; ctx.fillStyle='rgba(244,246,244,'+(0.3*st2.z)+')'; ctx.fillRect(st2.x,st2.y,st2.z*1.6,st2.z*1.6); }
-    }
-  })();
+  if(!canvas){
+    return;
+  }
 
-  /* ===== writing articles carousel (Blogger label: writing) ===== */
-  (function(){
-    var BLOG_ID = "ericjkuhns.blogspot.com";
-    var track = document.getElementById('art-track');
-    if(!track) return;
-    function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-    function firstImage(html){ var m=(html||'').match(/<img[^>]+src=["']([^"']+)["']/i); return m?m[1]:''; }
-    function fmtDate(iso){ try{ return new Date(iso).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }catch(e){ return ''; } }
-    function postSlug(entry){ var alt=(entry.link||[]).find(function(l){return l.rel==='alternate';}); var href=alt?alt.href:''; var m=href.match(/\/(\d{4})\/(\d{2})\/([^\/]+)\.html/); return m?(m[1]+'/'+m[2]+'/'+m[3]):encodeURIComponent(entry.id.$t); }
-    var CB = 'writingArticles_' + Math.floor(Math.random()*1e9);
-    window[CB] = function(json){
-      var entries = (json.feed && json.feed.entry) ? json.feed.entry : [];
-      if(!entries.length){ track.innerHTML = '<div class="art-loading mono">No writing posts yet. Label Blogger posts "writing" to feature them here.</div>'; return; }
-      track.innerHTML = '';
-      entries.forEach(function(e){
-        var title = e.title ? e.title.$t : 'Untitled';
-        var content = (e.content && e.content.$t) || (e.summary && e.summary.$t) || '';
-        var date = e.published ? e.published.$t : '';
-        var img = firstImage(content);
-        var cats = (e.category||[]).map(function(c){ return c.term; });
-        var slug = postSlug(e);
-        var a = document.createElement('a');
-        a.className='art-card'; a.href='blog/post.html?p='+encodeURIComponent(slug);
-        var thumbStyle = img ? (' style="background-image:url(\''+img+'\')"') : '';
-        var thumbText = img ? '' : '[ writing ]';
-        a.innerHTML = '<div class="art-thumb"'+thumbStyle+'>'+thumbText+'</div>'+
-          '<div class="art-body"><span class="date mono">'+fmtDate(date)+'</span><h3>'+esc(title)+'</h3>'+
-          (cats.length?'<span class="cat mono">'+esc(cats[0])+'</span>':'')+'</div>';
-        track.appendChild(a);
+  var ctx=
+    canvas.getContext('2d');
+
+  if(!ctx){
+    return;
+  }
+
+  var reduce=
+    window.matchMedia &&
+    window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+  var W;
+  var H;
+  var DPR;
+
+  var stars=[];
+  var ship=null;
+  var raf=null;
+  var planets=[];
+  var galaxy=null;
+  var galaxy2=null;
+
+  function resize(){
+
+    DPR=
+      Math.min(
+        window.devicePixelRatio||1,
+        2
+      );
+
+    var host=
+      canvas
+        .parentElement
+        .getBoundingClientRect();
+
+    W=host.width;
+    H=host.height;
+
+    canvas.width=
+      W*DPR;
+
+    canvas.height=
+      H*DPR;
+
+    canvas.style.width=
+      W+'px';
+
+    canvas.style.height=
+      H+'px';
+
+    ctx.setTransform(
+      DPR,
+      0,
+      0,
+      DPR,
+      0,
+      0
+    );
+
+    makeStars();
+    makeScenery();
+
+  }
+
+  function makeStars(){
+
+    stars=[];
+
+    var count=
+      Math.min(
+        160,
+        Math.floor(
+          W*
+          H/
+          7000
+        )
+      );
+
+    for(
+      var i=0;
+      i<count;
+      i++
+    ){
+
+      stars.push({
+        x:Math.random()*W,
+        y:Math.random()*H,
+        z:Math.random()*1+.2,
+        tw:Math.random()*Math.PI*2
       });
-      artUpd();
-    };
-    function artUpd(){
-      var prev=document.querySelector('.art-prev'), next=document.querySelector('.art-next');
-      if(!prev||!next) return;
-      var x=track.scrollLeft, maxS=track.scrollWidth-track.getBoundingClientRect().width;
-      prev.classList.toggle('disabled',x<=2); next.classList.toggle('disabled',x>=maxS-2);
+
     }
-    window.artSlide = function(dir){
-      var f=track.querySelector('.art-card'); if(!f) return;
-      var gap=parseFloat(getComputedStyle(track).columnGap||getComputedStyle(track).gap||16)||16;
-      var step=f.getBoundingClientRect().width+gap;
-      var per=Math.max(1,Math.round(track.getBoundingClientRect().width/step));
-      track.scrollBy({left:dir*step*per,behavior:'smooth'});
+
+  }
+
+  function makeScenery(){
+
+    galaxy={
+      x:W*.82,
+      y:H*.28,
+      r:Math.min(W,H)*.34,
+      rot:0
     };
-    track.addEventListener('scroll',artUpd,{passive:true});
-    window.addEventListener('resize',artUpd);
-    var s=document.createElement('script');
-    s.src='https://'+BLOG_ID+'/feeds/posts/default/-/writing?alt=json-in-script&max-results=15&callback='+CB;
-    s.onerror=function(){ track.innerHTML='<div class="art-loading mono">Couldn\'t load writing posts right now.</div>'; };
-    document.body.appendChild(s);
-  })();
+
+    galaxy2={
+      x:W*.12,
+      y:H*.66,
+      r:Math.min(W,H)*.13,
+      rot:1.2
+    };
+
+    planets=[];
+
+  }
+
+  function drawPlanet(p){
+
+    ctx.save();
+
+    var g=
+      ctx.createRadialGradient(
+        p.x,
+        p.y,
+        p.r*.6,
+        p.x,
+        p.y,
+        p.r*2.1
+      );
+
+    g.addColorStop(
+      0,
+      p.glow
+    );
+
+    g.addColorStop(
+      1,
+      'rgba(0,0,0,0)'
+    );
+
+    ctx.fillStyle=g;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      p.x,
+      p.y,
+      p.r*2.1,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    var bg=
+      ctx.createRadialGradient(
+        p.x-p.r*.4,
+        p.y-p.r*.4,
+        p.r*.2,
+        p.x,
+        p.y,
+        p.r
+      );
+
+    bg.addColorStop(
+      0,
+      p.hue
+    );
+
+    bg.addColorStop(
+      1,
+      p.shadow
+    );
+
+    ctx.fillStyle=bg;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      p.x,
+      p.y,
+      p.r,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.strokeStyle=
+      'rgba(244,246,244,0.12)';
+
+    ctx.lineWidth=1;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      p.x,
+      p.y,
+      p.r,
+      0,
+      Math.PI*2
+    );
+
+    ctx.stroke();
+
+    if(p.ring){
+
+      ctx.save();
+
+      ctx.translate(
+        p.x,
+        p.y
+      );
+
+      ctx.rotate(-.5);
+
+      ctx.scale(
+        1,
+        .32
+      );
+
+      ctx.strokeStyle=
+        'rgba(200,170,120,0.5)';
+
+      ctx.lineWidth=
+        Math.max(
+          2,
+          p.r*.13
+        );
+
+      ctx.beginPath();
+
+      ctx.arc(
+        0,
+        0,
+        p.r*1.6,
+        0,
+        Math.PI*2
+      );
+
+      ctx.stroke();
+
+      ctx.restore();
+
+    }
+
+    ctx.restore();
+
+  }
+
+  function drawGalaxy(gx){
+
+    ctx.save();
+
+    ctx.translate(
+      gx.x,
+      gx.y
+    );
+
+    ctx.rotate(
+      gx.rot
+    );
+
+    var core=
+      ctx.createRadialGradient(
+        0,
+        0,
+        0,
+        0,
+        0,
+        gx.r
+      );
+
+    core.addColorStop(
+      0,
+      'rgba(244,246,244,0.16)'
+    );
+
+    core.addColorStop(
+      .15,
+      'rgba(120,180,255,0.10)'
+    );
+
+    core.addColorStop(
+      .5,
+      'rgba(57,255,100,0.05)'
+    );
+
+    core.addColorStop(
+      1,
+      'rgba(0,0,0,0)'
+    );
+
+    ctx.fillStyle=
+      core;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      0,
+      0,
+      gx.r,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.globalCompositeOperation=
+      'lighter';
+
+    var arms=2;
+    var perArm=220;
+
+    for(
+      var a=0;
+      a<arms;
+      a++
+    ){
+
+      var base=
+        a*
+        Math.PI;
+
+      for(
+        var i=0;
+        i<perArm;
+        i++
+      ){
+
+        var frac=
+          i/perArm;
+
+        var ang=
+          base+
+          frac*
+          4.2;
+
+        var rad=
+          frac*
+          gx.r;
+
+        var jitter=
+          (
+            Math.sin(
+              i*12.9
+            )*
+            .5
+          )*
+          rad*
+          .08;
+
+        var sx=
+          Math.cos(ang)*
+          rad+
+          jitter;
+
+        var sy=
+          Math.sin(ang)*
+          rad+
+          jitter*
+          .6;
+
+        var alpha=
+          (1-frac)*.5;
+
+        ctx.fillStyle=
+          i%7===0
+            ? (
+                'rgba(57,255,100,'+
+                alpha+
+                ')'
+              )
+            : (
+                'rgba(210,225,255,'+
+                (alpha*.8)+
+                ')'
+              );
+
+        var sz=
+          (1-frac)*1.6+
+          .3;
+
+        ctx.fillRect(
+          sx,
+          sy,
+          sz,
+          sz
+        );
+
+      }
+
+    }
+
+    ctx.restore();
+
+  }
+
+  function drawShip(
+    x,
+    y,
+    scale,
+    t
+  ){
+
+    var s=
+      scale;
+
+    ctx.save();
+
+    ctx.translate(
+      x,
+      y
+    );
+
+    var trailLen=
+      60+
+      Math.sin(t*.02)*
+      10;
+
+    var grad=
+      ctx.createLinearGradient(
+        -trailLen,
+        0,
+        0,
+        0
+      );
+
+    grad.addColorStop(
+      0,
+      'rgba(57,255,100,0)'
+    );
+
+    grad.addColorStop(
+      1,
+      'rgba(57,255,100,0.5)'
+    );
+
+    ctx.fillStyle=
+      grad;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      -trailLen,
+      -2*s
+    );
+
+    ctx.lineTo(
+      0,
+      -3*s
+    );
+
+    ctx.lineTo(
+      0,
+      3*s
+    );
+
+    ctx.lineTo(
+      -trailLen,
+      2*s
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.fillStyle=
+      '#cfd6cf';
+
+    ctx.fillRect(
+      -6*s,
+      -2*s,
+      10*s,
+      4*s
+    );
+
+    ctx.fillStyle=
+      '#8a938c';
+
+    ctx.fillRect(
+      4*s,
+      -1*s,
+      4*s,
+      2*s
+    );
+
+    ctx.fillStyle=
+      '#39ff64';
+
+    ctx.fillRect(
+      -2*s,
+      -1*s,
+      3*s,
+      2*s
+    );
+
+    ctx.fillStyle=
+      '#1f8a37';
+
+    ctx.fillRect(
+      -6*s,
+      -4*s,
+      3*s,
+      2*s
+    );
+
+    ctx.fillRect(
+      -6*s,
+      2*s,
+      3*s,
+      2*s
+    );
+
+    ctx.restore();
+
+  }
+
+  function spawnShip(){
+
+    ship={
+      x:-80,
+      y:
+        H*.25+
+        Math.random()*
+        H*.4,
+
+      speed:
+        1.6+
+        Math.random()*
+        1.2,
+
+      scale:
+        2+
+        Math.random()*
+        1.4,
+
+      bob:
+        Math.random()*
+        Math.PI*
+        2
+    };
+
+  }
+
+  function drawGalaxy2(gx){
+
+    ctx.save();
+
+    ctx.translate(
+      gx.x,
+      gx.y
+    );
+
+    ctx.rotate(
+      gx.rot
+    );
+
+    ctx.scale(
+      1,
+      .62
+    );
+
+    var core=
+      ctx.createRadialGradient(
+        0,
+        0,
+        0,
+        0,
+        0,
+        gx.r
+      );
+
+    core.addColorStop(
+      0,
+      'rgba(200,220,255,0.14)'
+    );
+
+    core.addColorStop(
+      .3,
+      'rgba(120,160,255,0.07)'
+    );
+
+    core.addColorStop(
+      1,
+      'rgba(0,0,0,0)'
+    );
+
+    ctx.fillStyle=
+      core;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      0,
+      0,
+      gx.r,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.globalCompositeOperation=
+      'lighter';
+
+    for(
+      var i=0;
+      i<160;
+      i++
+    ){
+
+      var ang=
+        Math.random()*
+        Math.PI*
+        2;
+
+      var rad=
+        Math.pow(
+          Math.random(),
+          1.7
+        )*
+        gx.r;
+
+      var sx=
+        Math.cos(ang)*
+        rad;
+
+      var sy=
+        Math.sin(ang)*
+        rad;
+
+      var alpha=
+        (
+          1-
+          rad/
+          gx.r
+        )*
+        .6;
+
+      ctx.fillStyle=
+        i%9===0
+          ? (
+              'rgba(57,255,100,'+
+              alpha+
+              ')'
+            )
+          : (
+              'rgba(215,228,255,'+
+              alpha+
+              ')'
+            );
+
+      ctx.fillRect(
+        sx,
+        sy,
+        1,
+        1
+      );
+
+    }
+
+    ctx.restore();
+
+  }
+
+  var t=0;
+
+  function frame(){
+
+    t++;
+
+    ctx.clearRect(
+      0,
+      0,
+      W,
+      H
+    );
+
+    var ng=
+      ctx.createRadialGradient(
+        W*.7,
+        H*.3,
+        0,
+        W*.7,
+        H*.3,
+        Math.max(W,H)*.6
+      );
+
+    ng.addColorStop(
+      0,
+      'rgba(31,138,55,0.06)'
+    );
+
+    ng.addColorStop(
+      1,
+      'rgba(10,12,10,0)'
+    );
+
+    ctx.fillStyle=
+      ng;
+
+    ctx.fillRect(
+      0,
+      0,
+      W,
+      H
+    );
+
+    if(galaxy){
+
+      galaxy.rot+=.0006;
+
+      drawGalaxy(
+        galaxy
+      );
+
+    }
+
+    if(galaxy2){
+
+      galaxy2.rot+=.0004;
+
+      drawGalaxy2(
+        galaxy2
+      );
+
+    }
+
+    for(
+      var p=0;
+      p<planets.length;
+      p++
+    ){
+
+      drawPlanet(
+        planets[p]
+      );
+
+    }
+
+    for(
+      var i=0;
+      i<stars.length;
+      i++
+    ){
+
+      var st=
+        stars[i];
+
+      st.x-=
+        st.z*.5;
+
+      if(st.x<0){
+
+        st.x=W;
+
+        st.y=
+          Math.random()*H;
+
+      }
+
+      var tw=
+        .5+
+        .5*
+        Math.sin(
+          t*.03+
+          st.tw
+        );
+
+      var size=
+        st.z*
+        1.6;
+
+      ctx.fillStyle=
+        'rgba(244,246,244,'+
+        (
+          .25+
+          tw*
+          .55*
+          st.z
+        )+
+        ')';
+
+      ctx.fillRect(
+        st.x,
+        st.y,
+        size,
+        size
+      );
+
+    }
+
+    if(ship){
+
+      ship.x+=
+        ship.speed;
+
+      var yy=
+        ship.y+
+        Math.sin(
+          t*.04+
+          ship.bob
+        )*
+        6;
+
+      drawShip(
+        ship.x,
+        yy,
+        ship.scale,
+        t
+      );
+
+      if(ship.x>W+100){
+
+        ship=null;
+
+        setTimeout(
+          spawnShip,
+          2500+
+          Math.random()*
+          4000
+        );
+
+      }
+
+    }
+
+    raf=
+      requestAnimationFrame(
+        frame
+      );
+
+  }
+
+  resize();
+
+  window.addEventListener(
+    'resize',
+    resize
+  );
+
+  if(!reduce){
+
+    spawnShip();
+    frame();
+
+  }else{
+
+    var ng2=
+      ctx.createRadialGradient(
+        W*.7,
+        H*.3,
+        0,
+        W*.7,
+        H*.3,
+        Math.max(W,H)*.6
+      );
+
+    ng2.addColorStop(
+      0,
+      'rgba(31,138,55,0.06)'
+    );
+
+    ng2.addColorStop(
+      1,
+      'rgba(10,12,10,0)'
+    );
+
+    ctx.fillStyle=
+      ng2;
+
+    ctx.fillRect(
+      0,
+      0,
+      W,
+      H
+    );
+
+    if(galaxy){
+      drawGalaxy(galaxy);
+    }
+
+    if(galaxy2){
+      drawGalaxy2(galaxy2);
+    }
+
+    for(
+      var p2=0;
+      p2<planets.length;
+      p2++
+    ){
+      drawPlanet(
+        planets[p2]
+      );
+    }
+
+    for(
+      var i2=0;
+      i2<stars.length;
+      i2++
+    ){
+
+      var st2=
+        stars[i2];
+
+      ctx.fillStyle=
+        'rgba(244,246,244,'+
+        (.3*st2.z)+
+        ')';
+
+      ctx.fillRect(
+        st2.x,
+        st2.y,
+        st2.z*1.6,
+        st2.z*1.6
+      );
+
+    }
+
+  }
+
+})();
+
+(function(){
+
+  var BLOG_ID=
+    "ericjkuhns.blogspot.com";
+
+  var track=
+    document.getElementById(
+      'art-track'
+    );
+
+  if(!track){
+    return;
+  }
+
+  function esc(s){
+
+    return (s||"")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;");
+
+  }
+
+  function firstImage(html){
+
+    var m=
+      (html||'')
+        .match(
+          /<img[^>]+src=["']([^"']+)["']/i
+        );
+
+    return m
+      ? m[1]
+      : '';
+
+  }
+
+  function fmtDate(iso){
+
+    try{
+
+      return new Date(iso)
+        .toLocaleDateString(
+          'en-US',
+          {
+            year:'numeric',
+            month:'short',
+            day:'numeric'
+          }
+        );
+
+    }catch(e){
+
+      return '';
+
+    }
+
+  }
+
+  function postSlug(entry){
+
+    var alt=
+      (entry.link||[])
+        .find(
+          function(l){
+            return l.rel==='alternate';
+          }
+        );
+
+    var href=
+      alt
+        ? alt.href
+        : '';
+
+    var m=
+      href.match(
+        /\/(\d{4})\/(\d{2})\/([^\/]+)\.html/
+      );
+
+    return m
+      ? (
+          m[1]+'/'+
+          m[2]+'/'+
+          m[3]
+        )
+      : encodeURIComponent(
+          entry.id.$t
+        );
+
+  }
+
+  var CB=
+    'writingArticles_'+
+    Math.floor(
+      Math.random()*1e9
+    );
+
+  window[CB]=
+    function(json){
+
+      var entries=
+        (
+          json.feed &&
+          json.feed.entry
+        )
+          ? json.feed.entry
+          : [];
+
+      if(!entries.length){
+
+        track.innerHTML=
+          '<div class="art-loading mono">'+
+          'No writing posts yet. Label Blogger posts "writing" to feature them here.'+
+          '</div>';
+
+        return;
+
+      }
+
+      track.innerHTML='';
+
+      entries.forEach(
+        function(e){
+
+          var title=
+            e.title
+              ? e.title.$t
+              : 'Untitled';
+
+          var content=
+            (
+              e.content &&
+              e.content.$t
+            )
+            ||
+            (
+              e.summary &&
+              e.summary.$t
+            )
+            ||
+            '';
+
+          var date=
+            e.published
+              ? e.published.$t
+              : '';
+
+          var img=
+            firstImage(content);
+
+          var cats=
+            (e.category||[])
+              .map(
+                function(c){
+                  return c.term;
+                }
+              );
+
+          var slug=
+            postSlug(e);
+
+          var a=
+            document.createElement(
+              'a'
+            );
+
+          a.className=
+            'art-card';
+
+          a.href=
+            'blog/post.html?p='+
+            encodeURIComponent(slug);
+
+          var thumbStyle=
+            img
+              ? (
+                  ' style="background-image:url(\''+
+                  img+
+                  '\')"'
+                )
+              : '';
+
+          var thumbText=
+            img
+              ? ''
+              : '[ writing ]';
+
+          a.innerHTML=
+            '<div class="art-thumb"'+
+            thumbStyle+
+            '>'+
+            thumbText+
+            '</div>'+
+            '<div class="art-body">'+
+              '<span class="date mono">'+
+              fmtDate(date)+
+              '</span>'+
+              '<h3>'+
+              esc(title)+
+              '</h3>'+
+              (
+                cats.length
+                  ? (
+                      '<span class="cat mono">'+
+                      esc(cats[0])+
+                      '</span>'
+                    )
+                  : ''
+              )+
+            '</div>';
+
+          track.appendChild(a);
+
+        }
+      );
+
+      artUpd();
+
+    };
+
+  function artUpd(){
+
+    var prev=
+      document.querySelector(
+        '.art-prev'
+      );
+
+    var next=
+      document.querySelector(
+        '.art-next'
+      );
+
+    if(!prev || !next){
+      return;
+    }
+
+    var x=
+      track.scrollLeft;
+
+    var maxS=
+      track.scrollWidth-
+      track
+        .getBoundingClientRect()
+        .width;
+
+    prev.classList.toggle(
+      'disabled',
+      x<=2
+    );
+
+    next.classList.toggle(
+      'disabled',
+      x>=maxS-2
+    );
+
+  }
+
+  window.artSlide=
+    function(dir){
+
+      var f=
+        track.querySelector(
+          '.art-card'
+        );
+
+      if(!f){
+        return;
+      }
+
+      var gap=
+        parseFloat(
+          getComputedStyle(track).columnGap ||
+          getComputedStyle(track).gap ||
+          16
+        )
+        ||
+        16;
+
+      var step=
+        f
+          .getBoundingClientRect()
+          .width+
+        gap;
+
+      var per=
+        Math.max(
+          1,
+          Math.round(
+            track
+              .getBoundingClientRect()
+              .width/
+            step
+          )
+        );
+
+      track.scrollBy({
+        left:
+          dir*
+          step*
+          per,
+
+        behavior:'smooth'
+      });
+
+    };
+
+  track.addEventListener(
+    'scroll',
+    artUpd,
+    {passive:true}
+  );
+
+  window.addEventListener(
+    'resize',
+    artUpd
+  );
+
+  var s=
+    document.createElement(
+      'script'
+    );
+
+  s.src=
+    'https://'+
+    BLOG_ID+
+    '/feeds/posts/default/-/writing'+
+    '?alt=json-in-script'+
+    '&max-results=15'+
+    '&callback='+
+    CB;
+
+  s.onerror=
+    function(){
+
+      track.innerHTML=
+        '<div class="art-loading mono">'+
+        'Couldn\'t load writing posts right now.'+
+        '</div>';
+
+    };
+
+  document.body.appendChild(s);
+
+})();
 </script>
+
 <script src="site.js?v=6"></script>
 
 </body>
