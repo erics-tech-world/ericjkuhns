@@ -3,28 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
 <title>About | Eric J. Kuhns</title>
 <meta name="description" content="About Eric J. Kuhns: YouTuber, writer, actor, skateboarder, musician, digital marketer, and lifelong storyteller.">
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VC2DP6JN4S"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag(){
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'G-VC2DP6JN4S');
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
+>
+
 <link rel="stylesheet" href="site.css?v=6">
 
 <style>
-:root{--bg:#0a0c0a;--panel:#101410;--panel2:#0d110d;--ink:#f4f6f4;--muted:#8a938c;--line:#1e241e;--neon:#39ff64;--neon-dim:#1f8a37}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+
+:root{
+  --bg:#0a0c0a;
+  --panel:#101410;
+  --panel2:#0d110d;
+  --ink:#f4f6f4;
+  --muted:#8a938c;
+  --line:#1e241e;
+  --neon:#39ff64;
+  --neon-dim:#1f8a37;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   background:var(--bg);
   color:var(--ink);
   font-family:'Inter',sans-serif;
   line-height:1.6;
-  overflow-x:hidden
+  overflow-x:hidden;
 }
 
 body::after{
@@ -33,6 +71,7 @@ body::after{
   inset:0;
   pointer-events:none;
   z-index:9999;
+
   background:repeating-linear-gradient(
     0deg,
     transparent 0,
@@ -40,13 +79,27 @@ body::after{
     rgba(0,0,0,.14) 3px,
     transparent 4px
   );
+
   mix-blend-mode:overlay;
-  opacity:.5
+  opacity:.5;
 }
 
-a{color:inherit;text-decoration:none}
-.mono{font-family:'JetBrains Mono',monospace}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.mono{
+  font-family:'JetBrains Mono',monospace;
+}
+
+.wrap{
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 24px;
+}
+
+/* HERO */
 
 .hero{
   position:relative;
@@ -54,14 +107,14 @@ a{color:inherit;text-decoration:none}
   border-bottom:1px solid var(--line);
   overflow:hidden;
   display:flex;
-  align-items:center
+  align-items:center;
 }
 
 .matrix{
   position:absolute;
   inset:0;
   overflow:hidden;
-  opacity:.3
+  opacity:.3;
 }
 
 .matrix span{
@@ -72,21 +125,34 @@ a{color:inherit;text-decoration:none}
   animation:drift var(--dur) linear infinite;
   left:var(--x);
   top:110%;
-  opacity:var(--op)
+  opacity:var(--op);
 }
 
 @keyframes drift{
-  to{transform:translateY(-125vh)}
+  to{
+    transform:translateY(-125vh);
+  }
 }
 
 .hero::before{
   content:"";
   position:absolute;
   inset:0;
+
   background:
-    radial-gradient(circle at 75% 50%,rgba(57,255,100,.12),transparent 31%),
-    linear-gradient(90deg,var(--bg) 34%,rgba(10,12,10,.62) 70%,var(--bg));
-  z-index:1
+    radial-gradient(
+      circle at 75% 50%,
+      rgba(57,255,100,.12),
+      transparent 31%
+    ),
+    linear-gradient(
+      90deg,
+      var(--bg) 34%,
+      rgba(10,12,10,.62) 70%,
+      var(--bg)
+    );
+
+  z-index:1;
 }
 
 .hero-content{
@@ -96,30 +162,34 @@ a{color:inherit;text-decoration:none}
   display:grid;
   grid-template-columns:1.05fr .95fr;
   gap:48px;
-  align-items:center
+  align-items:center;
 }
 
 .kicker{
   font:12px 'JetBrains Mono';
   color:var(--neon);
   letter-spacing:1.4px;
-  margin-bottom:20px
+  margin-bottom:20px;
 }
 
 .hero h1{
   font-size:clamp(45px,7vw,82px);
   line-height:.98;
   letter-spacing:-4px;
-  margin-bottom:22px
+  margin-bottom:22px;
 }
 
-.hero h1 span{color:var(--neon)}
+.hero h1 span{
+  color:var(--neon);
+}
 
 .lead{
   font-size:clamp(16px,2vw,19px);
   color:var(--muted);
-  max-width:620px
+  max-width:620px;
 }
+
+/* IDENTITY PANEL */
 
 .identity{
   border:1px solid var(--neon-dim);
@@ -128,7 +198,7 @@ a{color:inherit;text-decoration:none}
   padding:22px;
   border-radius:4px;
   position:relative;
-  overflow:hidden
+  overflow:hidden;
 }
 
 .identity::before{
@@ -138,7 +208,7 @@ a{color:inherit;text-decoration:none}
   top:10px;
   font:9px 'JetBrains Mono';
   color:var(--neon-dim);
-  letter-spacing:1px
+  letter-spacing:1px;
 }
 
 .identity-line{
@@ -147,59 +217,67 @@ a{color:inherit;text-decoration:none}
   gap:12px;
   padding:10px 0;
   border-bottom:1px solid var(--line);
-  font-size:12px
+  font-size:12px;
 }
 
-.identity-line:last-child{border:0}
+.identity-line:last-child{
+  border:0;
+}
 
 .identity-line b{
   font-family:'JetBrains Mono';
   color:var(--muted);
-  font-weight:400
+  font-weight:400;
 }
 
-.identity-line span{color:var(--ink)}
+.identity-line span{
+  color:var(--ink);
+}
 
 .cycle{
   color:var(--neon)!important;
-  font-family:'JetBrains Mono'
+  font-family:'JetBrains Mono';
 }
+
+/* SECTIONS */
 
 section.blk{
   padding:72px 0;
-  border-bottom:1px solid var(--line)
+  border-bottom:1px solid var(--line);
 }
 
 .sec-head{
   display:flex;
   align-items:baseline;
   gap:14px;
-  margin-bottom:38px
+  margin-bottom:38px;
 }
 
 .sec-head .tag{
   font:12px 'JetBrains Mono';
   color:var(--neon);
-  letter-spacing:1px
+  letter-spacing:1px;
 }
 
 .sec-head h2{
   font-size:clamp(24px,4vw,34px);
   font-weight:800;
-  letter-spacing:-1px
+  letter-spacing:-1px;
 }
 
 .sec-head .line{
   flex:1;
   height:1px;
-  background:var(--line)
+  background:var(--line);
 }
+
+/* ABOUT */
 
 .about-grid{
   display:grid;
   grid-template-columns:.9fr 1.1fr;
   gap:38px;
-  align-items:start
+  align-items:start;
 }
 
 .portrait{
@@ -207,12 +285,12 @@ section.blk{
   padding:9px;
   background:var(--panel);
   position:sticky;
-  top:90px
+  top:90px;
 }
 
 .portrait img{
   width:100%;
-  display:block
+  display:block;
 }
 
 .portrait-meta{
@@ -220,32 +298,36 @@ section.blk{
   justify-content:space-between;
   padding:10px 3px 1px;
   font:10px 'JetBrains Mono';
-  color:var(--muted)
+  color:var(--muted);
 }
 
 .copy p{
   color:var(--muted);
   margin-bottom:18px;
-  font-size:15px
+  font-size:15px;
 }
 
-.copy strong{color:var(--ink)}
+.copy strong{
+  color:var(--ink);
+}
 
 .copy a,
 .copy a strong{
-  color:var(--neon)
+  color:var(--neon);
 }
 
 .copy .big{
   font-size:21px;
   line-height:1.55;
   color:var(--ink);
-  margin-bottom:24px
+  margin-bottom:24px;
 }
+
+/* TIMELINE */
 
 .timeline{
   position:relative;
-  padding-left:32px
+  padding-left:32px;
 }
 
 .timeline::before{
@@ -255,7 +337,7 @@ section.blk{
   top:8px;
   bottom:8px;
   width:1px;
-  background:var(--line)
+  background:var(--line);
 }
 
 .moment{
@@ -264,7 +346,7 @@ section.blk{
   padding:20px 22px;
   background:var(--panel);
   border:1px solid var(--line);
-  border-radius:3px
+  border-radius:3px;
 }
 
 .moment::before{
@@ -276,31 +358,35 @@ section.blk{
   height:9px;
   background:var(--bg);
   border:2px solid var(--neon);
-  border-radius:50%
+  border-radius:50%;
 }
 
 .year{
   font:11px 'JetBrains Mono';
   color:var(--neon);
-  margin-bottom:7px
+  margin-bottom:7px;
 }
 
 .moment h3{
   font-size:17px;
-  margin-bottom:6px
+  margin-bottom:6px;
 }
 
 .moment p{
   color:var(--muted);
-  font-size:13px
+  font-size:13px;
 }
 
-.moment p a{color:var(--neon)}
+.moment p a{
+  color:var(--neon);
+}
+
+/* PROJECTS */
 
 .projects{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:16px
+  gap:16px;
 }
 
 .project{
@@ -310,7 +396,7 @@ section.blk{
   border-radius:3px;
   position:relative;
   overflow:hidden;
-  transition:.2s
+  transition:.2s;
 }
 
 .project::before{
@@ -321,37 +407,48 @@ section.blk{
   width:0;
   height:2px;
   background:var(--neon);
-  transition:.3s
+  transition:.3s;
 }
 
 .project:hover{
   border-color:var(--neon-dim);
-  transform:translateY(-3px)
+  transform:translateY(-3px);
 }
 
-.project:hover::before{width:100%}
+.project:hover::before{
+  width:100%;
+}
 
 .project .code{
   font:10px 'JetBrains Mono';
   color:var(--neon);
-  margin-bottom:12px
+  margin-bottom:12px;
 }
 
 .project h3{
   font-size:17px;
-  margin-bottom:8px
+  margin-bottom:8px;
 }
 
 .project p{
   font-size:13px;
-  color:var(--muted)
+  color:var(--muted);
 }
 
+/* COMMON THREAD */
+
 .manifesto{
-  background:linear-gradient(135deg,rgba(57,255,100,.06),transparent 42%),var(--panel);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(57,255,100,.06),
+      transparent 42%
+    ),
+    var(--panel);
+
   border:1px solid var(--line);
   padding:34px;
-  border-radius:4px
+  border-radius:4px;
 }
 
 .manifesto blockquote{
@@ -359,19 +456,21 @@ section.blk{
   font-weight:800;
   line-height:1.18;
   letter-spacing:-1.4px;
-  max-width:850px
+  max-width:850px;
 }
 
 .manifesto blockquote em{
   color:var(--neon);
-  font-style:normal
+  font-style:normal;
 }
 
 .manifesto p{
   color:var(--muted);
   margin-top:18px;
-  max-width:740px
+  max-width:740px;
 }
+
+/* BUTTONS */
 
 .btn{
   font:13px 'JetBrains Mono';
@@ -382,80 +481,90 @@ section.blk{
   transition:.2s;
   display:inline-flex;
   align-items:center;
-  gap:8px
+  gap:8px;
 }
 
 .btn-primary{
   background:var(--neon);
   color:#04160a;
   border-color:var(--neon);
-  font-weight:700
+  font-weight:700;
 }
 
 .btn-primary:hover{
-  box-shadow:0 0 24px rgba(57,255,100,.4)
+  box-shadow:0 0 24px rgba(57,255,100,.4);
 }
 
 .btn-ghost:hover{
   border-color:var(--neon);
-  color:var(--neon)
+  color:var(--neon);
 }
+
+/* CTA */
 
 .cta{
   padding:82px 0;
-  text-align:center
+  text-align:center;
 }
 
 .cta h2{
   font-size:clamp(30px,5vw,48px);
   letter-spacing:-2px;
-  margin-bottom:10px
+  margin-bottom:10px;
 }
 
 .cta p{
   color:var(--muted);
-  margin-bottom:24px
+  margin-bottom:24px;
 }
 
+/* RESPONSIVE */
+
 @media(max-width:860px){
+
   .hero-content,
   .about-grid{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
-  .identity{max-width:620px}
+  .identity{
+    max-width:620px;
+  }
 
   .portrait{
     position:relative;
     top:auto;
-    max-width:520px
+    max-width:520px;
   }
 
   .projects{
-    grid-template-columns:1fr 1fr
+    grid-template-columns:1fr 1fr;
   }
 
   .hero h1{
-    letter-spacing:-2px
+    letter-spacing:-2px;
   }
 }
 
 @media(max-width:560px){
+
   .projects{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
   }
 
   .identity-line{
-    grid-template-columns:88px 1fr
+    grid-template-columns:88px 1fr;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
+
   *{
     animation:none!important;
-    transition:none!important
+    transition:none!important;
   }
 }
+
 </style>
 </head>
 
@@ -479,6 +588,7 @@ window.SITE={
     <div class="hero-content">
 
       <div>
+
         <div class="kicker">// WHO_AM_I?</div>
 
         <h1>
@@ -489,6 +599,7 @@ window.SITE={
         <p class="lead">
           Videos, stories, characters, tech, music, websites, skate projects and whatever else I feel compelled to explore.
         </p>
+
       </div>
 
       <div class="identity mono">
@@ -554,7 +665,9 @@ window.SITE={
 
       <div class="copy">
 
-        <p class="big">My Background</p>
+        <p class="big">
+          My Background
+        </p>
 
         <p>
           I was born in the Dallas / Fort Worth area in 1987. Since grade school, I've been performing on and off stage. My first love was live theatre, followed pretty quickly by writing fictional stories. As I got older, skateboarding, acting, breakdancing, 3D art and music all became different ways to get ideas out of my head and into the world.
@@ -566,16 +679,33 @@ window.SITE={
 
         <p>
           I started putting much more energy into my YouTube work, and those projects eventually grew into
-          <a href="https://www.youtube.com/@ericstechworld" target="_blank" rel="noopener">
+
+          <a
+            href="https://www.youtube.com/@ericstechworld"
+            target="_blank"
+            rel="noopener"
+          >
             <strong>Eric's Tech World</strong>
           </a>,
-          <a href="https://www.youtube.com/@ericskateboards" target="_blank" rel="noopener">
+
+          <a
+            href="https://www.youtube.com/@ericskateboards"
+            target="_blank"
+            rel="noopener"
+          >
             <strong>Eric Skateboards</strong>
           </a>
+
           and
-          <a href="https://www.youtube.com/@ericsbackrooms" target="_blank" rel="noopener">
+
+          <a
+            href="https://www.youtube.com/@ericsbackrooms"
+            target="_blank"
+            rel="noopener"
+          >
             <strong>Eric's Sidequests</strong>
           </a>,
+
           each giving me a place to explore a different part of what I'm into. In September 2026 I published my first full novel.
         </p>
 
@@ -604,76 +734,182 @@ window.SITE={
     <div class="timeline">
 
       <div class="moment">
-        <div class="year">1987 →</div>
-        <h3>DFW, Texas</h3>
-        <p>Born in the Dallas / Fort Worth area. Performing and writing started early.</p>
+
+        <div class="year">
+          1987 →
+        </div>
+
+        <h3>
+          DFW, Texas
+        </h3>
+
+        <p>
+          Born in the Dallas / Fort Worth area. Performing and writing started early.
+        </p>
+
       </div>
 
       <div class="moment">
-        <div class="year">TEEN YEARS →</div>
-        <h3>Skateboarding + Music</h3>
-        <p>Skate competitions, gigs around town, and a growing habit of turning every interest into a project.</p>
+
+        <div class="year">
+          TEEN YEARS →
+        </div>
+
+        <h3>
+          Skateboarding + Music
+        </h3>
+
+        <p>
+          Skate competitions, gigs around town, and a growing habit of turning every interest into a project.
+        </p>
+
       </div>
 
       <div class="moment">
-        <div class="year">2007 →</div>
-        <h3>Played My First Concert</h3>
-        <p>Played my first concert as a solo acoustic performer at the Plano Amphitheater.</p>
+
+        <div class="year">
+          2007 →
+        </div>
+
+        <h3>
+          Played My First Concert
+        </h3>
+
+        <p>
+          Played my first concert as a solo acoustic performer at the Plano Amphitheater.
+        </p>
+
       </div>
 
       <div class="moment">
-        <div class="year">2010-2012 →</div>
-        <h3>Acting Performance</h3>
-        <p>Studied acting performance in a 15-month program focused on film and theatre, earning an associate degree in 2012.</p>
+
+        <div class="year">
+          2010-2012 →
+        </div>
+
+        <h3>
+          Acting Performance
+        </h3>
+
+        <p>
+          Studied acting performance in a 15-month program focused on film and theatre, earning an associate degree in 2012.
+        </p>
+
       </div>
 
       <div class="moment">
-        <div class="year">2012-2016 →</div>
-        <h3>Professional Acting</h3>
-        <p>Represented by the Kim Dawson Agency in Dallas and worked in commercials, industrials and independent film.</p>
+
+        <div class="year">
+          2012-2016 →
+        </div>
+
+        <h3>
+          Professional Acting
+        </h3>
+
+        <p>
+          Represented by the Kim Dawson Agency in Dallas and worked in commercials, industrials and independent film.
+        </p>
+
       </div>
 
       <div class="moment">
-        <div class="year">2014 →</div>
-        <h3>Created My First Board Game</h3>
-        <p>Spent two months building my first board game. It was played exactly once, lasted four hours, and had five players.</p>
+
+        <div class="year">
+          2014 →
+        </div>
+
+        <h3>
+          Created My First Board Game
+        </h3>
+
+        <p>
+          Spent two months building my first board game. It was played exactly once, lasted four hours, and had five players.
+        </p>
+
       </div>
 
       <div class="moment">
-        <div class="year">2017 →</div>
-        <h3>Beemo</h3>
-        <p>Owned my first dog, Beemo, a corgi. Sadly, he passed away in October 2024.</p>
+
+        <div class="year">
+          2017 →
+        </div>
+
+        <h3>
+          Beemo
+        </h3>
+
+        <p>
+          Owned my first dog, Beemo, a corgi. Sadly, he passed away in October 2024.
+        </p>
+
       </div>
 
       <div class="moment">
-        <div class="year">2018 →</div>
-        <h3>Married</h3>
-        <p>Met my amazing wife in 2017 and got married the following year.</p>
+
+        <div class="year">
+          2018 →
+        </div>
+
+        <h3>
+          Married
+        </h3>
+
+        <p>
+          Met my amazing wife in 2017 and got married the following year.
+        </p>
+
       </div>
 
       <div class="moment">
-        <div class="year">2020 →</div>
-        <h3>First Published Photography</h3>
+
+        <div class="year">
+          2020 →
+        </div>
+
+        <h3>
+          First Published Photography
+        </h3>
+
         <p>
           Had my photography published for the first time in Mary Jacobs' book
           <em>Hidden History of Plano</em>.
         </p>
+
       </div>
 
       <div class="moment">
-        <div class="year">2026 →</div>
-        <h3>Published Book + 60K on YouTube</h3>
+
+        <div class="year">
+          2026 →
+        </div>
+
+        <h3>
+          Published Book + 60K on YouTube
+        </h3>
+
         <p>
           Published my debut novel,
           <a href="writing.html">Spacecosis</a>,
           and passed 60K+ subscribers on Eric's Tech World.
         </p>
+
       </div>
 
       <div class="moment">
-        <div class="year">NOW →</div>
-        <h3>One Person, Too Many Tabs Open</h3>
-        <p>Technology, robots, skateboarding, forgotten places, writing, acting, music, marketing and whatever sidequest comes next.</p>
+
+        <div class="year">
+          NOW →
+        </div>
+
+        <h3>
+          One Person, Too Many Tabs Open
+        </h3>
+
+        <p>
+          Technology, robots, skateboarding, forgotten places, writing, acting, music, marketing and whatever sidequest comes next.
+        </p>
+
       </div>
 
     </div>
@@ -694,40 +930,118 @@ window.SITE={
 
     <div class="projects">
 
-      <a class="project" href="eric-tech-world.html">
-        <div class="code">// 001</div>
-        <h3>Eric's Tech World</h3>
-        <p>Robots, future tech, reviews, experiments and adventures.</p>
+      <a
+        class="project"
+        href="eric-tech-world.html"
+      >
+
+        <div class="code">
+          // 001
+        </div>
+
+        <h3>
+          Eric's Tech World
+        </h3>
+
+        <p>
+          Robots, future tech, reviews, experiments and adventures.
+        </p>
+
       </a>
 
-      <a class="project" href="skateboarding.html">
-        <div class="code">// 002</div>
-        <h3>Eric Skateboards</h3>
-        <p>Skate history, spots, videos and more than two decades on a board.</p>
+      <a
+        class="project"
+        href="skateboarding.html"
+      >
+
+        <div class="code">
+          // 002
+        </div>
+
+        <h3>
+          Eric Skateboards
+        </h3>
+
+        <p>
+          Skate history, spots, videos and more than two decades on a board.
+        </p>
+
       </a>
 
-      <a class="project" href="#">
-        <div class="code">// 003</div>
-        <h3>Eric's Sidequests</h3>
-        <p>Urban exploration, nostalgia, music, skits, art and everything that doesn't fit elsewhere.</p>
+      <a
+        class="project"
+        href="#"
+      >
+
+        <div class="code">
+          // 003
+        </div>
+
+        <h3>
+          Eric's Sidequests
+        </h3>
+
+        <p>
+          Urban exploration, nostalgia, music, skits, art and everything that doesn't fit elsewhere.
+        </p>
+
       </a>
 
-      <a class="project" href="acting.html">
-        <div class="code">// 004</div>
-        <h3>Acting</h3>
-        <p>Film, commercials, industrials, theatre, hosting and voiceover.</p>
+      <a
+        class="project"
+        href="acting.html"
+      >
+
+        <div class="code">
+          // 004
+        </div>
+
+        <h3>
+          Acting
+        </h3>
+
+        <p>
+          Film, commercials, industrials, theatre, hosting and voiceover.
+        </p>
+
       </a>
 
-      <a class="project" href="music.html">
-        <div class="code">// 005</div>
-        <h3>Music</h3>
-        <p>Acoustic rock, alternative, hip hop and years of weird songs with friends.</p>
+      <a
+        class="project"
+        href="music.html"
+      >
+
+        <div class="code">
+          // 005
+        </div>
+
+        <h3>
+          Music
+        </h3>
+
+        <p>
+          Acoustic rock, alternative, hip hop and years of weird songs with friends.
+        </p>
+
       </a>
 
-      <a class="project" href="writing.html">
-        <div class="code">// 006</div>
-        <h3>Writing</h3>
-        <p>Original fiction, sci-fi worlds, articles and long-form storytelling.</p>
+      <a
+        class="project"
+        href="writing.html"
+      >
+
+        <div class="code">
+          // 006
+        </div>
+
+        <h3>
+          Writing
+        </h3>
+
+        <p>
+          Original fiction, sci-fi worlds, articles and long-form storytelling.
+        </p>
+
       </a>
 
     </div>
@@ -747,10 +1061,17 @@ window.SITE={
     </div>
 
     <div class="manifesto">
+
       <blockquote>
+
         I don't really think of these as separate creative projects. They're all different tools for doing the same thing:
-        <em>creating a story I feel compelled to tell.</em>
+
+        <em>
+          creating a story I feel compelled to tell.
+        </em>
+
       </blockquote>
+
     </div>
 
   </div>
@@ -761,23 +1082,41 @@ window.SITE={
 
   <div class="cta">
 
-    <h2>Want to see what I'm working on?</h2>
+    <h2>
+      Want to see what I'm working on?
+    </h2>
 
     <p>
       Start with the projects, read the blog, or say hello.
     </p>
 
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <div
+      style="
+        display:flex;
+        gap:12px;
+        justify-content:center;
+        flex-wrap:wrap;
+      "
+    >
 
-      <a class="btn btn-primary" href="index.html#projects">
+      <a
+        class="btn btn-primary"
+        href="index.html#projects"
+      >
         Explore Projects →
       </a>
 
-      <a class="btn btn-ghost" href="blog/index.html">
+      <a
+        class="btn btn-ghost"
+        href="blog/index.html"
+      >
         Read the Blog
       </a>
 
-      <a class="btn btn-ghost" href="mailto:info@ericjkuhns.com">
+      <a
+        class="btn btn-ghost"
+        href="mailto:info@ericjkuhns.com"
+      >
         Contact Me
       </a>
 
@@ -790,6 +1129,7 @@ window.SITE={
 <div id="site-footer"></div>
 
 <script>
+
 const roles=[
   "YOUTUBER",
   "WRITER",
@@ -804,13 +1144,16 @@ const roles=[
 let ri=0;
 
 setInterval(()=>{
+
   ri=(ri+1)%roles.length;
 
-  const el=document.getElementById('cycle');
+  const el=
+    document.getElementById('cycle');
 
   if(el){
     el.textContent=roles[ri];
   }
+
 },1100);
 
 const words=[
@@ -826,11 +1169,13 @@ const words=[
   "RENDERING"
 ];
 
-const matrix=document.getElementById('matrix');
+const matrix=
+  document.getElementById('matrix');
 
 for(let i=0;i<28;i++){
 
-  const s=document.createElement('span');
+  const s=
+    document.createElement('span');
 
   s.textContent=
     words[i%words.length]
@@ -856,7 +1201,9 @@ for(let i=0;i<28;i++){
     (-Math.random()*18)+'s';
 
   matrix.appendChild(s);
+
 }
+
 </script>
 
 <script src="site.js?v=6"></script>
